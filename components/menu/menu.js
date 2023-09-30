@@ -24,6 +24,7 @@ const Menu = ({ navigation }) => {
             alignItems: "center",
             gap: 10,
           }}
+          onPress={() => navigation.navigate("Accountdetails")}
         >
           <PrimaryAccentText align={"left"}>Account Details</PrimaryAccentText>
           <Icon icon={"account"} height={30} width={30} fill="#3498DB" />
@@ -37,6 +38,7 @@ const Menu = ({ navigation }) => {
             alignItems: "center",
             gap: 10,
           }}
+          onPress={() => navigation.navigate("ResetAccount")}
         >
           <PrimaryAccentText align={"left"}>Reset Account</PrimaryAccentText>
           <Icon icon={"refresh"} height={30} width={30} fill="#3498DB" />

@@ -13,7 +13,6 @@ import {
 import { View, Text } from "react-native";
 import { useEffect, useState } from "react";
 import PassphraseDisplay from "./phraseDisplay";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getkeys } from "../../subcomponents/api/nodeserver";
 import { Loading } from "../../subcomponents/loading/loadingPage";
 import VerifyPhrase from "./verifyPhrase";
@@ -92,7 +91,9 @@ const CreateAccount = ({ navigation }) => {
         {!isLoading && (
           <PrimaryButton
             title="Continue"
-            onPress={() => setIsVerifying(true)}
+            onPress={() => {
+              setIsVerifying(true);
+            }}
           />
         )}
       </View>

@@ -6,23 +6,78 @@ import {
 import Icon from "../subcomponents/icon/icon";
 import { View, ScrollView } from "react-native";
 import { TouchableOpacity } from "react-native";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Image } from "expo-image";
+import { getCertificates } from "../subcomponents/api/nodeserver";
+import { PrimaryButton } from "../subcomponents/button/button";
+import { Loading } from "../subcomponents/loading/loadingPage";
 
-const Certificate = () => {
+const Certificate = ({ navigation }) => {
+  const [certificates, setCertificates] = useState(null);
+
+  const poppulateCertificates = async () => {
+    try {
+      const certs = await getCertificates();
+      setCertificates(certs.data.certificates);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  useEffect(() => {
+    poppulateCertificates();
+  }, []);
+
   return (
     <ScrollView style={{ flex: 1, gap: 20, marginVertical: 20 }}>
       <PrimaryAccentText>Certificates</PrimaryAccentText>
-      <CertificateTile />
-      <CertificateTile />
-      <CertificateTile />
+      {!certificates && (
+        <View
+          style={{
+            padding: 50,
+          }}
+        >
+          <Loading />
+        </View>
+      )}
+      {certificates && certificates.length === 0 && (
+        <View style={{ padding: 20, flex: 1, gap: 20 }}>
+          <PrimaryText>Your certificates will be shown here.</PrimaryText>
+          <PrimaryText>
+            Ask your university to send certificates to your wallet address
+          </PrimaryText>
+          <PrimaryButton
+            title="Receive Certificates"
+            endIcon={"receive"}
+            onPress={() => navigation.navigate("Accountdetails")}
+          />
+        </View>
+      )}
+      {certificates &&
+        certificates.length > 0 &&
+        certificates.map((issuer, index) => (
+          <CertificateTile
+            issuer={issuer}
+            key={issuer.name + index}
+            navigation={navigation}
+          />
+        ))}
+      {certificates &&
+        certificates.length > 0 &&
+        certificates.map((issuer, index) => (
+          <CertificateTile
+            issuer={issuer}
+            key={issuer.name + index}
+            navigation={navigation}
+          />
+        ))}
     </ScrollView>
   );
 };
 
 export default Certificate;
 
-const CertificateTile = () => {
+const CertificateTile = ({ issuer, navigation }) => {
   const [expanded, setExpanded] = useState(false);
   return (
     <View>
@@ -37,17 +92,24 @@ const CertificateTile = () => {
         }}
       >
         <View style={{ flexDirection: "row" }}>
-          <PrimaryText>Beyond Imagination Technologies</PrimaryText>
-          <Icon icon="verified" width={20} height={20} />
+          <PrimaryText>
+            {issuer.name.substring(0, 23)}
+            {issuer.name.length > 23 && "..."}
+          </PrimaryText>
+          {issuer.is_verified && (
+            <Icon icon="verified" width={20} height={20} />
+          )}
         </View>
         <PrimaryText>{expanded ? "-" : "+"}</PrimaryText>
       </TouchableOpacity>
-      {expanded && <CertificateContainer />}
+      {expanded && (
+        <CertificateContainer issuer={issuer} navigation={navigation} />
+      )}
     </View>
   );
 };
 
-const CertificateContainer = () => {
+const CertificateContainer = ({ issuer, navigation }) => {
   return (
     <View
       style={{
@@ -59,26 +121,36 @@ const CertificateContainer = () => {
         justifyContent: "space-between",
       }}
     >
-      <CertificateCard />
-      <CertificateCard />
-      <CertificateCard />
-      <CertificateCard />
+      {issuer.certificates.map((cert, index) => (
+        <CertificateCard
+          cert={cert}
+          key={cert.cid + index}
+          navigation={navigation}
+          issuer={issuer}
+        />
+      ))}
     </View>
   );
 };
 
-const CertificateCard = () => {
+const CertificateCard = ({ cert, navigation, issuer }) => {
   const blurhash =
-    "|rF?hV%2WCj[ayj[a|j[az_NaeWBj@ayfRayfQfQM{M|azj[azf6fQfQfQIpWXofj[ayj[j[fQayWCoeoeaya}j[ayfQa{oLj?j[WVj[ayayj[fQoff7azayj[ayj[j[ayofayayayj[fQj[ayayj[ayfjj[j[ayjuayj[";
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVjE9071LFZzNxjKM0BdvHD4s4xMZGw7QVZQ&usqp=CAU";
 
   return (
-    <View
+    <TouchableOpacity
       style={{
         width: 90,
-        height: 110,
+        height: 115,
         backgroundColor: "#393644",
         borderRadius: 5,
       }}
+      onPress={() =>
+        navigation.navigate("Certificate", {
+          certData: cert,
+          issuerData: issuer,
+        })
+      }
     >
       <Image
         style={{
@@ -89,11 +161,16 @@ const CertificateCard = () => {
           borderBottomLeftRadius: 0,
           borderBottomRightRadius: 0,
         }}
-        source="https://4.imimg.com/data4/JE/XJ/MY-6362665/certificate.jpg"
+        source={cert.image ? cert.image : blurhash}
         contentFit="cover"
         transition={1000}
       />
-      <SecondaryText>Certificate of Appreciation</SecondaryText>
-    </View>
+      <View style={{ padding: 5 }}>
+        <SecondaryText>
+          {cert.name.substring(0, 15)}
+          {cert.name.length > 15 && "..."}
+        </SecondaryText>
+      </View>
+    </TouchableOpacity>
   );
 };

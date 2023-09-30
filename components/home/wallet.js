@@ -6,21 +6,36 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as Clipboard from "expo-clipboard";
 import { getbalance } from "../subcomponents/api/nodeserver";
 
-const Wallet = () => {
+const Wallet = ({ navigation }) => {
   const [address, setAddress] = useState("");
   const [displayAddress, setDisplayAddress] = useState("");
+  const [balance, setBalance] = useState(0);
+  const [displaybalance, setDisplayBalance] = useState("0.00");
 
   const poppulateAddress = async () => {
-    const publicKey = await AsyncStorage.getItem("publicKey");
-    const trimmedPublicKey = publicKey.slice(8);
-    setAddress(trimmedPublicKey);
-    const shortenedAddress =
-      trimmedPublicKey.slice(0, 4) + "..." + trimmedPublicKey.slice(-4);
-    setDisplayAddress(shortenedAddress);
+    try {
+      const publicKey = await AsyncStorage.getItem("publicKey");
+      const trimmedPublicKey = publicKey;
+      setAddress(trimmedPublicKey);
+      const shortenedAddress =
+        trimmedPublicKey.slice(0, 4) + "..." + trimmedPublicKey.slice(-4);
+      setDisplayAddress(shortenedAddress);
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   const poppulateBalance = async () => {
-    getbalance();
+    getbalance()
+      .then((res) => {
+        if (res.status === "success") {
+          const newBalance = parseFloat(res.data.balance);
+          setBalance(newBalance);
+          const roundedbalance = newBalance.toFixed(2);
+          setDisplayBalance(roundedbalance);
+        }
+      })
+      .catch((err) => console.log(err));
   };
 
   useEffect(() => {
@@ -39,7 +54,7 @@ const Wallet = () => {
           endIcon={"copy"}
           onPress={() => Clipboard.setStringAsync(address)}
         />
-        <LargeAccentText>125.698 NEAR</LargeAccentText>
+        <LargeAccentText>{displaybalance} NEAR</LargeAccentText>
       </View>
       <View
         style={{
@@ -51,11 +66,15 @@ const Wallet = () => {
           <PrimaryButton
             title="Send"
             endIcon={"send"}
-            onPress={poppulateBalance}
+            onPress={() => navigation.navigate("SendTransaction")}
           />
         </View>
         <View style={{ flex: 1 }}>
-          <PrimaryButton title="Receive" endIcon={"receive"} />
+          <PrimaryButton
+            title="Receive"
+            endIcon={"receive"}
+            onPress={() => navigation.navigate("Accountdetails")}
+          />
         </View>
       </View>
       <View />

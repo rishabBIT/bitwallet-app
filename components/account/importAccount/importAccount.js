@@ -2,14 +2,44 @@ import Container from "../../subcomponents/container/container";
 import {
   PrimaryAccentText,
   SecondaryText,
+  ErrorText,
 } from "../../subcomponents/text/text";
 import { PrimaryButton, LinkButton } from "../../subcomponents/button/button";
 import { View } from "react-native";
 import Input from "../../subcomponents/input/input";
 import { useState } from "react";
+import { Loading } from "../../subcomponents/loading/loadingPage";
+import { importkeys } from "../../subcomponents/api/nodeserver";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const ImportAccount = ({ navigation }) => {
-  const [word, setWord] = useState("");
+  const [phrase, setPhrase] = useState("");
+  const [isloading, setisloading] = useState(false);
+  const [error, setError] = useState("");
+
+  const findAccount = async () => {
+    setError("");
+    const words = phrase.split(" ");
+
+    if (words.length !== 12) {
+      setError("Passphrase should have 12 words. No extra spaces.");
+      return;
+    }
+
+    setisloading(true);
+
+    await importkeys(phrase)
+      .then(async (res) => {
+        const keys = res.data.keys;
+        await AsyncStorage.setItem("phrase", keys.seedPhrase);
+        await AsyncStorage.setItem("publicKey", keys.publicKey);
+        await AsyncStorage.setItem("secretKey", keys.secretKey);
+        navigation.navigate("Home");
+      })
+      .catch((err) => console.log(err));
+    setisloading(false);
+  };
+
   return (
     <Container>
       <View
@@ -38,11 +68,18 @@ const ImportAccount = ({ navigation }) => {
         <Input
           label="Passphrase (12 words)"
           placeholder="Enter phrase..."
-          value={word}
-          onChangeText={(e) => setWord(e)}
+          value={phrase}
+          onChangeText={(e) => setPhrase(e)}
         />
+        <ErrorText>{error}</ErrorText>
 
-        <PrimaryButton title="Find My Account" />
+        {isloading ? (
+          <View style={{ padding: 20 }}>
+            <Loading />
+          </View>
+        ) : (
+          <PrimaryButton title="Find My Account" onPress={findAccount} />
+        )}
       </View>
     </Container>
   );
