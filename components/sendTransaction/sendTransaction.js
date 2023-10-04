@@ -26,17 +26,23 @@ const checkAddressValidity = (e) => {
 
 const SendTransaction = ({ navigation }) => {
   const route = useRoute();
-  const { transactionData } = route.params;
+
   const [balance, setBalance] = useState(0);
   const [displaybalance, setDisplayBalance] = useState("0.00");
   const [amount, setAmount] = useState(0);
-  const [address, setAddress] = useState(
-    transactionData ? transactionData.address : ""
-  );
-  const [isAddressValid, setIsAddressValid] = useState(
-    transactionData ? checkAddressValidity(transactionData.address) : false
-  );
+  const [address, setAddress] = useState("");
+  const [isAddressValid, setIsAddressValid] = useState(false);
   const [isLoading, setIsloading] = useState(false);
+
+  const poppulateInitialData = () => {
+    try {
+      const { transactionData } = route.params;
+      setAddress(transactionData.address);
+      setIsAddressValid(checkAddressValidity(transactionData.address));
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   const poppulateBalance = async () => {
     getbalance()
@@ -52,6 +58,7 @@ const SendTransaction = ({ navigation }) => {
   };
 
   useEffect(() => {
+    poppulateInitialData();
     poppulateBalance();
   }, []);
 

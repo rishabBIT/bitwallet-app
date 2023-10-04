@@ -7,23 +7,32 @@ export const updateURLs = async () => {
     );
     const data = await response.json();
     AsyncStorage.setItem("cert-backend", data["cert-backend"]);
+    AsyncStorage.setItem("ws-backend", data["ws-backend"]);
     AsyncStorage.setItem(
       "cert-urls",
       JSON.stringify({ certURLs: data["cert-urls"] })
     );
     AsyncStorage.setItem("node-backend", data["node-backend"]);
+    return true;
   } catch (e) {
     console.error("error here :", e);
+    return false;
   }
 };
 
 export const getkeys = async () => {
-  const API_URL = await AsyncStorage.getItem("node-backend");
+  let API_URL = await AsyncStorage.getItem("node-backend");
+  if (API_URL === null || API_URL === "null") {
+    await updateURLs();
+    API_URL = await AsyncStorage.getItem("node-backend");
+  }
   const endpoint = "getkeys";
   const url = API_URL + endpoint;
+  console.log(url);
   const result = { status: "failed" };
   try {
     const response = await fetch(url).then((res) => res.json());
+    console.log(response);
     result.status = "success";
     result.data = response;
   } catch (e) {
@@ -92,9 +101,14 @@ export const sendNear = async (address, amount) => {
   return result;
 };
 export const importkeys = async (phrase) => {
-  const API_URL = await AsyncStorage.getItem("node-backend");
+  let API_URL = await AsyncStorage.getItem("node-backend");
+  if (API_URL === null || API_URL === "null") {
+    await updateURLs();
+    API_URL = await AsyncStorage.getItem("node-backend");
+  }
   const endpoint = "importkeys";
   const url = API_URL + endpoint;
+  console.log(url);
   const result = { status: "failed" };
   try {
     const requestOptions = {
@@ -127,6 +141,62 @@ export const getCertificates = async () => {
   const result = { status: "failed" };
   try {
     const response = await fetch(url).then((res) => res.json());
+    result.status = "success";
+    result.data = response;
+  } catch (e) {
+    console.log("Cert Error", e);
+  }
+  return result;
+};
+export const registerDevice = async (token) => {
+  const API_URL = await AsyncStorage.getItem("cert-backend");
+  const publicKey = await AsyncStorage.getItem("publicKey");
+  const deviceId = await AsyncStorage.getItem("device-id");
+  if (deviceId !== null) {
+    console.log("Device ID exists:", deviceId);
+    return false;
+  }
+  const url = `${API_URL}wallet/create/`;
+  console.log(token);
+  const result = { status: "failed" };
+  try {
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        wallet: publicKey,
+        token: token,
+        is_active: true,
+      }),
+    };
+    const response = await fetch(url, requestOptions).then((res) => res.json());
+    console.log(response);
+    result.status = "success";
+    result.data = response;
+  } catch (e) {
+    console.log("Cert Error", e);
+  }
+  return result;
+};
+export const deleteDevice = async () => {
+  const API_URL = await AsyncStorage.getItem("cert-backend");
+  if (deviceId === null) {
+    console.log("Device ID does not exists:", deviceId);
+    return false;
+  }
+  const url = `${API_URL}wallet/device/${deviceId}/`;
+  const result = { status: "failed" };
+  try {
+    const requestOptions = {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const response = await fetch(url, requestOptions).then((res) => res.json());
+    console.log(response);
     result.status = "success";
     result.data = response;
   } catch (e) {

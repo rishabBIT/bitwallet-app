@@ -10,6 +10,8 @@ import Input from "../../subcomponents/input/input";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useState, useEffect } from "react";
 import { Loading } from "../../subcomponents/loading/loadingPage";
+import useNotifications from "../../notifications/notifications";
+import { registerDevice } from "../../subcomponents/api/nodeserver";
 
 const VerifyPhrase = ({ pasphrase, keys, back, navigation }) => {
   const [word, setWord] = useState("");
@@ -17,6 +19,8 @@ const VerifyPhrase = ({ pasphrase, keys, back, navigation }) => {
   const [targetWord, setTargetWord] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const { notification, expoPushToken, registerForPushNotificationsAsync } =
+    useNotifications();
 
   function getWordsFromSentence(sentence) {
     const words = sentence.split(" ");
@@ -52,6 +56,8 @@ const VerifyPhrase = ({ pasphrase, keys, back, navigation }) => {
     await AsyncStorage.setItem("phrase", keys.seedPhrase);
     await AsyncStorage.setItem("publicKey", keys.publicKey);
     await AsyncStorage.setItem("secretKey", keys.secretKey);
+    const token = await registerForPushNotificationsAsync();
+    await registerDevice(token.data);
     navigation.navigate("Home");
     setLoading(false);
   };

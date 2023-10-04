@@ -215,4 +215,33 @@ export default icons = {
 `,
     isEditable: true,
   },
+  download: {
+    xml: `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M16 5.64706H11.4286V0H4.57143V5.64706H0L8 12.2353L16 5.64706ZM0 14.1176V16H16V14.1176H0Z" fill="white"/>
+</svg>
+`,
+    isEditable: true,
+  },
+  delete: {
+    xml: `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M16 5.64706H11.4286V0H4.57143V5.64706H0L8 12.2353L16 5.64706ZM0 14.1176V16H16V14.1176H0Z" fill="white"/>
+</svg>
+`,
+    isEditable: true,
+  },
+  error: {
+    xml: `<svg width="96" height="96" viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_74_22)">
+<path d="M48 8C25.92 8 8 25.92 8 48C8 70.08 25.92 88 48 88C70.08 88 88 70.08 88 48C88 25.92 70.08 8 48 8ZM52 68H44V60H52V68ZM52 52H44V28H52V52Z" fill="#FFD700"/>
+</g>
+<defs>
+<clipPath id="clip0_74_22">
+<rect width="96" height="96" fill="white"/>
+</clipPath>
+</defs>
+</svg>
+
+`,
+    isEditable: true,
+  },
 };

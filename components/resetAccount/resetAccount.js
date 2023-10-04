@@ -13,6 +13,7 @@ import { PrimaryButton } from "../subcomponents/button/button";
 import Pin from "../pin/keypad";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import LoadingPage from "../subcomponents/loading/loadingPage";
+import { deleteDevice } from "../subcomponents/api/nodeserver";
 
 const ResetAccount = ({ navigation }) => {
   const [isPin, setIsPin] = useState(false);
@@ -34,6 +35,7 @@ const ResetAccount = ({ navigation }) => {
       setStatus("Invalid Pin");
     } else {
       setIsloading(true);
+      await deleteDevice();
       await AsyncStorage.clear();
       navigation.navigate("Home");
       setIsloading(false);

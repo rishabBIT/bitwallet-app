@@ -3,6 +3,7 @@ import { Text, View, StyleSheet, Button } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import Container from "../subcomponents/container/container";
 import {
+  ErrorText,
   PrimaryAccentText,
   PrimaryText,
   SecondaryText,
@@ -14,6 +15,8 @@ import {
 } from "../subcomponents/button/button";
 import { Linking } from "react-native";
 import { WebView } from "react-native-webview";
+import LoadingPage from "../subcomponents/loading/loadingPage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Scanner({ navigation }) {
   const [hasPermission, setHasPermission] = useState(null);
@@ -190,15 +193,7 @@ const ScannedPage = ({ navigation, data, setScanned }) => {
           </View>
         )}
 
-        {isConnection && (
-          <View style={{ gap: 20 }}>
-            <PrimaryText>Connect with {data.slice(3)} ?</PrimaryText>
-            <View style={{ gap: 10 }}>
-              <PrimaryButton title="Connect" />
-              <SecondaryButton title="Decline" />
-            </View>
-          </View>
-        )}
+        {isConnection && <ConnectionPage data={data} navigation={navigation} />}
 
         {isURL && (
           <View style={{ gap: 20 }}>
@@ -234,5 +229,95 @@ const ScannedPage = ({ navigation, data, setScanned }) => {
         />
       </View>
     </Container>
+  );
+};
+
+const ConnectionPage = ({ data, navigation }) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [isConnected, setIsConnected] = useState(false);
+  const [url, setUrl] = useState("");
+  const [socket, setSocket] = useState(null);
+
+  useEffect(() => {
+    poppulateURL();
+  }, []);
+
+  const poppulateURL = () => {
+    const urlData = JSON.parse(data.slice(3));
+    setUrl(urlData["domain"]);
+    connectSocket(urlData["socket"]);
+  };
+
+  const connectSocket = async (wsURL) => {
+    const chatSocket = new WebSocket(wsURL);
+    chatSocket.onmessage = function (e) {
+      const data = JSON.parse(e.data);
+      console.log(data);
+    };
+    chatSocket.onclose = function (e) {
+      setIsConnected(false);
+      console.log("Chat socket closed unexpectedly");
+    };
+    chatSocket.onopen = function (e) {
+      setSocket(chatSocket);
+      setIsConnected(true);
+    };
+  };
+
+  const acceptConnection = async () => {
+    setIsLoading(true);
+    const address = await AsyncStorage.getItem("publicKey");
+
+    try {
+      socket.send(
+        JSON.stringify({
+          message: "accept",
+          accountId: address,
+        })
+      );
+      setIsLoading(false);
+      navigation.navigate("Home");
+    } catch {
+      navigation.navigate("Home");
+      setIsLoading(false);
+    }
+  };
+  const rejectConnection = async () => {
+    setIsLoading(true);
+    try {
+      socket.send(
+        JSON.stringify({
+          message: "reject",
+        })
+      );
+      setIsLoading(false);
+      navigation.navigate("Home");
+    } catch {
+      navigation.navigate("Home");
+      setIsLoading(false);
+    }
+  };
+
+  if (isLoading)
+    return (
+      <View>
+        <LoadingPage />
+      </View>
+    );
+
+  return (
+    <View style={{ gap: 20 }}>
+      <PrimaryText>Connect with {url} ?</PrimaryText>
+
+      <View style={{ gap: 10 }}>
+        {!isConnected ? (
+          <ErrorText>Unable to connect!</ErrorText>
+        ) : (
+          <PrimaryButton title="Connect" onPress={acceptConnection} />
+        )}
+
+        <SecondaryButton title="Decline" onPress={rejectConnection} />
+      </View>
+    </View>
   );
 };

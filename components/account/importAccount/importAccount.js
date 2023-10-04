@@ -11,11 +11,15 @@ import { useState } from "react";
 import { Loading } from "../../subcomponents/loading/loadingPage";
 import { importkeys } from "../../subcomponents/api/nodeserver";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import useNotifications from "../../notifications/notifications";
+import { registerDevice } from "../../subcomponents/api/nodeserver";
 
 const ImportAccount = ({ navigation }) => {
   const [phrase, setPhrase] = useState("");
   const [isloading, setisloading] = useState(false);
   const [error, setError] = useState("");
+  const { notification, expoPushToken, registerForPushNotificationsAsync } =
+    useNotifications();
 
   const findAccount = async () => {
     setError("");
@@ -34,6 +38,8 @@ const ImportAccount = ({ navigation }) => {
         await AsyncStorage.setItem("phrase", keys.seedPhrase);
         await AsyncStorage.setItem("publicKey", keys.publicKey);
         await AsyncStorage.setItem("secretKey", keys.secretKey);
+        const token = await registerForPushNotificationsAsync();
+        await registerDevice(token.data);
         navigation.navigate("Home");
       })
       .catch((err) => console.log(err));

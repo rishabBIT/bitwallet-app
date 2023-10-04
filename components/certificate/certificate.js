@@ -68,7 +68,7 @@ const Certificate = ({ navigation }) => {
           ) : (
             <ErrorText>Not Verified</ErrorText>
           )}
-          <LinkButton title="Delete" />
+          <LinkButton title="Delete" endIcon={"delete"} />
         </View>
         <Image
           style={{
@@ -99,6 +99,7 @@ const Certificate = ({ navigation }) => {
         </View>
         <PrimaryButton
           title="Download"
+          endIcon={"download"}
           onPress={() => downloadImage(certData.image)}
         />
       </View>

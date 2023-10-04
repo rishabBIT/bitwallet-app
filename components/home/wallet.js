@@ -5,12 +5,15 @@ import { useState, useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as Clipboard from "expo-clipboard";
 import { getbalance } from "../subcomponents/api/nodeserver";
+import useNotifications from "../notifications/notifications";
 
 const Wallet = ({ navigation }) => {
   const [address, setAddress] = useState("");
   const [displayAddress, setDisplayAddress] = useState("");
   const [balance, setBalance] = useState(0);
   const [displaybalance, setDisplayBalance] = useState("0.00");
+  const { notification, expoPushToken, registerForPushNotificationsAsync } =
+    useNotifications(navigation);
 
   const poppulateAddress = async () => {
     try {
@@ -48,6 +51,7 @@ const Wallet = ({ navigation }) => {
       style={{ flex: 1, justifyContent: "space-between", gap: 50, padding: 20 }}
     >
       <PrimaryAccentText>Account</PrimaryAccentText>
+
       <View>
         <LinkButton
           title={displayAddress}

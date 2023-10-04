@@ -17,7 +17,10 @@ import LoadingPage from "./components/subcomponents/loading/loadingPage";
 import Pin from "./components/pin/keypad";
 import Scanner from "./components/scanner/scanner";
 import Certificate from "./components/certificate/certificate";
+import NoInternet from "./components/noInternet/noInternet";
 import { updateURLs } from "./components/subcomponents/api/nodeserver";
+import useNotifications from "./components/notifications/notifications";
+import Connection from "./components/connection/connection";
 
 const Stack = createNativeStackNavigator();
 
@@ -26,10 +29,11 @@ export default function App() {
   const [isLoading, setIsloading] = useState(true);
   const [status, setStatus] = useState("");
   const [storedPin, setStoredPin] = useState("");
+  const [isConnected, setIsConnected] = useState(true);
 
   useEffect(() => {
-    updateURLs();
     checkStatus();
+    checkConnection();
   }, []);
 
   const checkStatus = async () => {
@@ -42,6 +46,14 @@ export default function App() {
     setIsloading(false);
   };
 
+  const checkConnection = async () => {
+    setIsloading(true);
+    const isInternet = await updateURLs();
+    if (isInternet) setIsConnected(true);
+    else setIsConnected(false);
+    setIsloading(false);
+  };
+
   const enterPin = (e) => {
     if (storedPin !== e) setStatus("Invalid Pin");
     else setIsPinRequired(false);
@@ -51,6 +63,8 @@ export default function App() {
 
   if (isPinRequired)
     return <Pin title="Enter Pin" subtitle={status} submit={enterPin} />;
+
+  if (!isConnected) return <NoInternet retry={checkConnection} />;
 
   return (
     <SafeAreaProvider>
@@ -174,6 +188,16 @@ export default function App() {
               presentation: "modal",
               animationTypeForReplace: "push",
               animation: "slide_from_right",
+            }}
+          />
+          <Stack.Screen
+            name="Connection"
+            component={Connection}
+            options={{
+              headerShown: false,
+              presentation: "modal",
+              // animationTypeForReplace: "push",
+              // animation: "slide_from_right",
             }}
           />
         </Stack.Navigator>
