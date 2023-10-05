@@ -14,11 +14,24 @@ import Icon from "../subcomponents/icon/icon";
 import { Image } from "expo-image";
 import * as FileSystem from "expo-file-system";
 import * as MediaLibrary from "expo-media-library";
+import * as Sharing from "expo-sharing";
 import { Linking } from "react-native";
+import { useEffect, useState } from "react";
 
 const Certificate = ({ navigation }) => {
   const route = useRoute();
   const { certData, issuerData } = route.params;
+  const [isSharingAvailable, setIsSharingAvailable] = useState(false);
+
+  useEffect(() => {
+    Sharing.isAvailableAsync().then((available) => {
+      if (available) {
+        setIsSharingAvailable(true);
+      } else {
+        setIsSharingAvailable(false);
+      }
+    });
+  }, []);
 
   async function downloadImage(uri) {
     try {
@@ -30,6 +43,7 @@ const Certificate = ({ navigation }) => {
       const permission = await MediaLibrary.requestPermissionsAsync();
       const asset = await MediaLibrary.createAssetAsync(downloadedFile.uri);
       const album = await MediaLibrary.getAlbumAsync("Certificates");
+      alert("Image is saved in your photo gallery.");
       if (album == null) {
         await MediaLibrary.createAlbumAsync("Certificates", asset, false);
       } else {
@@ -38,6 +52,21 @@ const Certificate = ({ navigation }) => {
     } catch (e) {
       Linking.openURL(uri);
     }
+  }
+
+  async function shareImage(uri) {
+    const downloadedFile = await FileSystem.downloadAsync(
+      uri,
+      FileSystem.documentDirectory + "certificate.png"
+    );
+
+    Sharing.shareAsync(downloadedFile.uri)
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((err) => {
+        console.log(JSON.stringify(err));
+      });
   }
 
   const blurhash =
@@ -60,7 +89,7 @@ const Certificate = ({ navigation }) => {
             justifyContent: "space-between",
           }}
         >
-          {!issuerData.is_verified ? (
+          {issuerData.is_verified ? (
             <View style={{ flexDirection: "row", alignItems: "center" }}>
               <Text style={{ color: "#00FF00", fontSize: 24 }}>Verified</Text>
               <Icon icon="verified" width={20} height={20} />
@@ -97,11 +126,24 @@ const Certificate = ({ navigation }) => {
           <SecondaryText align={"left"}>{issuerData.website}</SecondaryText>
           <SecondaryText align={"left"}>{issuerData.wallet}</SecondaryText>
         </View>
-        <PrimaryButton
-          title="Download"
-          endIcon={"download"}
-          onPress={() => downloadImage(certData.image)}
-        />
+        <View style={{ flexDirection: "row", gap: 10 }}>
+          <View style={{ flex: 1 }}>
+            <PrimaryButton
+              title="Download"
+              endIcon={"download"}
+              onPress={() => downloadImage(certData.image)}
+            />
+          </View>
+          {isSharingAvailable && (
+            <View style={{ flex: 1 }}>
+              <PrimaryButton
+                title="Share"
+                endIcon={"share"}
+                onPress={() => shareImage(certData.image)}
+              />
+            </View>
+          )}
+        </View>
       </View>
     </Container>
   );

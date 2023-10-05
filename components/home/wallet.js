@@ -1,9 +1,14 @@
 import { PrimaryAccentText, LargeAccentText } from "../subcomponents/text/text";
-import { LinkButton, PrimaryButton } from "../subcomponents/button/button";
-import { View } from "react-native";
+import {
+  LinkButton,
+  PrimaryButton,
+  TertiaryButton,
+} from "../subcomponents/button/button";
+import { View, Share } from "react-native";
 import { useState, useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as Clipboard from "expo-clipboard";
+import * as Sharing from "expo-sharing";
 import { getbalance } from "../subcomponents/api/nodeserver";
 import useNotifications from "../notifications/notifications";
 
@@ -21,7 +26,7 @@ const Wallet = ({ navigation }) => {
       const trimmedPublicKey = publicKey;
       setAddress(trimmedPublicKey);
       const shortenedAddress =
-        trimmedPublicKey.slice(0, 4) + "..." + trimmedPublicKey.slice(-4);
+        trimmedPublicKey.slice(0, 4) + "..." + trimmedPublicKey.slice(-4) + " ";
       setDisplayAddress(shortenedAddress);
     } catch (e) {
       console.log(e);
@@ -52,14 +57,27 @@ const Wallet = ({ navigation }) => {
     >
       <PrimaryAccentText>Account</PrimaryAccentText>
 
-      <View>
+      <View
+        style={{
+          flexDirection: "row",
+          gap: 20,
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
         <LinkButton
           title={displayAddress}
           endIcon={"copy"}
           onPress={() => Clipboard.setStringAsync(address)}
         />
-        <LargeAccentText>{displaybalance} NEAR</LargeAccentText>
+
+        <LinkButton
+          title=""
+          endIcon={"share"}
+          onPress={() => Share.share({ message: address })}
+        />
       </View>
+      <LargeAccentText>{displaybalance} NEAR</LargeAccentText>
       <View
         style={{
           flexDirection: "row",

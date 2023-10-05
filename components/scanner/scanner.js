@@ -149,17 +149,20 @@ const ScannedPage = ({ navigation, data, setScanned }) => {
     }
   };
 
-  const checkIsCertificate = () => {
-    const startURL = "https://bitmemoirlatam.com";
-    try {
-      if (data.substring(0, startURL.length) === startURL) {
-        setIsCertificate(true);
-      } else {
-        setIsCertificate(false);
+  const checkIsCertificate = async () => {
+    const cert_urls = await AsyncStorage.getItem("cert-urls");
+    console.log(cert_urls);
+    JSON.parse(cert_urls)["certURLs"].map((startURL) => {
+      try {
+        if (data.substring(0, startURL.length) === startURL) {
+          setIsCertificate(true);
+        } else {
+          setIsCertificate(false);
+        }
+      } catch (e) {
+        console.log(e);
       }
-    } catch (e) {
-      console.log(e);
-    }
+    });
   };
 
   return (
@@ -195,7 +198,7 @@ const ScannedPage = ({ navigation, data, setScanned }) => {
 
         {isConnection && <ConnectionPage data={data} navigation={navigation} />}
 
-        {isURL && (
+        {isURL && !isCertificate && (
           <View style={{ gap: 20 }}>
             <PrimaryText>URL : {data}</PrimaryText>
             <PrimaryButton
