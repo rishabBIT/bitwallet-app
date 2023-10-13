@@ -38,8 +38,12 @@ const ImportAccount = ({ navigation }) => {
         await AsyncStorage.setItem("phrase", keys.seedPhrase);
         await AsyncStorage.setItem("publicKey", keys.publicKey);
         await AsyncStorage.setItem("secretKey", keys.secretKey);
-        const token = await registerForPushNotificationsAsync();
-        await registerDevice(token.data);
+        try {
+          const token = await registerForPushNotificationsAsync();
+          await registerDevice(token.data);
+        } catch {
+          console.log("could not register device---");
+        }
         navigation.navigate("Home");
       })
       .catch((err) => console.log(err));
@@ -75,7 +79,7 @@ const ImportAccount = ({ navigation }) => {
           label="Passphrase (12 words)"
           placeholder="Enter phrase..."
           value={phrase}
-          onChangeText={(e) => setPhrase(e)}
+          onChangeText={(e) => setPhrase(e.toString().toLowerCase())}
         />
         <ErrorText>{error}</ErrorText>
 

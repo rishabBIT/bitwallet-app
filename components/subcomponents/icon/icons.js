@@ -258,4 +258,18 @@ export default icons = {
 `,
     isEditable: true,
   },
+  update: {
+    xml: `<svg width="96" height="96" viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_79_2)">
+<path d="M68 4.04L28 4C23.6 4 20 7.6 20 12V84C20 88.4 23.6 92 28 92H68C72.4 92 76 88.4 76 84V12C76 7.6 72.4 4.04 68 4.04ZM68 76H28V20H68V76ZM64 52H52V32H44V52H32L48 68L64 52Z" fill="black"/>
+</g>
+<defs>
+<clipPath id="clip0_79_2">
+<rect width="96" height="96" fill="white"/>
+</clipPath>
+</defs>
+</svg>
+`,
+    isEditable: true,
+  },
 };

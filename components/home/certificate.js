@@ -11,14 +11,25 @@ import { Image } from "expo-image";
 import { getCertificates } from "../subcomponents/api/nodeserver";
 import { PrimaryButton } from "../subcomponents/button/button";
 import { Loading } from "../subcomponents/loading/loadingPage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Certificate = ({ navigation }) => {
   const [certificates, setCertificates] = useState(null);
 
   const poppulateCertificates = async () => {
     try {
+      let certs = await AsyncStorage.getItem("certificates");
+      setCertificates(JSON.parse(certs));
+    } catch {
+      console.log("no certs in storage");
+    }
+    try {
       const certs = await getCertificates();
       setCertificates(certs.data.certificates);
+      AsyncStorage.setItem(
+        "certificates",
+        JSON.stringify(certs.data.certificates)
+      );
     } catch (e) {
       console.log(e);
     }
@@ -53,15 +64,6 @@ const Certificate = ({ navigation }) => {
           />
         </View>
       )}
-      {certificates &&
-        certificates.length > 0 &&
-        certificates.map((issuer, index) => (
-          <CertificateTile
-            issuer={issuer}
-            key={issuer.name + index}
-            navigation={navigation}
-          />
-        ))}
       {certificates &&
         certificates.length > 0 &&
         certificates.map((issuer, index) => (

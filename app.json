@@ -3,7 +3,7 @@
     "name": "BitWallet",
     "slug": "BitWallet",
     "package": "beimagine.tech",
-    "version": "2.0.0",
+    "version": "2.0.2",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -24,7 +24,7 @@
       "bundleIdentifier": "com.navraj2071.BitWallet"
     },
     "android": {
-      "versionCode": 10,
+      "versionCode": 12,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#020105"

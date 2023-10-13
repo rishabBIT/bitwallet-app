@@ -21,6 +21,8 @@ import NoInternet from "./components/noInternet/noInternet";
 import { updateURLs } from "./components/subcomponents/api/nodeserver";
 import useNotifications from "./components/notifications/notifications";
 import Connection from "./components/connection/connection";
+import Update from "./components/update/update";
+import { checkForUpdates } from "./components/subcomponents/api/nodeserver";
 
 const Stack = createNativeStackNavigator();
 
@@ -30,11 +32,18 @@ export default function App() {
   const [status, setStatus] = useState("");
   const [storedPin, setStoredPin] = useState("");
   const [isConnected, setIsConnected] = useState(true);
+  const [updateAvailable, setUpdateAvailable] = useState(false);
 
   useEffect(() => {
     checkStatus();
     checkConnection();
+    setTimeout(checkUpdate, 10000);
   }, []);
+
+  const checkUpdate = async () => {
+    let update = await checkForUpdates();
+    setUpdateAvailable(update);
+  };
 
   const checkStatus = async () => {
     setIsloading(true);
@@ -65,6 +74,9 @@ export default function App() {
     return <Pin title="Enter Pin" subtitle={status} submit={enterPin} />;
 
   if (!isConnected) return <NoInternet retry={checkConnection} />;
+
+  if (updateAvailable)
+    return <Update cancel={() => setUpdateAvailable(false)} />;
 
   return (
     <SafeAreaProvider>

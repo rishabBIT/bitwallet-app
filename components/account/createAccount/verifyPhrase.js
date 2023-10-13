@@ -56,8 +56,12 @@ const VerifyPhrase = ({ pasphrase, keys, back, navigation }) => {
     await AsyncStorage.setItem("phrase", keys.seedPhrase);
     await AsyncStorage.setItem("publicKey", keys.publicKey);
     await AsyncStorage.setItem("secretKey", keys.secretKey);
-    const token = await registerForPushNotificationsAsync();
-    await registerDevice(token.data);
+    try {
+      const token = await registerForPushNotificationsAsync();
+      await registerDevice(token.data);
+    } catch {
+      console.log("could not register device---");
+    }
     navigation.navigate("Home");
     setLoading(false);
   };
@@ -88,7 +92,7 @@ const VerifyPhrase = ({ pasphrase, keys, back, navigation }) => {
             label={`Word #${targetIndex}`}
             placeholder="Enter word..."
             value={word}
-            onChangeText={(e) => setWord(e)}
+            onChangeText={(e) => setWord(e.toString().toLowerCase())}
           />
           <ErrorText>{error}</ErrorText>
         </View>

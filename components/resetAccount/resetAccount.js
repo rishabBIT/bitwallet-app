@@ -35,7 +35,11 @@ const ResetAccount = ({ navigation }) => {
       setStatus("Invalid Pin");
     } else {
       setIsloading(true);
-      await deleteDevice();
+      try {
+        const result = await deleteDevice();
+      } catch (e) {
+        console.log(e);
+      }
       await AsyncStorage.clear();
       navigation.navigate("Home");
       setIsloading(false);
