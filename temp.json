@@ -1,0 +1,14 @@
+{
+  "actions": [["Object"]],
+  "actions_agg": { "deposit": 1e24 },
+  "block": { "block_height": 138440234 },
+  "block_timestamp": "1695115849799775332",
+  "included_in_block_hash": "H53hrdqXMTVC1h6PbXNYCmCajEtCTcxyd4eybDWnc55W",
+  "logs": [],
+  "outcomes": { "status": true },
+  "outcomes_agg": { "transaction_fee": 1.1516194712273e21 },
+  "predecessor_account_id": "dev-1675849983997-69455845833622",
+  "receipt_id": "ieWPCusyn1CbaqxhrhcrWieV2thKGwynih1r19dMbtJ",
+  "receiver_account_id": "undefined",
+  "transaction_hash": "BXfn51MkyG3JsfJgWDpCnpzhiQzvB4mAnq9WcyuQxqxp"
+}

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "976807099905",
+    "project_id": "bitwallet-74c7f",
+    "storage_bucket": "bitwallet-74c7f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:976807099905:android:7033c50617d07697ae4a00",
+        "android_client_info": {
+          "package_name": "beimagine.tech"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5N0WUhbMQIOWB0TzvtolKB4UrvYeWLS0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

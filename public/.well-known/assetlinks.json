@@ -1,0 +1,11 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "beimagine.tech",
+      "sha256_cert_fingerprints":
+        ["0F:94:83:B3:B4:E5:E3:5D:A0:CC:39:FC:54:5F:23:6A:3F:F6:33:5A:1E:DC:BE:AC:D8:70:CE:84:DF:2E:91:30"]
+    }
+  }
+]
