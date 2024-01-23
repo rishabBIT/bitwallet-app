@@ -59,7 +59,14 @@ export default function App() {
   const [deepLink, setDeepLink] = useState(false)
 
   useEffect(() => {
+    Linking.addEventListener('url', (res) => {
+      handleDeepLink(res.url)
+    })
+
     handleDeepLink()
+    return () => {
+      Linking.removeEventListener('url', handleDeepLink)
+    }
   }, [])
 
   useEffect(() => {
@@ -70,10 +77,19 @@ export default function App() {
     }
   }, [deepLink])
 
-  const handleDeepLink = async () => {
+  const getInitialUrl = async () => {
+    const initialUrl = await Linking.getInitialURL()
+
+    return initialUrl
+  }
+
+  const handleDeepLink = async (initialUrl) => {
     try {
       let action, app, redirectUrl
-      const initialUrl = await Linking.getInitialURL()
+
+      if (!initialUrl) {
+        initialUrl = await getInitialUrl()
+      }
 
       const paramsArray = initialUrl.split('?')[1].split('&')
 
@@ -95,12 +111,6 @@ export default function App() {
 
         setDataFn(action, app, redirectUrl)
         setDeepLink(true)
-
-        navigationRef.current?.navigate('Deeplink', {
-          app_name: appName,
-          redirectUrl: redirectUrl,
-        })
-        console.log('Navigation')
       }
     } catch (e) {
       console.log(e)
@@ -120,10 +130,6 @@ export default function App() {
   const checkStatus = async () => {
     setIsloading(true)
     const pin = await AsyncStorage.getItem('pin')
-
-    console.log('====================================')
-    console.log(pin)
-    console.log('====================================')
 
     if (pin && pin !== null && pin !== 'null' && pin.length === 4) {
       setIsPinRequired(true)
@@ -331,7 +337,6 @@ export default function App() {
           <Stack.Screen
             name='Deeplink'
             component={DeepLinkHandler}
-            // app_name={appName}
             initialParams={{ app_name: appName }}
           />
           <Stack.Screen

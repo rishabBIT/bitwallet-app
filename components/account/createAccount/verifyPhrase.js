@@ -24,6 +24,9 @@ const VerifyPhrase = ({ pasphrase, keys, back, navigation }) => {
 
   function getWordsFromSentence(sentence) {
     const words = sentence.split(' ')
+    console.log('====================================')
+    console.log(`Words : ${words}`)
+    console.log('====================================')
     return words
   }
 
@@ -46,7 +49,7 @@ const VerifyPhrase = ({ pasphrase, keys, back, navigation }) => {
     setLoading(true)
     setError('')
     if (word === '') {
-      setError(`Please enter word # ${targetIndex}`)
+      setError(`Please enter word #${targetIndex}`)
       setLoading(false)
       return
     }
@@ -93,7 +96,7 @@ const VerifyPhrase = ({ pasphrase, keys, back, navigation }) => {
         </View>
         <View>
           <Input
-            label={`Word #${targetIndex}`}
+            label={`Enter word number ${targetIndex}`}
             placeholder='Enter word...'
             value={word}
             onChangeText={(e) => setWord(e.toString().toLowerCase())}
@@ -104,7 +107,13 @@ const VerifyPhrase = ({ pasphrase, keys, back, navigation }) => {
         {loading ? (
           <Loading />
         ) : (
-          <PrimaryButton title='Verify and Complete' onPress={handleSubmit} />
+          <PrimaryButton
+            title='Verify and Complete'
+            onPress={() => {
+              handleSubmit()
+              getWordsFromSentence(pasphrase)
+            }}
+          />
         )}
       </View>
     </Container>

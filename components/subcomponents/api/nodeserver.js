@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
-const Current_Version = '2.0.3'
+const Current_Version = '2.0.4'
 
 export const updateURLs = async () => {
   try {
@@ -331,6 +331,41 @@ export const importTokens = async (tokenId) => {
       })
   } catch (e) {
     console.log(`import keys : ${e}`)
+  }
+  return result
+}
+
+export const createAccount = async () => {
+  let API_URL = await AsyncStorage.getItem('node-backend')
+  if (API_URL === null || API_URL === 'null') {
+    await updateURLs()
+    API_URL = await AsyncStorage.getItem('node-backend')
+  }
+  const endpoint = 'createAccount'
+  const testNetUrl = API_URL + endpoint
+  const result = { status: 'failed' }
+
+  const publicKey = await AsyncStorage.getItem('publicKey')
+
+  try {
+    const requestOptions = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        publicKey: publicKey,
+      }),
+    }
+
+    await fetch('http://127.0.0.0:3000/createAccount', requestOptions)
+      .then((res) => res.json())
+      .then((response) => {
+        result.status = 'success'
+        result.data = response
+      })
+  } catch (e) {
+    console.log(`create account : ${e}`)
   }
   return result
 }

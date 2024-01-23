@@ -89,11 +89,3 @@ const DeepLinkHandler = ({ app_name, redirectUrl, setDeepLink }) => {
 
 export default DeepLinkHandler
 
-/*
-1. public key instead of redirecturl = done
-2. ask for pin before accepting. = done
-3. dynamic app url = done
-4. ui changes in bitwallet deeplink page = done
-5. document for user who wants to connect to bitwallet app - how to format url and format of response.
-6. if no bitwallet app, redirect to playstore. = cant determine if the url is invalid
-*/
