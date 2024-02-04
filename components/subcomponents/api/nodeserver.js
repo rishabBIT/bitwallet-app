@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
-const Current_Version = '2.0.4'
+const Current_Version = '2.0.5'
 
 export const updateURLs = async () => {
   try {
