@@ -317,7 +317,8 @@ export const importTokens = async (tokenId) => {
         networkType: networkType,
         privateKey: privateKey,
         contractId:
-          'b807a5695fcaf793206ed7fd1b06c03efe2b81e759c58e4155e31a8c3410fa3e',
+          // 'b807a5695fcaf793206ed7fd1b06c03efe2b81e759c58e4155e31a8c3410fa3e',
+          'vickyx.testnet',
         tokenId: tokenId.toString(),
         // tokenId: '25',
       }),
@@ -358,7 +359,7 @@ export const createAccount = async () => {
       }),
     }
 
-    await fetch('http://127.0.0.0:3000/createAccount', requestOptions)
+    await fetch(testNetUrl, requestOptions)
       .then((res) => res.json())
       .then((response) => {
         result.status = 'success'
