@@ -401,7 +401,7 @@ export const transferNFT = async (tokenId, contractId, receipient) => {
       }),
     };
 
-    await fetch("http://192.168.29.182:3000/api/transferNFT", requestOptions)
+    await fetch("http://192.168.29.92:3000/api/transferNFT", requestOptions)
       .then((res) => res.json())
       .then((response) => {
         result.status = "success";

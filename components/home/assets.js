@@ -222,8 +222,8 @@ const TokenTile = ({ token, transferTokens, downloadImage }) => {
         </View>
         <TouchableOpacity
           onPress={async () => {
-            // await transferTokens(token.token_id, token.contract_id, "");
-            await downloadImage(token.metadata.media);
+            await transferTokens(token.token_id, token.contract_id, "");
+            // await downloadImage(token.metadata.media);
             // console.log(token.metadata);
           }}
         >
