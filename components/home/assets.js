@@ -1,158 +1,194 @@
-import { useEffect, useState } from "react";
+import { shareAsync } from 'expo'
+import { useEffect, useState } from 'react'
 import {
   Button,
   Dimensions,
   Image,
   Modal,
-  Linking,
+  Platform,
   SafeAreaView,
   TextInput,
   ToastAndroid,
   TouchableOpacity,
   View,
-} from "react-native";
+} from 'react-native'
 // import Snackbar from 'react-native-snackbar'
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import {
-  importTokens,
-  transferNFT,
-  downloadNFT,
-} from "../subcomponents/api/nodeserver";
-import { PrimaryButton } from "../subcomponents/button/button";
-import LoadingPage from "../subcomponents/loading/loadingPage";
-import {
-  PrimaryAccentText,
-  PrimaryText,
-  SecondaryText,
-} from "../subcomponents/text/text";
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { importTokens, transferNFT } from '../subcomponents/api/nodeserver'
+import { PrimaryButton } from '../subcomponents/button/button'
+import LoadingPage from '../subcomponents/loading/loadingPage'
+import { PrimaryAccentText, PrimaryText } from '../subcomponents/text/text'
 
-import { ScrollView } from "react-native";
-import Icon from "../subcomponents/icon/icon";
-import * as MediaLibrary from "expo-media-library";
+import { ScrollView } from 'react-native'
+import Icon from '../subcomponents/icon/icon'
 
-const { width } = Dimensions.get("window");
+import * as FileSystem from 'expo-file-system'
+import * as MediaLibrary from 'expo-media-library'
+// import { StorageAccessFramework } from 'expo-file-system'
+
+// import notifee from '@notifee/react-native'
+
+const { width } = Dimensions.get('window')
 
 const Assets = () => {
-  const [tokens, setTokens] = useState([]);
-  const [isLoading, setIsloading] = useState(false);
+  const [tokens, setTokens] = useState([])
+  const [isLoading, setIsloading] = useState(false)
 
-  const [isModalVisible, setModalVisible] = useState(false);
+  const [isModalVisible, setModalVisible] = useState(false)
+  const [isReceipientModalVisible, setReceipientModalVisible] = useState(false)
 
-  const [inputValue, setInputValue] = useState("");
+  const [inputValue, setInputValue] = useState('')
+  const [receipientInputValue, setReceipientInputValue] = useState(
+    'a658422f81304f3ce227150a754cebd714c8a2c079a0b5f59b65e31b092ea938'
+  )
+
+  let tokenItem = {}
 
   const toggleModalVisibility = () => {
-    setModalVisible(!isModalVisible);
-  };
+    setModalVisible(!isModalVisible)
+  }
+
+  const toggleReceipientModalVisibility = () => {
+    setReceipientModalVisible(!isReceipientModalVisible)
+  }
 
   const transferTokens = async (tokenId, contractId, receipient) => {
     try {
-      const receipient =
-        "a658422f81304f3ce227150a754cebd714c8a2c079a0b5f59b65e31b092ea938";
+      // const receipient =
+      //   '674d895a861c548d4777a124603963017e0824edf768e70c9ab28609f090c058'
 
-      setIsloading(true);
-      const res = await transferNFT(tokenId, contractId, receipient);
-      console.log(res);
-      setIsloading(false);
+      setIsloading(true)
+      const res = await transferNFT(tokenId, contractId, receipient)
+      ToastAndroid.show('Token transfer successful')
+      console.log(res)
+      setIsloading(false)
     } catch (error) {
-      console.log(`Error transferNFT : ${error}`);
-      setIsloading(false);
-    }
-  };
-
-  const fetchTokens = async () => {
-    setIsloading(true);
-    const nftData = JSON.parse(await AsyncStorage.getItem("nfts")) || [];
-
-    const isExist = nftData.find((item) => item.token_id === inputValue);
-
-    if (isExist) {
-      ToastAndroid.show(
-        "This NFT already exists in your wallet",
-        ToastAndroid.SHORT,
-      );
-      // AsyncStorage.clear()
-      // const nft = await transferNFT(inputValue)
-      console.log(nft);
-
-      setIsloading(false);
-    } else {
-      const publicKey = await AsyncStorage.getItem("publicKey");
-      const selectednetwork = await AsyncStorage.getItem("network");
-      const networkType = JSON.parse(selectednetwork).networkType;
-
-      const res = await importTokens(inputValue);
-      // console.log(res)
-
-      if (!res.data || !res.data.tokens) {
-        setIsloading(false);
-        ToastAndroid.show("NFT doesn't exist.", ToastAndroid.SHORT);
-      } else if (res.data.tokens.owner_id === publicKey) {
-        res.data.tokens.network = networkType;
-        res.data.tokens.contract_id = "vickyx.testnet";
-        nftData.push(res.data.tokens);
-
-        await AsyncStorage.setItem("nfts", JSON.stringify(nftData));
-        // setTokens([res])
-        setTokens([...tokens, res.data.tokens]);
-
-        console.log("====================================");
-        console.log(tokens);
-        console.log("====================================");
-
-        setIsloading(false);
-      } else {
-        setIsloading(false);
-        ToastAndroid.show(
-          "NFT doesn't belong to this account.",
-          ToastAndroid.SHORT,
-        );
-      }
-    }
-  };
-
-  useEffect(() => {
-    fetchTokensFromStorage();
-  }, []);
-
-  const fetchTokensFromStorage = async () => {
-    // setIsloading(true)
-    let nftData = (await AsyncStorage.getItem("nfts")) || [];
-    setTokens(JSON.parse(nftData));
-    setIsloading(false);
-  };
-
-  async function downloadImage(uri) {
-    try {
-      const downloadedFile = await FileSystem.downloadAsync(
-        uri,
-        FileSystem.documentDirectory + "nft.gif",
-      );
-
-      const permission = await MediaLibrary.requestPermissionsAsync();
-      const asset = await MediaLibrary.createAssetAsync(downloadedFile.uri);
-      const album = await MediaLibrary.getAlbumAsync("Nft");
-      alert("Image is saved in your photo gallery.");
-      if (album == null) {
-        await MediaLibrary.createAlbumAsync("Nft", asset, false);
-      } else {
-        await MediaLibrary.addAssetsToAlbumAsync([asset], album, false);
-      }
-    } catch (e) {
-      Linking.openURL(uri);
+      console.log(`Error transferNFT : ${error}`)
+      setIsloading(false)
     }
   }
 
-  const downloadNFTImage = async (uri) => {
-    try {
-      const res = await downloadNFT(uri);
-      console.log(res);
-    } catch (e) {
-      console.log(e);
-      Linking.openURL(uri);
-    }
-  };
+  const fetchTokens = async () => {
+    setIsloading(true)
+    const nftData = JSON.parse(await AsyncStorage.getItem('nfts')) || []
 
-  if (isLoading) return <LoadingPage />;
+    const isExist = nftData.find((item) => item.token_id === inputValue)
+
+    if (isExist) {
+      ToastAndroid.show(
+        'This NFT already exists in your wallet',
+        ToastAndroid.SHORT
+      )
+      // AsyncStorage.clear()
+      // const nft = await transferNFT(inputValue)
+      console.log(nft)
+
+      setIsloading(false)
+    } else {
+      const publicKey = await AsyncStorage.getItem('publicKey')
+      const selectednetwork = await AsyncStorage.getItem('network')
+      const networkType = JSON.parse(selectednetwork).networkType
+
+      const res = await importTokens(inputValue)
+      // console.log(res)
+
+      if (!res.data || !res.data.tokens) {
+        setIsloading(false)
+        ToastAndroid.show("NFT doesn't exist.", ToastAndroid.SHORT)
+      } else if (res.data.tokens.owner_id === publicKey) {
+        res.data.tokens.network = networkType
+        res.data.tokens.contract_id = 'vickyx.testnet'
+        nftData.push(res.data.tokens)
+
+        await AsyncStorage.setItem('nfts', JSON.stringify(nftData))
+        // setTokens([res])
+        setTokens([...tokens, res.data.tokens])
+
+        console.log('====================================')
+        console.log(tokens)
+        console.log('====================================')
+
+        setIsloading(false)
+      } else {
+        setIsloading(false)
+        ToastAndroid.show(
+          "NFT doesn't belong to this account.",
+          ToastAndroid.SHORT
+        )
+      }
+    }
+  }
+
+  useEffect(() => {
+    fetchTokensFromStorage()
+  }, [])
+
+  const fetchTokensFromStorage = async () => {
+    // setIsloading(true)
+    let nftData = (await AsyncStorage.getItem('nfts')) || []
+    setTokens(JSON.parse(nftData))
+    setIsloading(false)
+  }
+
+  // download nft
+  async function downloadNFTImage(url) {
+    const filename = 'token.gif'
+    const result = await FileSystem.downloadAsync(
+      url.toString(),
+      FileSystem.documentDirectory + filename
+    )
+
+    // Save the downloaded file
+    saveFile(result.uri, filename, result.headers['content-type'])
+  }
+
+  async function saveFile(uri, filename, mimetype) {
+    if (Platform.OS === 'android') {
+      const permissions = await MediaLibrary.requestPermissionsAsync(true)
+
+      if (permissions.granted) {
+        // onDisplayNotification()
+        const base64 = await FileSystem.readAsStringAsync(uri, {
+          encoding: FileSystem.EncodingType.Base64,
+        })
+
+        await MediaLibrary.saveToLibraryAsync(uri).then(() => {
+          ToastAndroid.show('Download complete', ToastAndroid.SHORT)
+        })
+      } else {
+        shareAsync(uri)
+      }
+    } else {
+      shareAsync(uri)
+    }
+  }
+
+  // async function onDisplayNotification() {
+  //   // Request permissions (required for iOS)
+  //   await notifee.requestPermission()
+  //
+  //   // Create a channel (required for Android)
+  //   const channelId = await notifee.createChannel({
+  //     id: 'default',
+  //     name: 'Default Channel',
+  //   })
+  //
+  //   // Display a notification
+  //   await notifee.displayNotification({
+  //     title: 'Notification Title',
+  //     body: 'Main body content of the notification',
+  //     android: {
+  //       channelId,
+  //       // smallIcon: 'name-of-a-small-icon', // optional, defaults to 'ic_launcher'.
+  //       // pressAction is needed if you want the notification to open the app when pressed
+  //       pressAction: {
+  //         id: 'default',
+  //       },
+  //     },
+  //   })
+  // }
+
+  if (isLoading) return <LoadingPage />
 
   return (
     <ScrollView style={{ flex: 1, gap: 20, marginVertical: 20 }}>
@@ -172,135 +208,106 @@ const Assets = () => {
       )}
 
       {tokens.length > 0 &&
-        tokens.map((item, index) => (
-          <TokenTile
-            token={item}
-            transferTokens={transferTokens}
-            downloadImage={downloadNFTImage}
-          />
-        ))}
+        tokens.map(
+          (item, index) => (
+            (tokenItem = item),
+            (
+              <TokenTile
+                key={index}
+                token={item}
+                // transferTokens={transferTokens}
+                download={downloadNFTImage}
+                toggleModalVisibility={toggleReceipientModalVisibility}
+              // isModalVisible={isReceipientModalVisible}
+              // receipientInputValue={receipientInputValue}
+              // setReceipientInputValue={setReceipientInputValue}
+              />
+            )
+          )
+        )}
+
       <View style={{ padding: 50, flex: 1, gap: 20 }}>
-        <ModalSheet
+        {isReceipientModalVisible && (
+          <ModalSheetReceipientId
+            isReceipientModalVisible={isReceipientModalVisible}
+            toggleModalVisibility={toggleReceipientModalVisibility}
+            setInputValue={setReceipientInputValue}
+            inputValue={receipientInputValue}
+            transferTokens={transferTokens}
+            token={tokenItem}
+          />
+        )}
+        <ModalSheetTokenId
           isModalVisible={isModalVisible}
           toggleModalVisibility={toggleModalVisibility}
           setInputValue={setInputValue}
           inputValue={inputValue}
           fetchTokens={fetchTokens}
+        // token={token}
         />
         <PrimaryButton
-          title="Import tokens"
-          endIcon={"receive"}
+          title='Import tokens'
+          endIcon={'receive'}
           onPress={toggleModalVisibility}
         />
       </View>
     </ScrollView>
-  );
-};
+  )
+}
 
-const TokenTile = ({ token, transferTokens, downloadImage }) => {
+const TokenTile = ({ token, download, toggleModalVisibility }) => {
   return (
     <View>
-      <TouchableOpacity
-        onPress={() => {}}
+      <View
         style={{
-          flexDirection: "row",
-          justifyContent: "space-between",
-          alignItems: "center",
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center',
           padding: 10,
-          backgroundColor: "#393644",
+          marginBottom: 10,
+          backgroundColor: '#393644',
         }}
       >
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <Image
             style={{ width: 50, height: 50, borderRadius: 25, marginRight: 10 }}
             source={{ uri: token.metadata.media }}
           />
           <PrimaryText>
             {token.metadata.title.substring(0, 23)}
-            {token.metadata.title.length > 23 && "..."}
+            {token.metadata.title.length > 23 && '...'}
           </PrimaryText>
         </View>
-        <TouchableOpacity
-          onPress={async () => {
-            await transferTokens(token.token_id, token.contract_id, "");
-            // await downloadImage(token.metadata.media);
-            // console.log(token.metadata);
+
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-evenly',
+            gap: 16,
           }}
         >
-          <Icon icon={"send"} width={20} height={20} fill="#FFF" />
-        </TouchableOpacity>
-      </TouchableOpacity>
+          <TouchableOpacity
+            onPress={async () => {
+              //
+              toggleModalVisibility()
+            }}
+          >
+            <Icon icon={'send'} width={20} height={20} fill='#FFF' />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={async () => {
+              await download(token.metadata.media)
+            }}
+          >
+            <Icon icon={'download'} width={18} height={20} fill='#FFF' />
+          </TouchableOpacity>
+        </View>
+      </View>
     </View>
-  );
-};
+  )
+}
 
-const TokenContainer = ({ token }) => {
-  return (
-    console.log(token),
-    (
-      <View
-        style={{
-          padding: 10,
-          flexDirection: "row",
-          gap: 10,
-          flexWrap: "wrap",
-          alignItems: "center",
-          justifyContent: "space-between",
-        }}
-      >
-        {token.map((item, index) => (
-          <TokenCard
-            token={item}
-            key={index}
-            // navigation={navigation}
-            // issuer={issuer}
-          />
-        ))}
-      </View>
-    )
-  );
-};
-
-const TokenCard = ({ token }) => {
-  const blurhash =
-    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVjE9071LFZzNxjKM0BdvHD4s4xMZGw7QVZQ&usqp=CAU";
-
-  return (
-    <TouchableOpacity
-      style={{
-        width: 90,
-        height: 115,
-        backgroundColor: "#393644",
-        borderRadius: 5,
-      }}
-      onPress={() => {
-        console.log("Token Card");
-      }}
-    >
-      <Image
-        style={{
-          width: 90,
-          height: 67,
-          backgroundColor: "#393644",
-          borderRadius: 5,
-          borderBottomLeftRadius: 0,
-          borderBottomRightRadius: 0,
-        }}
-        source={token.metadata.media ? token.metadata.media : blurhash}
-        contentFit="cover"
-        transition={1000}
-      />
-      <View style={{ padding: 5 }}>
-        <SecondaryText>
-          {token.metadata.title.substring(0, 15)}
-          {token.metadata.title.length > 15 && "..."}
-        </SecondaryText>
-      </View>
-    </TouchableOpacity>
-  );
-};
-
-const ModalSheet = ({
+const ModalSheetTokenId = ({
   isModalVisible,
   toggleModalVisibility,
   setInputValue,
@@ -310,38 +317,38 @@ const ModalSheet = ({
   return (
     <SafeAreaView>
       <Modal
-        animationType="slide"
+        animationType='slide'
         transparent
         visible={isModalVisible}
-        presentationStyle="overFullScreen"
+        presentationStyle='overFullScreen'
         onDismiss={toggleModalVisibility}
       >
         <View
           style={{
             flex: 1,
-            alignItems: "center",
-            justifyContent: "center",
-            backgroundColor: "rgba(0, 0, 0, 0.2)",
+            alignItems: 'center',
+            justifyContent: 'center',
+            backgroundColor: 'rgba(0, 0, 0, 0.2)',
           }}
         >
           <View
             style={{
-              alignItems: "center",
-              justifyContent: "center",
-              position: "absolute",
-              top: "50%",
-              left: "50%",
+              alignItems: 'center',
+              justifyContent: 'center',
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
               elevation: 5,
               transform: [{ translateX: -(width * 0.4) }, { translateY: -90 }],
               height: 180,
               width: width * 0.8,
-              backgroundColor: "#fff",
+              backgroundColor: '#fff',
               borderRadius: 7,
             }}
           >
             <TouchableOpacity
               style={{
-                position: "absolute",
+                position: 'absolute',
                 top: 8,
                 right: 8,
                 zIndex: 1,
@@ -349,21 +356,21 @@ const ModalSheet = ({
               onPress={toggleModalVisibility}
             >
               <Image
-                source={require("../../assets/close.png")}
+                source={require('../../assets/close.png')}
                 style={{ height: 20, width: 20 }}
               />
             </TouchableOpacity>
 
             <TextInput
-              placeholder="Enter Token Id"
+              placeholder='Enter Token Id'
               value={inputValue}
-              inputMode="numeric"
+              inputMode='numeric'
               style={{
-                width: "80%",
+                width: '80%',
                 borderRadius: 5,
                 paddingVertical: 8,
                 paddingHorizontal: 16,
-                borderColor: "rgba(0, 0, 0, 0.2)",
+                borderColor: 'rgba(0, 0, 0, 0.2)',
                 borderWidth: 1,
                 marginBottom: 8,
               }}
@@ -371,16 +378,16 @@ const ModalSheet = ({
             />
 
             <Button
-              title="Submit"
+              title='Submit'
               onPress={async () => {
                 if (inputValue.length !== 0) {
-                  toggleModalVisibility();
-                  await fetchTokens();
+                  toggleModalVisibility()
+                  await fetchTokens()
                 } else {
                   ToastAndroid.show(
-                    "Token Id cannot be empty",
-                    ToastAndroid.SHORT,
-                  );
+                    'Token Id cannot be empty',
+                    ToastAndroid.SHORT
+                  )
                 }
               }}
             />
@@ -388,6 +395,106 @@ const ModalSheet = ({
         </View>
       </Modal>
     </SafeAreaView>
-  );
-};
-export default Assets;
+  )
+}
+
+const ModalSheetReceipientId = ({
+  isModalVisible,
+  toggleModalVisibility,
+  setInputValue,
+  inputValue,
+  transferTokens,
+  token,
+}) => {
+  return (
+    <SafeAreaView>
+      <Modal
+        animationType='slide'
+        transparent
+        visible={isModalVisible}
+        presentationStyle='overFullScreen'
+        onDismiss={toggleModalVisibility}
+      >
+        <View
+          style={{
+            flex: 1,
+            alignItems: 'center',
+            justifyContent: 'center',
+            backgroundColor: 'rgba(0, 0, 0, 0.2)',
+          }}
+        >
+          <View
+            style={{
+              alignItems: 'center',
+              justifyContent: 'center',
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              elevation: 5,
+              transform: [{ translateX: -(width * 0.4) }, { translateY: -90 }],
+              height: 180,
+              width: width * 0.8,
+              backgroundColor: '#fff',
+              borderRadius: 7,
+            }}
+          >
+            <TouchableOpacity
+              style={{
+                position: 'absolute',
+                top: 8,
+                right: 8,
+                zIndex: 1,
+              }}
+              onPress={toggleModalVisibility}
+            >
+              <Image
+                source={require('../../assets/close.png')}
+                style={{ height: 20, width: 20 }}
+              />
+            </TouchableOpacity>
+
+            <TextInput
+              placeholder='Enter receipient id'
+              value={inputValue}
+              inputMode='numeric'
+              style={{
+                width: '80%',
+                borderRadius: 5,
+                paddingVertical: 8,
+                paddingHorizontal: 16,
+                borderColor: 'rgba(0, 0, 0, 0.2)',
+                borderWidth: 1,
+                marginBottom: 8,
+              }}
+              onChangeText={(value) => setInputValue(value)}
+            />
+
+            <Button
+              title='Submit'
+              onPress={async () => {
+                if (inputValue.length !== 0) {
+                  toggleModalVisibility()
+                  console.log('====================================')
+                  console.log(token.token_id, token.contract_id, inputValue)
+                  console.log('====================================')
+                  await transferTokens(
+                    token.token_id,
+                    token.contract_id,
+                    inputValue
+                  )
+                } else {
+                  ToastAndroid.show(
+                    'Receipient Id cannot be empty',
+                    ToastAndroid.SHORT
+                  )
+                }
+              }}
+            />
+          </View>
+        </View>
+      </Modal>
+    </SafeAreaView>
+  )
+}
+
+export default Assets
