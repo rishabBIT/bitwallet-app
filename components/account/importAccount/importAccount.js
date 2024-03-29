@@ -1,10 +1,11 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useState } from 'react'
 import { View } from 'react-native'
+import Container from '../../../subcomponents/container'
 import useNotifications from '../../notifications/notifications'
 import { importkeys, registerDevice } from '../../subcomponents/api/nodeserver'
-import { LinkButton, PrimaryButton } from '../../subcomponents/button/button'
-import Container from '../../subcomponents/container/container'
+import { AppBar } from '../../subcomponents/appbar/appbar'
+import { PrimaryButton } from '../../subcomponents/button/button'
 import Input from '../../subcomponents/input/input'
 import { Loading } from '../../subcomponents/loading/loadingPage'
 import {
@@ -62,13 +63,7 @@ const ImportAccount = ({ navigation }) => {
           gap: 20,
         }}
       >
-        <View style={{ width: 60 }}>
-          <LinkButton
-            title='< Back'
-            onPress={() => navigation.navigate('CreateorImport')}
-          />
-        </View>
-
+        <AppBar title={''} />
         <View style={{ gap: 10 }}>
           <PrimaryAccentText>
             Recover Existing Account Using Passphrase
@@ -86,10 +81,10 @@ const ImportAccount = ({ navigation }) => {
         <ErrorText>{error}</ErrorText>
 
         {isloading ? (
-          <View style={{ padding: 20 }}>
-            <Loading />
-          </View>
+          // <View style={{ padding: 10 }}>
+          <Loading />
         ) : (
+          // </View>
           <PrimaryButton title='Find My Account' onPress={findAccount} />
         )}
       </View>

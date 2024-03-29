@@ -1,5 +1,11 @@
 import React from 'react'
-import { Dimensions, StyleSheet, Text, View } from 'react-native'
+import {
+  Dimensions,
+  ImageBackground,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native'
 import { SceneMap, TabBar, TabView } from 'react-native-tab-view'
 import { LinkButton } from '../subcomponents/button/button'
 import Container from '../subcomponents/container/container'
@@ -22,6 +28,10 @@ export default function TabViewExample({ navigation }) {
 
   return (
     <Container>
+      <ImageBackground
+        source={require('../../assets/new/Background.png')}
+        style={styles.background}
+      ></ImageBackground>
       <View style={{ padding: 10 }}>
         <View style={{ width: 80 }}>
           <LinkButton title='< Back' onPress={() => navigation.pop()} />

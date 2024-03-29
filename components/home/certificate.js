@@ -1,7 +1,8 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Image } from 'expo-image'
+import { LinearGradient } from 'expo-linear-gradient'
 import { useEffect, useState } from 'react'
-import { ScrollView, TouchableOpacity, View } from 'react-native'
+import { Dimensions, ScrollView, TouchableOpacity, View } from 'react-native'
 import { getCertificates } from '../subcomponents/api/nodeserver'
 import { PrimaryButton } from '../subcomponents/button/button'
 import Icon from '../subcomponents/icon/icon'
@@ -56,11 +57,14 @@ const Certificate = ({ navigation }) => {
           <PrimaryText>
             Ask your university to send certificates to your wallet address
           </PrimaryText>
-          <PrimaryButton
-            title='Receive Certificates'
-            endIcon={'receive'}
-            onPress={() => navigation.navigate('Accountdetails')}
-          />
+          <View style={{ paddingTop: 80 }}>
+            <PrimaryButton
+              title='Receive Certificates'
+              endIcon={'receive'}
+              // onPress={() => AsyncStorage.clear()}
+              onPress={() => navigation.navigate('Accountdetails')}
+            />
+          </View>
         </View>
       )}
       {certificates &&
@@ -79,34 +83,116 @@ const Certificate = ({ navigation }) => {
 export default Certificate
 
 const CertificateTile = ({ issuer, navigation }) => {
+  const { width } = Dimensions.get('window')
   const [expanded, setExpanded] = useState(false)
   return (
-    <View>
+    <View
+      // colors={['#71BBFF', '#E26CFF']}
+      // start={[0, 0]}
+      // end={[1, 0]}
+      style={{
+        width: width,
+        borderRadius: 20,
+        overflow: 'hidden', // Necessary for borderRadius to work in LinearGradient
+      }}
+    >
       <TouchableOpacity
         onPress={() => setExpanded(!expanded)}
         style={{
+          width: '100%',
           flexDirection: 'row',
           justifyContent: 'space-between',
           alignItems: 'center',
           padding: 10,
-          backgroundColor: '#393644',
+          backgroundColor: 'transparent',
+          borderRadius: 20,
         }}
       >
-        <View style={{ flexDirection: 'row' }}>
-          <PrimaryText>
-            {issuer.name.substring(0, 23)}
-            {issuer.name.length > 23 && '...'}
-          </PrimaryText>
-          {issuer.is_verified && (
-            <Icon icon='verified' width={20} height={20} />
-          )}
-        </View>
-        <PrimaryText>{expanded ? '-' : '+'}</PrimaryText>
+        <LinearGradient
+          colors={['#71BBFF', '#E26CFF']}
+          start={[0, 0]}
+          end={[1, 0]}
+          style={{
+            flex: 1,
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            paddingHorizontal: 10,
+            paddingVertical: 10,
+            borderRadius: 20,
+          }}
+        >
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              flex: 1,
+              justifyContent: 'space-between',
+            }}
+          >
+            <PrimaryText>
+              {issuer.name.substring(0, 23)}
+              {issuer.name.length > 23 && '...'}
+            </PrimaryText>
+            <View
+              style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}
+            >
+              {issuer.is_verified && (
+                <Icon icon='verified' width={20} height={20} />
+              )}
+              <PrimaryText>{expanded ? '-' : '+'}</PrimaryText>
+            </View>
+          </View>
+        </LinearGradient>
       </TouchableOpacity>
       {expanded && (
         <CertificateContainer issuer={issuer} navigation={navigation} />
       )}
     </View>
+
+    // <View>
+    //   <TouchableOpacity
+    //     onPress={() => setExpanded(!expanded)}
+    //     style={{
+    //       flexDirection: 'row',
+    //       justifyContent: 'space-between',
+    //       alignItems: 'center',
+    //       padding: 10,
+    //       backgroundColor: '#393644',
+    //     }}
+    //   >
+    //     <View
+    //       style={{
+    //         padding: 10,
+    //         flexDirection: 'row',
+    //         gap: 10,
+    //         flexWrap: 'wrap',
+    //         alignItems: 'center',
+    //         justifyContent: 'space-between',
+    //         maxWidth: 800,
+    //       }}
+    //     >
+    //       {/* <View
+    //       style={{
+    //         flexDirection: 'row',
+    //         // justifyContent: 'space-between',
+    //         gap: 10,
+    //       }} */}
+    //       {/* > */}
+    //       <PrimaryText>
+    //         {issuer.name.substring(0, 23)}
+    //         {issuer.name.length > 23 && '...'}
+    //       </PrimaryText>
+    //       {issuer.is_verified && (
+    //         <Icon icon='verified' width={20} height={20} />
+    //       )}
+    //     </View>
+    //     <PrimaryText>{expanded ? '-' : '+'}</PrimaryText>
+    //   </TouchableOpacity>
+    //   {expanded && (
+    //     <CertificateContainer issuer={issuer} navigation={navigation} />
+    //   )}
+    // </View>
   )
 }
 

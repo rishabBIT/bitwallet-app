@@ -1,14 +1,11 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useEffect, useState } from 'react'
-import { View } from 'react-native'
+import { Text, View } from 'react-native'
 import QRCode from 'react-qr-code'
-import { LinkButton, PrimaryButton } from '../subcomponents/button/button'
-import Container from '../subcomponents/container/container'
-import {
-  PrimaryAccentText,
-  PrimaryText,
-  SecondaryText,
-} from '../subcomponents/text/text'
+import Container from '../../subcomponents/container'
+import { AppBar } from '../subcomponents/appbar/appbar'
+import { PrimaryButton } from '../subcomponents/button/button'
+import { PrimaryAccentText, PrimaryText } from '../subcomponents/text/text'
 import PinInput from './pinInput'
 import SeedPhrase from './seedPhrase'
 
@@ -33,37 +30,51 @@ const Accountdetails = ({ navigation }) => {
 
   return (
     <Container>
-      <View style={{ padding: 20, gap: 20 }}>
-        <View style={{ width: 80 }}>
-          <LinkButton
-            title='< Back'
-            onPress={() => navigation.navigate('Home')}
-          />
+      <View
+        style={{
+          flex: 1,
+          padding: 20,
+          justifyContent: 'space-between',
+          gap: 20,
+        }}
+      >
+        <AppBar title={'Account Details'} back={navigation} />
+        <View style={{ gap: 10 }}>
+          <PrimaryAccentText align={'left'}>Account ID: </PrimaryAccentText>
+          <PrimaryText align={'left'}>{account}</PrimaryText>
         </View>
-
-        <PrimaryAccentText>Account Details</PrimaryAccentText>
-
-        <PrimaryText align={'left'}>Account Id: </PrimaryText>
-        <PrimaryText align={'left'}>{account}</PrimaryText>
         <View
           style={{
             padding: 10,
-            backgroundColor: '#393644',
+            backgroundColor: '#FFFFFF',
             alignItems: 'center',
-            gap: 20,
+            marginHorizontal: 30,
+            // gap: 10,
+            borderRadius: 20,
           }}
         >
           <QRCode
-            size={256}
-            style={{ height: 'auto', maxWidth: 300, width: '100%' }}
+            size={212}
+            style={{
+              height: 'auto',
+              maxWidth: 300,
+              width: '80%',
+            }}
             value={account}
             viewBox={`0 0 256 256`}
-            bgColor='#393644'
-            fgColor='#3498DB'
+            bgColor='#FFFFFF'
+            fgColor='#000000'
           />
-          <SecondaryText>
+          <Text
+            style={{
+              color: '#000000',
+              paddingTop: 10,
+              fontSize: 16,
+              textAlign: 'justify',
+            }}
+          >
             Scan the qr code to send NEAR, tokens or NFTs.
-          </SecondaryText>
+          </Text>
         </View>
         <PrimaryButton title='Export Passphrase' onPress={() => setView(2)} />
       </View>

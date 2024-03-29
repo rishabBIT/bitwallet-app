@@ -23,6 +23,7 @@ import { ScrollView } from 'react-native'
 import Icon from '../subcomponents/icon/icon'
 
 import * as FileSystem from 'expo-file-system'
+import { LinearGradient } from 'expo-linear-gradient'
 import * as MediaLibrary from 'expo-media-library'
 // import { StorageAccessFramework } from 'expo-file-system'
 
@@ -38,9 +39,7 @@ const Assets = () => {
   const [isReceipientModalVisible, setReceipientModalVisible] = useState(false)
 
   const [inputValue, setInputValue] = useState('')
-  const [receipientInputValue, setReceipientInputValue] = useState(
-    'a658422f81304f3ce227150a754cebd714c8a2c079a0b5f59b65e31b092ea938'
-  )
+  const [receipientInputValue, setReceipientInputValue] = useState('')
 
   let tokenItem = {}
 
@@ -79,7 +78,7 @@ const Assets = () => {
         'This NFT already exists in your wallet',
         ToastAndroid.SHORT
       )
-      // AsyncStorage.clear()
+
       // const nft = await transferNFT(inputValue)
       console.log(nft)
 
@@ -111,6 +110,7 @@ const Assets = () => {
         setIsloading(false)
       } else {
         setIsloading(false)
+        // AsyncStorage.clear()
         ToastAndroid.show(
           "NFT doesn't belong to this account.",
           ToastAndroid.SHORT
@@ -163,31 +163,6 @@ const Assets = () => {
     }
   }
 
-  // async function onDisplayNotification() {
-  //   // Request permissions (required for iOS)
-  //   await notifee.requestPermission()
-  //
-  //   // Create a channel (required for Android)
-  //   const channelId = await notifee.createChannel({
-  //     id: 'default',
-  //     name: 'Default Channel',
-  //   })
-  //
-  //   // Display a notification
-  //   await notifee.displayNotification({
-  //     title: 'Notification Title',
-  //     body: 'Main body content of the notification',
-  //     android: {
-  //       channelId,
-  //       // smallIcon: 'name-of-a-small-icon', // optional, defaults to 'ic_launcher'.
-  //       // pressAction is needed if you want the notification to open the app when pressed
-  //       pressAction: {
-  //         id: 'default',
-  //       },
-  //     },
-  //   })
-  // }
-
   if (isLoading) return <LoadingPage />
 
   return (
@@ -218,9 +193,9 @@ const Assets = () => {
                 // transferTokens={transferTokens}
                 download={downloadNFTImage}
                 toggleModalVisibility={toggleReceipientModalVisibility}
-              // isModalVisible={isReceipientModalVisible}
-              // receipientInputValue={receipientInputValue}
-              // setReceipientInputValue={setReceipientInputValue}
+                // isModalVisible={isReceipientModalVisible}
+                // receipientInputValue={receipientInputValue}
+                // setReceipientInputValue={setReceipientInputValue}
               />
             )
           )
@@ -243,7 +218,7 @@ const Assets = () => {
           setInputValue={setInputValue}
           inputValue={inputValue}
           fetchTokens={fetchTokens}
-        // token={token}
+          // token={token}
         />
         <PrimaryButton
           title='Import tokens'
@@ -257,53 +232,61 @@ const Assets = () => {
 
 const TokenTile = ({ token, download, toggleModalVisibility }) => {
   return (
-    <View>
+    // <View>
+    <LinearGradient
+      colors={['#71BBFF', '#E26CFF']}
+      start={{ x: 0, y: 0 }}
+      end={{ x: 1, y: 0 }}
+      style={{
+        flex: 1,
+        alignSelf: 'center',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        padding: 10,
+        // marginBottom: 10,
+        marginTop: 10,
+        backgroundColor: '#393644',
+        width: width - 30,
+        borderRadius: 10,
+      }}
+    >
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <Image
+          style={{ width: 50, height: 50, borderRadius: 25, marginRight: 10 }}
+          source={{ uri: token.metadata.media }}
+        />
+        <PrimaryText>
+          {token.metadata.title.substring(0, 23)}
+          {token.metadata.title.length > 23 && '...'}
+        </PrimaryText>
+      </View>
+
       <View
         style={{
           flexDirection: 'row',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          padding: 10,
-          marginBottom: 10,
-          backgroundColor: '#393644',
+          justifyContent: 'space-evenly',
+          gap: 16,
         }}
       >
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <Image
-            style={{ width: 50, height: 50, borderRadius: 25, marginRight: 10 }}
-            source={{ uri: token.metadata.media }}
-          />
-          <PrimaryText>
-            {token.metadata.title.substring(0, 23)}
-            {token.metadata.title.length > 23 && '...'}
-          </PrimaryText>
-        </View>
-
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-evenly',
-            gap: 16,
+        <TouchableOpacity
+          onPress={async () => {
+            //
+            toggleModalVisibility()
           }}
         >
-          <TouchableOpacity
-            onPress={async () => {
-              //
-              toggleModalVisibility()
-            }}
-          >
-            <Icon icon={'send'} width={20} height={20} fill='#FFF' />
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={async () => {
-              await download(token.metadata.media)
-            }}
-          >
-            <Icon icon={'download'} width={18} height={20} fill='#FFF' />
-          </TouchableOpacity>
-        </View>
+          <Icon icon={'send'} width={20} height={20} fill='#FFF' />
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={async () => {
+            await download(token.metadata.media)
+          }}
+        >
+          <Icon icon={'download'} width={18} height={20} fill='#FFF' />
+        </TouchableOpacity>
       </View>
-    </View>
+    </LinearGradient>
+    // </View>
   )
 }
 

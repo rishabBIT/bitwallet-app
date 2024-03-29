@@ -302,6 +302,10 @@ export const importTokens = async (tokenId) => {
   const privateKey = await AsyncStorage.getItem('secretKey')
   const selectednetwork = await AsyncStorage.getItem('network')
   const networkType = JSON.parse(selectednetwork).networkType
+
+  console.log('====================================')
+  console.log(publicKey, privateKey, selectednetwork, networkType)
+  console.log('====================================')
   const endpoint = 'importTokens'
   const testNetUrl = API_URL + endpoint
   const result = { status: 'failed' }
@@ -401,7 +405,7 @@ export const transferNFT = async (tokenId, contractId, receipient) => {
       }),
     }
 
-    await fetch('http://192.168.29.89:3000/api/transferNFT', requestOptions)
+    await fetch(testNetUrl, requestOptions)
       .then((res) => res.json())
       .then((response) => {
         result.status = 'success'

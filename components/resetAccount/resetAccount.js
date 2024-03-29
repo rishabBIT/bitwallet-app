@@ -1,59 +1,59 @@
-import Container from "../subcomponents/container/container";
-import { View } from "react-native";
-import { LinkButton, SecondaryButton } from "../subcomponents/button/button";
+import { View } from 'react-native'
+import Container from '../../subcomponents/container'
+import { SecondaryButton } from '../subcomponents/button/button'
 import {
   PrimaryAccentText,
   PrimaryText,
   SecondaryText,
   WarningText,
-} from "../subcomponents/text/text";
+} from '../subcomponents/text/text'
 
-import { useState, useEffect } from "react";
-import { PrimaryButton } from "../subcomponents/button/button";
-import Pin from "../pin/keypad";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import LoadingPage from "../subcomponents/loading/loadingPage";
-import { deleteDevice } from "../subcomponents/api/nodeserver";
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { useEffect, useState } from 'react'
+import Pin from '../pin/keypad'
+import { deleteDevice } from '../subcomponents/api/nodeserver'
+import { PrimaryButton } from '../subcomponents/button/button'
+import LoadingPage from '../subcomponents/loading/loadingPage'
 
 const ResetAccount = ({ navigation }) => {
-  const [isPin, setIsPin] = useState(false);
-  const [pin, setPin] = useState("");
-  const [status, setStatus] = useState("");
-  const [isLoading, setIsloading] = useState(false);
+  const [isPin, setIsPin] = useState(false)
+  const [pin, setPin] = useState('')
+  const [status, setStatus] = useState('')
+  const [isLoading, setIsloading] = useState(false)
 
   const poppulatePin = async () => {
-    AsyncStorage.getItem("pin")
+    AsyncStorage.getItem('pin')
       .then((res) => {
-        setPin(res);
+        setPin(res)
       })
-      .catch((err) => console.log(err));
-  };
+      .catch((err) => console.log(err))
+  }
 
   const submitPin = async (e) => {
-    setStatus("");
+    setStatus('')
     if (e !== pin) {
-      setStatus("Invalid Pin");
+      setStatus('Invalid Pin')
     } else {
-      setIsloading(true);
+      setIsloading(true)
       try {
-        const result = await deleteDevice();
+        const result = await deleteDevice()
       } catch (e) {
-        console.log(e);
+        console.log(e)
       }
-      await AsyncStorage.clear();
-      navigation.navigate("Home");
-      setIsloading(false);
+      // await AsyncStorage.clear()
+      navigation.navigate('Home')
+      setIsloading(false)
     }
-  };
+  }
 
   useEffect(() => {
-    poppulatePin();
-  }, []);
+    poppulatePin()
+  }, [])
 
-  if (isLoading) return <LoadingPage />;
+  if (isLoading) return <LoadingPage />
 
   if (isPin)
-    return <Pin title={"Enter Pin"} subtitle={status} submit={submitPin} />;
+    return <Pin title={'Enter Pin'} subtitle={status} submit={submitPin} />
 
   return (
     <Container>
@@ -62,7 +62,7 @@ const ResetAccount = ({ navigation }) => {
           flex: 1,
           padding: 20,
           gap: 20,
-          justifyContent: "center",
+          justifyContent: 'center',
         }}
       >
         <PrimaryAccentText>Reset Account</PrimaryAccentText>
@@ -76,21 +76,21 @@ const ResetAccount = ({ navigation }) => {
         <View>
           <SecondaryText>Secret phrase can be copied from:</SecondaryText>
           <SecondaryText>
-            Menu {">"} Account-Details {">"} Export Passphrase{" "}
+            Menu {'>'} Account-Details {'>'} Export Passphrase{' '}
           </SecondaryText>
         </View>
-        <SecondaryButton
-          title="Reset Account"
-          endIcon={"refresh"}
+        <PrimaryButton
+          title='Reset Account'
+          endIcon={'refresh'}
           onPress={() => setIsPin(true)}
         />
-        <PrimaryButton
-          title="Cancel X"
-          onPress={() => navigation.navigate("Home")}
+        <SecondaryButton
+          title='Cancel X'
+          onPress={() => navigation.navigate('Home')}
         />
       </View>
     </Container>
-  );
-};
+  )
+}
 
-export default ResetAccount;
+export default ResetAccount

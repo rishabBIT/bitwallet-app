@@ -1,9 +1,9 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import React, { useEffect, useState } from 'react'
 import { FlatList, Text, View } from 'react-native'
+import Container from '../../subcomponents/container'
 import { getNFTTransactionHistory } from '../subcomponents/api/nodeserver'
-import { LinkButton } from '../subcomponents/button/button'
-import Container from '../subcomponents/container/container'
+import { AppBar } from '../subcomponents/appbar/appbar'
 import LoadingPage from '../subcomponents/loading/loadingPage'
 
 const NFTTransactionHistory = ({ navigation }) => {
@@ -28,9 +28,9 @@ const NFTTransactionHistory = ({ navigation }) => {
   }, [])
 
   const getElapsedTime = (timestampWithMilliseconds) => {
-    const now = new Date().getTime() // Current time in milliseconds
-    const timestamp = Math.floor(timestampWithMilliseconds / 1000000) // Convert to seconds
-    const timeDifference = now - timestamp // Time difference in milliseconds
+    const now = new Date().getTime()
+    const timestamp = Math.floor(timestampWithMilliseconds / 1000000)
+    const timeDifference = now - timestamp
     const seconds = Math.floor(timeDifference / 1000)
     if (seconds < 0) {
       return `a few seconds ago`
@@ -56,6 +56,9 @@ const NFTTransactionHistory = ({ navigation }) => {
   if (nftTransactionHistory.length === 0) {
     return (
       <Container>
+        <View style={{ position: 'absolute', top: 60, left: 20, zIndex: 10 }}>
+          <AppBar title={''} back={navigation} />
+        </View>
         <View
           style={{
             display: 'flex',
@@ -71,9 +74,8 @@ const NFTTransactionHistory = ({ navigation }) => {
     return (
       <Container>
         <View style={{ padding: 20, gap: 20, marginBottom: 30 }}>
-          <View style={{ width: 80 }}>
-            <LinkButton title='< Back' onPress={() => navigation.pop()} />
-          </View>
+          <AppBar title={'NFT Transactions'} back={navigation} />
+
           {nftTransactionHistory.length !== 0 && (
             <FlatList
               showsVerticalScrollIndicator={false}
@@ -83,17 +85,21 @@ const NFTTransactionHistory = ({ navigation }) => {
                 return (
                   <View
                     style={{
-                      backgroundColor: '#393644',
+                      backgroundColor: 'rgba(255, 255, 255, 0.2)',
                       borderRadius: 8,
                       padding: 16,
                       margin: 16,
-                      elevation: 3,
+                      // elevation: 3,
                     }}
                   >
-                    <View style={{ paddingBottom: 16 }}>
+                    <View
+                      style={{
+                        paddingBottom: 16,
+                      }}
+                    >
                       <Text
                         style={{
-                          color: '#3498DB',
+                          color: '#D8DD00',
                         }}
                       >
                         Name:{' '}
@@ -105,7 +111,7 @@ const NFTTransactionHistory = ({ navigation }) => {
                     <View style={{ paddingBottom: 16 }}>
                       <Text
                         style={{
-                          color: '#3498DB',
+                          color: '#D8DD00',
                         }}
                       >
                         Contract :{' '}
@@ -117,7 +123,7 @@ const NFTTransactionHistory = ({ navigation }) => {
                     <View style={{ paddingBottom: 16 }}>
                       <Text
                         style={{
-                          color: '#3498DB',
+                          color: '#D8DD00',
                         }}
                       >
                         Receiver Id:{' '}
@@ -129,7 +135,7 @@ const NFTTransactionHistory = ({ navigation }) => {
                     <View style={{ paddingBottom: 16 }}>
                       <Text
                         style={{
-                          color: '#3498DB',
+                          color: '#D8DD00',
                         }}
                       >
                         Event Kind:{' '}
@@ -142,7 +148,7 @@ const NFTTransactionHistory = ({ navigation }) => {
                     <View style={{ paddingBottom: 16 }}>
                       <Text
                         style={{
-                          color: '#3498DB',
+                          color: '#D8DD00',
                         }}
                       >
                         Transaction Hash:{' '}
@@ -152,22 +158,10 @@ const NFTTransactionHistory = ({ navigation }) => {
                       </Text>
                     </View>
 
-                    {/* <View style={{ paddingBottom: 16 }}>
-                      <Text
-                        style={{
-                          color: '#3498DB',
-                        }}
-                      >
-                        Transaction Fee:{' '}
-                        <Text style={{ color: 'white' }}>
-                          {item.item.outcomes_agg.transaction_fee}
-                        </Text>
-                      </Text>
-                    </View> */}
                     <View style={{ paddingBottom: 16 }}>
                       <Text
                         style={{
-                          color: '#3498DB',
+                          color: '#D8DD00',
                         }}
                       >
                         Date :{' '}

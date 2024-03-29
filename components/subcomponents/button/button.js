@@ -1,168 +1,171 @@
-import { TouchableOpacity, Text, StyleSheet } from "react-native";
-import Icon from "../icon/icon";
+import { Text, TouchableOpacity } from 'react-native'
+import Icon from '../icon/icon'
 
 export const PrimaryButton = ({ title, onPress, startIcon, endIcon }) => {
   return (
     <TouchableOpacity
       style={{
-        backgroundColor: "#3498DB",
+        backgroundColor: '#D8DD00',
         borderRadius: 40,
         padding: 20,
-        alignItems: "center",
-        flexDirection: "row",
-        justifyContent: "center",
-        borderWidth: 2,
-        borderColor: "#3498DB",
+        alignItems: 'center',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        // borderWidth: 2,
+        // borderColor: '#3498DB',
       }}
       onPress={onPress}
     >
       {startIcon && (
-        <Icon icon={startIcon} width={20} height={20} fill="#ffffff" />
+        <Icon icon={startIcon} width={20} height={20} fill='#ffffff' />
       )}
 
       <Text
         style={{
-          color: "#FFFFFF",
+          color: '#000000',
           fontSize: 16,
+          letterSpacing: 1.0,
+          paddingRight: 10,
+          fontWeight: 'bold',
         }}
       >
         {title}
       </Text>
-      {endIcon && <Icon icon={endIcon} width={20} height={20} fill="#ffffff" />}
+      {endIcon && <Icon icon={endIcon} width={20} height={20} fill='#000000' />}
     </TouchableOpacity>
-  );
-};
+  )
+}
 export const SecondaryButton = ({ title, onPress, startIcon, endIcon }) => {
   return (
     <TouchableOpacity
       style={{
-        backgroundColor: "#CCCCCC",
+        backgroundColor: '#CCCCCC',
         borderRadius: 40,
         padding: 20,
-        alignItems: "center",
-        flexDirection: "row",
-        justifyContent: "center",
+        alignItems: 'center',
+        flexDirection: 'row',
+        justifyContent: 'center',
         borderWidth: 2,
-        borderColor: "#CCCCCC",
+        borderColor: '#CCCCCC',
       }}
       onPress={onPress}
     >
       {startIcon && (
-        <Icon icon={startIcon} width={20} height={20} fill="#393644" />
+        <Icon icon={startIcon} width={20} height={20} fill='#393644' />
       )}
 
       <Text
         style={{
-          color: "#393644",
+          color: '#393644',
           fontSize: 16,
         }}
       >
         {title}
       </Text>
-      {endIcon && <Icon icon={endIcon} width={20} height={20} fill="#393644" />}
+      {endIcon && <Icon icon={endIcon} width={20} height={20} fill='#393644' />}
     </TouchableOpacity>
-  );
-};
+  )
+}
 export const TertiaryButton = ({ title, onPress, startIcon, endIcon }) => {
   return (
     <TouchableOpacity
       style={{
-        backgroundColor: "transparent",
-        borderColor: "#44CCFF",
+        backgroundColor: 'transparent',
+        borderColor: '#ffffff',
         borderWidth: 2,
-        borderRadius: 40,
+        borderRadius: 10,
         padding: 20,
-        alignItems: "center",
-        flexDirection: "row",
-        justifyContent: "center",
+        alignItems: 'center',
+        flexDirection: 'row',
+        justifyContent: 'center',
       }}
       onPress={onPress}
     >
       {startIcon && (
-        <Icon icon={startIcon} width={20} height={20} fill="#ffffff" />
+        <Icon icon={startIcon} width={20} height={20} fill='#ffffff' />
       )}
 
       <Text
         style={{
-          color: "#FFFFFF",
+          color: '#FFFFFF',
           fontSize: 16,
         }}
       >
         {title}
       </Text>
-      {endIcon && <Icon icon={endIcon} width={20} height={20} fill="#ffffff" />}
+      {endIcon && <Icon icon={endIcon} width={20} height={20} fill='#ffffff' />}
     </TouchableOpacity>
-  );
-};
+  )
+}
 export const LinkButton = ({ title, onPress, startIcon, endIcon }) => {
   return (
     <TouchableOpacity
       style={{
-        backgroundColor: "transparent",
-        alignItems: "center",
-        flexDirection: "row",
-        justifyContent: "center",
+        backgroundColor: 'transparent',
+        alignItems: 'center',
+        flexDirection: 'row',
+        justifyContent: 'center',
       }}
       onPress={onPress}
     >
       {startIcon && (
-        <Icon icon={startIcon} width={20} height={20} fill="#FFD700" />
+        <Icon icon={startIcon} width={50} height={50} fill='#FFFFFF' />
       )}
 
       <Text
         style={{
-          color: "#FFD700",
+          color: '#FFD700',
           fontSize: 20,
         }}
       >
         {title}
       </Text>
-      {endIcon && <Icon icon={endIcon} width={20} height={20} fill="#FFD700" />}
+      {endIcon && <Icon icon={endIcon} width={20} height={20} fill='#FFD700' />}
     </TouchableOpacity>
-  );
-};
+  )
+}
 
 export const IconButton = ({ icon, onPress }) => {
   return (
     <TouchableOpacity
       style={{
-        backgroundColor: "transparent",
+        backgroundColor: 'transparent',
         padding: 20,
-        alignItems: "center",
-        flexDirection: "row",
-        justifyContent: "center",
+        alignItems: 'center',
+        flexDirection: 'row',
+        justifyContent: 'center',
       }}
       onPress={onPress}
     >
-      <Icon icon={icon} width={48} height={48} fill="#ffffff" />
+      <Icon icon={icon} width={48} height={48} fill='#ffffff' />
     </TouchableOpacity>
-  );
-};
+  )
+}
 
 export const KeypadButton = ({ number, onPress }) => {
   return (
     <TouchableOpacity
       style={{
-        backgroundColor: "transparent",
-        borderColor: "#44CCFF",
+        backgroundColor: 'transparent',
+        borderColor: '#FFFFFF',
         width: 80,
         height: 80,
-        borderWidth: 2,
+        borderWidth: 0.8,
         borderRadius: 40,
         padding: 20,
-        alignItems: "center",
-        justifyContent: "center",
+        alignItems: 'center',
+        justifyContent: 'center',
       }}
       onPress={onPress}
     >
       <Text
         style={{
-          color: "#FFFFFF",
+          color: '#FFFFFF',
           fontSize: 24,
         }}
       >
         {number}
       </Text>
     </TouchableOpacity>
-  );
-};
+  )
+}

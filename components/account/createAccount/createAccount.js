@@ -1,41 +1,39 @@
-import Container from "../../subcomponents/container/container";
+import { useEffect, useState } from 'react'
+import { View } from 'react-native'
+import { getkeys } from '../../subcomponents/api/nodeserver'
+import { PrimaryButton } from '../../subcomponents/button/button'
+// import Container from '../../subcomponents/container/container'
+import Container from '../../../subcomponents/container'
+import { Loading } from '../../subcomponents/loading/loadingPage'
+
+import { AppBar } from '../../subcomponents/appbar/appbar'
 import {
   PrimaryAccentText,
   SecondaryText,
   WarningText,
-  InfoText,
-} from "../../subcomponents/text/text";
-import {
-  PrimaryButton,
-  SecondaryButton,
-  LinkButton,
-} from "../../subcomponents/button/button";
-import { View, Text } from "react-native";
-import { useEffect, useState } from "react";
-import PassphraseDisplay from "./phraseDisplay";
-import { getkeys } from "../../subcomponents/api/nodeserver";
-import { Loading } from "../../subcomponents/loading/loadingPage";
-import VerifyPhrase from "./verifyPhrase";
+} from '../../subcomponents/text/text'
+import PassphraseDisplay from './phraseDisplay'
+import VerifyPhrase from './verifyPhrase'
 
-const CreateAccount = ({ navigation }) => {
-  const [pasphrase, setPassphrase] = useState(null);
-  const [keys, setKeys] = useState(null);
-  const [isLoading, setIsloading] = useState(true);
-  const [isVerifying, setIsVerifying] = useState(false);
+const CreateAccount = ({ navigation, back }) => {
+  const [pasphrase, setPassphrase] = useState(null)
+  const [keys, setKeys] = useState(null)
+  const [isLoading, setIsloading] = useState(true)
+  const [isVerifying, setIsVerifying] = useState(false)
 
   useEffect(() => {
-    poppulateKeys();
-  }, []);
+    poppulateKeys()
+  }, [])
 
   const poppulateKeys = async () => {
-    setIsloading(true);
-    const response = await getkeys();
-    if (response.status === "success") {
-      setPassphrase(response.data.keys.seedPhrase);
-      setKeys(response.data.keys);
-      setIsloading(false);
+    setIsloading(true)
+    const response = await getkeys()
+    if (response.status === 'success') {
+      setPassphrase(response.data.keys.seedPhrase)
+      setKeys(response.data.keys)
+      setIsloading(false)
     }
-  };
+  }
 
   if (isVerifying)
     return (
@@ -45,7 +43,7 @@ const CreateAccount = ({ navigation }) => {
         back={() => setIsVerifying(false)}
         navigation={navigation}
       />
-    );
+    )
 
   return (
     <Container>
@@ -53,16 +51,11 @@ const CreateAccount = ({ navigation }) => {
         style={{
           flex: 1,
           padding: 20,
-          justifyContent: "space-between",
+          justifyContent: 'space-between',
           gap: 20,
         }}
       >
-        <View style={{ width: 60 }}>
-          <LinkButton
-            title="< Back"
-            onPress={() => navigation.navigate("CreateorImport")}
-          />
-        </View>
+        <AppBar title={'Create Account'} back={back} />
 
         <View style={{ gap: 10 }}>
           <PrimaryAccentText>Setup Your Secure Passphrase</PrimaryAccentText>
@@ -73,7 +66,7 @@ const CreateAccount = ({ navigation }) => {
           <SecondaryText>
             You will be asked to verify your passphrase next.
           </SecondaryText>
-          <WarningText align="left">
+          <WarningText align='left'>
             Warning: Anyone with access to the passphrase will also have access
             to your account!
           </WarningText>
@@ -90,15 +83,15 @@ const CreateAccount = ({ navigation }) => {
 
         {!isLoading && (
           <PrimaryButton
-            title="Continue"
+            title='Continue'
             onPress={() => {
-              setIsVerifying(true);
+              setIsVerifying(true)
             }}
           />
         )}
       </View>
     </Container>
-  );
-};
+  )
+}
 
-export default CreateAccount;
+export default CreateAccount

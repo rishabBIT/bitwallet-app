@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useEffect, useState } from 'react'
 import { View } from 'react-native'
-import Container from '../subcomponents/container/container'
+import Container from '../../subcomponents/container'
 import LoadingPage from '../subcomponents/loading/loadingPage'
 import Assets from './assets'
 import Certificate from './certificate'
@@ -55,15 +55,13 @@ const Home = ({ navigation }) => {
 
   return (
     <Container>
+      <Navbar navigation={navigation} />
       <View style={{ flex: 1, justifyContent: 'space-between' }}>
-        <Navbar navigation={navigation} />
-
         {view === 'wallet' && <Wallet navigation={navigation} />}
         {view === 'certificate' && <Certificate navigation={navigation} />}
         {view === 'assets' && <Assets navigation={navigation} />}
-
-        <Footer view={view} setView={setView} />
       </View>
+      <Footer view={view} setView={setView} />
     </Container>
   )
 }

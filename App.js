@@ -25,12 +25,13 @@ import {
   checkForUpdates,
   updateURLs,
 } from './components/subcomponents/api/nodeserver'
-import LoadingPage from './components/subcomponents/loading/loadingPage'
 import TabViewExample from './components/tabview/tabview'
 import TransactionHistoryIncoming from './components/transaction_history/transaction_history_incoming'
 import TransactionHistoryOutgoing from './components/transaction_history/transaction_history_outgoing'
 
 import Update from './components/update/update'
+
+import LoadingPage from './components/subcomponents/loading/loadingPage'
 
 const Stack = createNativeStackNavigator()
 
@@ -45,6 +46,8 @@ const linking = {
 }
 
 export default function App() {
+  // const [fontsLoaded, setFontsLoaded] = useState(false)
+
   const [isPinRequired, setIsPinRequired] = useState(false)
   const [isLoading, setIsloading] = useState(true)
   const [status, setStatus] = useState('')
@@ -57,6 +60,16 @@ export default function App() {
   const [redirectUrl, setRedirectUrl] = useState('')
 
   const [deepLink, setDeepLink] = useState(false)
+
+  // useEffect(() => {
+  //   async function loadFonts() {
+  //     await Font.loadAsync({
+  //       SyneRegular: require('./assets/fonts/Syne-Regular.ttf'),
+  //     })
+  //     setFontsLoaded(true)
+  //   }
+  //   loadFonts()
+  // }, [])
 
   useEffect(() => {
     Linking.addEventListener('url', (res) => {
@@ -116,6 +129,7 @@ export default function App() {
       console.log(e)
     }
   }
+
   const setDataFn = async (action, appName, redirectUrl) => {
     setAppName(appName)
     setAction(action)
@@ -161,6 +175,10 @@ export default function App() {
     )
 
   if (isLoading) return <LoadingPage />
+
+  // if (!fontsLoaded) return <LoadingPage />
+
+  // if (error) return console.log(error)
 
   if (isPinRequired)
     return <Pin title='Enter Pin' subtitle={status} submit={enterPin} />

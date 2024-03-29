@@ -1,10 +1,11 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useEffect, useState } from 'react'
 import { View } from 'react-native'
+import Container from '../../../subcomponents/container'
 import useNotifications from '../../notifications/notifications'
 import { registerDevice } from '../../subcomponents/api/nodeserver'
-import { LinkButton, PrimaryButton } from '../../subcomponents/button/button'
-import Container from '../../subcomponents/container/container'
+import { AppBar } from '../../subcomponents/appbar/appbar'
+import { PrimaryButton } from '../../subcomponents/button/button'
 import Input from '../../subcomponents/input/input'
 import { Loading } from '../../subcomponents/loading/loadingPage'
 import {
@@ -83,9 +84,8 @@ const VerifyPhrase = ({ pasphrase, keys, back, navigation }) => {
           gap: 20,
         }}
       >
-        <View style={{ width: 60 }}>
-          <LinkButton title='< Back' onPress={back} />
-        </View>
+        
+        <AppBar title={''} back={back} />
 
         <View style={{ gap: 10 }}>
           <PrimaryAccentText>Verify Passphrase</PrimaryAccentText>

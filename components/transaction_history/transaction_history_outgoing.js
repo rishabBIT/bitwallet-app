@@ -1,8 +1,8 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import React, { useEffect, useState } from 'react'
 import { FlatList, Text, View } from 'react-native'
+import Container from '../../subcomponents/container'
 import { getTransactionHistory } from '../subcomponents/api/nodeserver'
-import Container from '../subcomponents/container/container'
 import LoadingPage from '../subcomponents/loading/loadingPage'
 
 const TransactionHistoryOutgoing = ({ navigation }) => {
@@ -94,17 +94,16 @@ const TransactionHistoryOutgoing = ({ navigation }) => {
                 return (
                   <View
                     style={{
-                      backgroundColor: '#393644',
+                      backgroundColor: 'rgba(255, 255, 255, 0.2)',
                       borderRadius: 8,
                       padding: 16,
                       margin: 16,
-                      elevation: 3,
                     }}
                   >
                     <View style={{ paddingBottom: 16 }}>
                       <Text
                         style={{
-                          color: '#3498DB',
+                          color: '#D8DD00',
                         }}
                       >
                         Receiver Id:{' '}
@@ -117,7 +116,7 @@ const TransactionHistoryOutgoing = ({ navigation }) => {
                     <View style={{ paddingBottom: 16 }}>
                       <Text
                         style={{
-                          color: '#3498DB',
+                          color: '#D8DD00',
                         }}
                       >
                         Sender Id:{' '}
@@ -130,7 +129,7 @@ const TransactionHistoryOutgoing = ({ navigation }) => {
                     <View style={{ paddingBottom: 16 }}>
                       <Text
                         style={{
-                          color: '#3498DB',
+                          color: '#D8DD00',
                         }}
                       >
                         Deposit:{' '}
@@ -143,7 +142,7 @@ const TransactionHistoryOutgoing = ({ navigation }) => {
                     <View style={{ paddingBottom: 16 }}>
                       <Text
                         style={{
-                          color: '#3498DB',
+                          color: '#D8DD00',
                         }}
                       >
                         Transaction Fee:{' '}
@@ -156,7 +155,7 @@ const TransactionHistoryOutgoing = ({ navigation }) => {
                     <View style={{ paddingBottom: 16 }}>
                       <Text
                         style={{
-                          color: '#3498DB',
+                          color: '#D8DD00',
                         }}
                       >
                         Date :{' '}

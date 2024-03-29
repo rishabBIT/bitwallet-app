@@ -1,36 +1,35 @@
-import React, { useState, useEffect } from "react";
-import { Text, View, StyleSheet, Button } from "react-native";
-import { BarCodeScanner } from "expo-barcode-scanner";
-import Container from "../subcomponents/container/container";
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { BarCodeScanner } from 'expo-barcode-scanner'
+import React, { useEffect, useState } from 'react'
+import { Linking, StyleSheet, Text, View } from 'react-native'
+import { WebView } from 'react-native-webview'
+import Container from '../../subcomponents/container'
+import {
+  LinkButton,
+  PrimaryButton,
+  SecondaryButton,
+} from '../subcomponents/button/button'
+import LoadingPage from '../subcomponents/loading/loadingPage'
 import {
   ErrorText,
   PrimaryAccentText,
   PrimaryText,
   SecondaryText,
-} from "../subcomponents/text/text";
-import {
-  LinkButton,
-  PrimaryButton,
-  SecondaryButton,
-} from "../subcomponents/button/button";
-import { Linking } from "react-native";
-import { WebView } from "react-native-webview";
-import LoadingPage from "../subcomponents/loading/loadingPage";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+} from '../subcomponents/text/text'
 
 export default function Scanner({ navigation }) {
-  const [hasPermission, setHasPermission] = useState(null);
-  const [scanned, setScanned] = useState(false);
-  const [data, setData] = useState(null);
+  const [hasPermission, setHasPermission] = useState(null)
+  const [scanned, setScanned] = useState(false)
+  const [data, setData] = useState(null)
 
   useEffect(() => {
     const getBarCodeScannerPermissions = async () => {
-      const { status } = await BarCodeScanner.requestPermissionsAsync();
-      setHasPermission(status === "granted");
-    };
+      const { status } = await BarCodeScanner.requestPermissionsAsync()
+      setHasPermission(status === 'granted')
+    }
 
-    getBarCodeScannerPermissions();
-  }, []);
+    getBarCodeScannerPermissions()
+  }, [])
 
   if (scanned)
     return (
@@ -39,18 +38,18 @@ export default function Scanner({ navigation }) {
         navigation={navigation}
         data={data}
       />
-    );
+    )
 
   const handleBarCodeScanned = ({ type, data }) => {
-    setScanned(true);
-    setData(data);
-  };
+    setScanned(true)
+    setData(data)
+  }
 
   if (hasPermission === null) {
-    return <Text>Requesting for camera permission</Text>;
+    return <Text>Requesting for camera permission</Text>
   }
   if (hasPermission === false) {
-    return <Text>No access to camera</Text>;
+    return <Text>No access to camera</Text>
   }
 
   return (
@@ -59,7 +58,7 @@ export default function Scanner({ navigation }) {
         style={{
           flex: 1,
           padding: 20,
-          justifyContent: "space-between",
+          justifyContent: 'space-between',
           gap: 20,
         }}
       >
@@ -79,91 +78,91 @@ export default function Scanner({ navigation }) {
           />
         </View>
         <SecondaryButton
-          title="Cancel X"
-          onPress={() => navigation.navigate("Home")}
+          title='Cancel X'
+          onPress={() => navigation.navigate('Home')}
         />
       </View>
     </Container>
-  );
+  )
 }
 
 const ScannedPage = ({ navigation, data, setScanned }) => {
-  const [isAddress, setIsAddress] = useState(false);
-  const [isURL, setIsURL] = useState(false);
-  const [isConnection, setIsConnection] = useState(false);
-  const [isCertificate, setIsCertificate] = useState(false);
+  const [isAddress, setIsAddress] = useState(false)
+  const [isURL, setIsURL] = useState(false)
+  const [isConnection, setIsConnection] = useState(false)
+  const [isCertificate, setIsCertificate] = useState(false)
 
   useEffect(() => {
-    checkAddress();
-    checkIsConnection();
-    checkIsURL();
-    checkIsCertificate();
-  }, []);
+    checkAddress()
+    checkIsConnection()
+    checkIsURL()
+    checkIsCertificate()
+  }, [])
 
   const checkAddress = () => {
     try {
-      const lastFiveChars = data.slice(-5);
-      const lastEightChars = data.slice(-8);
+      const lastFiveChars = data.slice(-5)
+      const lastEightChars = data.slice(-8)
       if (
-        lastFiveChars === ".near" ||
-        lastEightChars === ".testnet" ||
-        lastEightChars === ".mainnet" ||
+        lastFiveChars === '.near' ||
+        lastEightChars === '.testnet' ||
+        lastEightChars === '.mainnet' ||
         data.length === 64
       )
-        setIsAddress(true);
+        setIsAddress(true)
       else {
-        setIsAddress(false);
+        setIsAddress(false)
       }
     } catch (e) {
-      console.log(e);
+      console.log(e)
     }
-  };
+  }
 
   const checkIsConnection = () => {
     try {
-      if (data[0] + data[1] + data[2] === "wc:") setIsConnection(true);
-      else setIsConnection(false);
+      if (data[0] + data[1] + data[2] === 'wc:') setIsConnection(true)
+      else setIsConnection(false)
     } catch (e) {
-      console.log(e);
+      console.log(e)
     }
-  };
+  }
 
   const checkIsURL = () => {
     try {
       const urlPattern = new RegExp(
-        "^(https?:\\/\\/)?" +
-          "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" +
-          "((\\d{1,3}\\.){3}\\d{1,3}))" +
-          "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" +
-          "(\\?[;&a-z\\d%_.~+=-]*)?" +
-          "(\\#[-a-z\\d_]*)?$",
-        "i"
-      );
+        '^(https?:\\/\\/)?' +
+          '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' +
+          '((\\d{1,3}\\.){3}\\d{1,3}))' +
+          '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' +
+          '(\\?[;&a-z\\d%_.~+=-]*)?' +
+          '(\\#[-a-z\\d_]*)?$',
+        'i'
+      )
       if (urlPattern.test(data)) {
-        setIsURL(true);
+        setIsURL(true)
       } else {
-        setIsURL(false);
+        setIsURL(false)
       }
     } catch (e) {
-      console.log(e);
+      console.log(e)
     }
-  };
+  }
 
   const checkIsCertificate = async () => {
-    const cert_urls = await AsyncStorage.getItem("cert-urls");
-    console.log(cert_urls);
-    JSON.parse(cert_urls)["certURLs"].map((startURL) => {
+    const cert_urls = await AsyncStorage.getItem('cert-urls')
+    console.log(cert_urls)
+    JSON.parse(cert_urls)['certURLs'].map((startURL) => {
       try {
         if (data.substring(0, startURL.length) === startURL) {
-          setIsCertificate(true);
+          setIsCertificate(true)
         } else {
-          setIsCertificate(false);
+          setIsCertificate(false)
         }
       } catch (e) {
-        console.log(e);
+        console.log(e)
       }
-    });
-  };
+    })
+  }
 
   return (
     <Container>
@@ -171,13 +170,13 @@ const ScannedPage = ({ navigation, data, setScanned }) => {
         style={{
           flex: 1,
           padding: 20,
-          justifyContent: "space-between",
+          justifyContent: 'space-between',
         }}
       >
         <View style={{ width: 70 }}>
           <LinkButton
-            title="< Back"
-            onPress={() => navigation.navigate("Home")}
+            title='< Back'
+            onPress={() => navigation.navigate('Home')}
           />
         </View>
 
@@ -185,10 +184,10 @@ const ScannedPage = ({ navigation, data, setScanned }) => {
           <View style={{ gap: 20 }}>
             <PrimaryText>Account Id: {data}</PrimaryText>
             <PrimaryButton
-              title="Send NEAR"
-              endIcon={"send"}
+              title='Send NEAR'
+              endIcon={'send'}
               onPress={() =>
-                navigation.navigate("SendTransaction", {
+                navigation.navigate('SendTransaction', {
                   transactionData: { address: data },
                 })
               }
@@ -202,11 +201,11 @@ const ScannedPage = ({ navigation, data, setScanned }) => {
           <View style={{ gap: 20 }}>
             <PrimaryText>URL : {data}</PrimaryText>
             <PrimaryButton
-              title="Open URL"
+              title='Open URL'
               onPress={() => {
                 Linking.openURL(data).catch((err) =>
-                  console.log("Error opening URL: ", err)
-                );
+                  console.log('Error opening URL: ', err)
+                )
               }}
             />
           </View>
@@ -226,87 +225,87 @@ const ScannedPage = ({ navigation, data, setScanned }) => {
         {/* <PrimaryButton title="Print Data" onPress={() => console.log(data)} /> */}
 
         <SecondaryButton
-          title="Scan again"
-          endIcon="qr"
+          title='Scan again'
+          endIcon='qr'
           onPress={() => setScanned(false)}
         />
       </View>
     </Container>
-  );
-};
+  )
+}
 
 const ConnectionPage = ({ data, navigation }) => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [isConnected, setIsConnected] = useState(false);
-  const [url, setUrl] = useState("");
-  const [socket, setSocket] = useState(null);
+  const [isLoading, setIsLoading] = useState(false)
+  const [isConnected, setIsConnected] = useState(false)
+  const [url, setUrl] = useState('')
+  const [socket, setSocket] = useState(null)
 
   useEffect(() => {
-    poppulateURL();
-  }, []);
+    poppulateURL()
+  }, [])
 
   const poppulateURL = () => {
-    const urlData = JSON.parse(data.slice(3));
-    setUrl(urlData["domain"]);
-    connectSocket(urlData["socket"]);
-  };
+    const urlData = JSON.parse(data.slice(3))
+    setUrl(urlData['domain'])
+    connectSocket(urlData['socket'])
+  }
 
   const connectSocket = async (wsURL) => {
-    const chatSocket = new WebSocket(wsURL);
+    const chatSocket = new WebSocket(wsURL)
     chatSocket.onmessage = function (e) {
-      const data = JSON.parse(e.data);
-      console.log(data);
-    };
+      const data = JSON.parse(e.data)
+      console.log(data)
+    }
     chatSocket.onclose = function (e) {
-      setIsConnected(false);
-      console.log("Chat socket closed unexpectedly");
-    };
+      setIsConnected(false)
+      console.log('Chat socket closed unexpectedly')
+    }
     chatSocket.onopen = function (e) {
-      setSocket(chatSocket);
-      setIsConnected(true);
-    };
-  };
+      setSocket(chatSocket)
+      setIsConnected(true)
+    }
+  }
 
   const acceptConnection = async () => {
-    setIsLoading(true);
-    const address = await AsyncStorage.getItem("publicKey");
+    setIsLoading(true)
+    const address = await AsyncStorage.getItem('publicKey')
 
     try {
       socket.send(
         JSON.stringify({
-          message: "accept",
+          message: 'accept',
           accountId: address,
         })
-      );
-      setIsLoading(false);
-      navigation.navigate("Home");
+      )
+      setIsLoading(false)
+      navigation.navigate('Home')
     } catch {
-      navigation.navigate("Home");
-      setIsLoading(false);
+      navigation.navigate('Home')
+      setIsLoading(false)
     }
-  };
+  }
   const rejectConnection = async () => {
-    setIsLoading(true);
+    setIsLoading(true)
     try {
       socket.send(
         JSON.stringify({
-          message: "reject",
+          message: 'reject',
         })
-      );
-      setIsLoading(false);
-      navigation.navigate("Home");
+      )
+      setIsLoading(false)
+      navigation.navigate('Home')
     } catch {
-      navigation.navigate("Home");
-      setIsLoading(false);
+      navigation.navigate('Home')
+      setIsLoading(false)
     }
-  };
+  }
 
   if (isLoading)
     return (
       <View>
         <LoadingPage />
       </View>
-    );
+    )
 
   return (
     <View style={{ gap: 20 }}>
@@ -316,11 +315,11 @@ const ConnectionPage = ({ data, navigation }) => {
         {!isConnected ? (
           <ErrorText>Unable to connect!</ErrorText>
         ) : (
-          <PrimaryButton title="Connect" onPress={acceptConnection} />
+          <PrimaryButton title='Connect' onPress={acceptConnection} />
         )}
 
-        <SecondaryButton title="Decline" onPress={rejectConnection} />
+        <SecondaryButton title='Decline' onPress={rejectConnection} />
       </View>
     </View>
-  );
-};
+  )
+}
