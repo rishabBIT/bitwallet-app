@@ -68,17 +68,17 @@ const TransactionHistoryIncoming = ({ navigation }) => {
   if (isLoading) return <LoadingPage />
   if (incomingHistory.length === 0) {
     return (
-      <Container>
-        <View
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignSelf: 'center',
-          }}
-        >
-          <Text style={{ color: 'white', fontSize: 30 }}>No transactions</Text>
-        </View>
-      </Container>
+      // <Container>
+      <View
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignSelf: 'center',
+        }}
+      >
+        <Text style={{ color: 'white', fontSize: 30 }}>No transactions</Text>
+      </View>
+      // </Container>
     )
   } else {
     return (

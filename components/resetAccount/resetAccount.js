@@ -40,8 +40,9 @@ const ResetAccount = ({ navigation }) => {
       } catch (e) {
         console.log(e)
       }
-      // await AsyncStorage.clear()
-      navigation.navigate('Home')
+      await AsyncStorage.clear()
+      navigation.navigate('CreateorImport')
+      navigation.popToTop()
       setIsloading(false)
     }
   }

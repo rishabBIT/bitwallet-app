@@ -55,7 +55,7 @@ const CreateAccount = ({ navigation, back }) => {
           gap: 20,
         }}
       >
-        <AppBar title={'Create Account'} back={back} />
+        <AppBar title={'Create Account'} back={navigation} />
 
         <View style={{ gap: 10 }}>
           <PrimaryAccentText>Setup Your Secure Passphrase</PrimaryAccentText>

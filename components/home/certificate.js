@@ -62,7 +62,7 @@ const Certificate = ({ navigation }) => {
               title='Receive Certificates'
               endIcon={'receive'}
               // onPress={() => AsyncStorage.clear()}
-              onPress={() => navigation.navigate('Accountdetails')}
+              onPress={() => navigation.navigate('AccountdetailsOne')}
             />
           </View>
         </View>

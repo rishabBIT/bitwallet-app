@@ -31,6 +31,7 @@ import TransactionHistoryOutgoing from './components/transaction_history/transac
 
 import Update from './components/update/update'
 
+import AccountdetailsOne from './components/accountdetails/accountdetails_one'
 import LoadingPage from './components/subcomponents/loading/loadingPage'
 
 const Stack = createNativeStackNavigator()
@@ -266,6 +267,16 @@ export default function App() {
           <Stack.Screen
             name='Accountdetails'
             component={Accountdetails}
+            options={{
+              headerShown: false,
+              presentation: 'modal',
+              animationTypeForReplace: 'push',
+              animation: 'slide_from_left',
+            }}
+          />
+          <Stack.Screen
+            name='AccountdetailsOne'
+            component={AccountdetailsOne}
             options={{
               headerShown: false,
               presentation: 'modal',

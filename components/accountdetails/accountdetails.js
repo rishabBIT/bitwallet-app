@@ -9,7 +9,7 @@ import { PrimaryAccentText, PrimaryText } from '../subcomponents/text/text'
 import PinInput from './pinInput'
 import SeedPhrase from './seedPhrase'
 
-const Accountdetails = ({ navigation }) => {
+const Accountdetails = ({ navigation, isExport = false }) => {
   const [account, setAccount] = useState('')
   const [view, setView] = useState(1)
 
@@ -76,6 +76,7 @@ const Accountdetails = ({ navigation }) => {
             Scan the qr code to send NEAR, tokens or NFTs.
           </Text>
         </View>
+
         <PrimaryButton title='Export Passphrase' onPress={() => setView(2)} />
       </View>
     </Container>

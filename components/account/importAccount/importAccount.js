@@ -34,9 +34,6 @@ const ImportAccount = ({ navigation }) => {
 
     await importkeys(phrase)
       .then(async (res) => {
-        console.log('====================================')
-        console.log(`Res : ${JSON.stringify(res)}`)
-        console.log('====================================')
         const keys = res.data.keys
         await AsyncStorage.setItem('phrase', keys.seedPhrase)
         await AsyncStorage.setItem('publicKey', keys.publicKey)
@@ -63,7 +60,7 @@ const ImportAccount = ({ navigation }) => {
           gap: 20,
         }}
       >
-        <AppBar title={''} />
+        <AppBar title={''} back={navigation} />
         <View style={{ gap: 10 }}>
           <PrimaryAccentText>
             Recover Existing Account Using Passphrase

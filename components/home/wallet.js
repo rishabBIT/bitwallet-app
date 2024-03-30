@@ -110,10 +110,7 @@ const Wallet = ({ navigation }) => {
           <PrimaryButton
             title='RECEIVE'
             endIcon={'receive'}
-            onPress={
-              () => navigation.navigate('AccountDetails')
-              // AsyncStorage.clear()
-            }
+            onPress={() => navigation.navigate('AccountdetailsOne')}
           />
         </View>
       </View>
