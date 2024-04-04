@@ -39,7 +39,8 @@ export const SecondaryButton = ({ title, onPress, startIcon, endIcon }) => {
   return (
     <TouchableOpacity
       style={{
-        backgroundColor: '#CCCCCC',
+        backgroundColor: '#FFFFFF',
+        // backgroundColor: '#CCCCCC',
         borderRadius: 40,
         padding: 20,
         alignItems: 'center',

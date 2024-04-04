@@ -1,4 +1,4 @@
-import { View } from 'react-native'
+import { Image, View } from 'react-native'
 import { PrimaryButton, SecondaryButton } from '../subcomponents/button/button'
 // import Container from '../subcomponents/container/container'
 import Container from '../../subcomponents/container'
@@ -15,6 +15,17 @@ const CreateorImport = ({ navigation }) => {
           gap: 20,
         }}
       >
+        <Image
+          source={require('../../assets/new/Bitwallet-logo.png')}
+          style={{
+            width: 200,
+            height: 200,
+            marginBottom: 20,
+            alignSelf: 'center',
+          }}
+          resizeMode='contain'
+        />
+
         <PrimaryAccentText>Welcome to Bit-Wallet</PrimaryAccentText>
 
         <SecondaryText>
@@ -28,7 +39,7 @@ const CreateorImport = ({ navigation }) => {
           title='Create Account'
           onPress={() => navigation.navigate('CreateAccount')}
         />
-        <PrimaryAccentText>Or</PrimaryAccentText>
+        <PrimaryAccentText fontSize={16}>OR</PrimaryAccentText>
         <SecondaryButton
           title='Recover Existing Account'
           onPress={() => navigation.navigate('ImportAccount')}

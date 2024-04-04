@@ -31,7 +31,7 @@ import * as MediaLibrary from 'expo-media-library'
 
 const { width } = Dimensions.get('window')
 
-const Assets = () => {
+const Assets = ({ navigation }) => {
   const [tokens, setTokens] = useState([])
   const [isLoading, setIsloading] = useState(false)
 
@@ -39,6 +39,7 @@ const Assets = () => {
   const [isReceipientModalVisible, setReceipientModalVisible] = useState(false)
 
   const [inputValue, setInputValue] = useState('')
+  const [contractIdValue, setContractIdValue] = useState('')
   const [receipientInputValue, setReceipientInputValue] = useState('')
 
   let tokenItem = {}
@@ -58,8 +59,19 @@ const Assets = () => {
 
       setIsloading(true)
       const res = await transferNFT(tokenId, contractId, receipient)
-      ToastAndroid.show('Token transfer successful')
-      console.log(res)
+
+      const nftData = JSON.parse(await AsyncStorage.getItem('nfts')) || []
+
+      const index = nftData.findIndex((item) => item.token_id === tokenId)
+      if (index !== -1) {
+        nftData.splice(index, 1)
+
+        await AsyncStorage.setItem('nfts', JSON.stringify(nftData))
+        setTokens(nftData)
+      }
+
+      ToastAndroid.show('Token transfer successful', ToastAndroid.SHORT)
+      // console.log(res)
       setIsloading(false)
     } catch (error) {
       console.log(`Error transferNFT : ${error}`)
@@ -88,7 +100,7 @@ const Assets = () => {
       const selectednetwork = await AsyncStorage.getItem('network')
       const networkType = JSON.parse(selectednetwork).networkType
 
-      const res = await importTokens(inputValue)
+      const res = await importTokens(inputValue, contractIdValue)
       // console.log(res)
 
       if (!res.data || !res.data.tokens) {
@@ -96,11 +108,11 @@ const Assets = () => {
         ToastAndroid.show("NFT doesn't exist.", ToastAndroid.SHORT)
       } else if (res.data.tokens.owner_id === publicKey) {
         res.data.tokens.network = networkType
-        res.data.tokens.contract_id = 'vickyx.testnet'
+        res.data.tokens.contract_id = contractIdValue
+        // res.data.tokens.contract_id = 'vickyx.testnet'
         nftData.push(res.data.tokens)
 
         await AsyncStorage.setItem('nfts', JSON.stringify(nftData))
-        // setTokens([res])
         setTokens([...tokens, res.data.tokens])
 
         console.log('====================================')
@@ -196,6 +208,7 @@ const Assets = () => {
                 // isModalVisible={isReceipientModalVisible}
                 // receipientInputValue={receipientInputValue}
                 // setReceipientInputValue={setReceipientInputValue}
+                navigator={navigation}
               />
             )
           )
@@ -217,6 +230,8 @@ const Assets = () => {
           toggleModalVisibility={toggleModalVisibility}
           setInputValue={setInputValue}
           inputValue={inputValue}
+          contractIdValue={contractIdValue}
+          setContractIdValue={setContractIdValue}
           fetchTokens={fetchTokens}
           // token={token}
         />
@@ -230,63 +245,70 @@ const Assets = () => {
   )
 }
 
-const TokenTile = ({ token, download, toggleModalVisibility }) => {
+const TokenTile = ({ token, download, toggleModalVisibilityi, navigator }) => {
   return (
-    // <View>
-    <LinearGradient
-      colors={['#71BBFF', '#E26CFF']}
-      start={{ x: 0, y: 0 }}
-      end={{ x: 1, y: 0 }}
-      style={{
-        flex: 1,
-        alignSelf: 'center',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        padding: 10,
-        // marginBottom: 10,
-        marginTop: 10,
-        backgroundColor: '#393644',
-        width: width - 30,
-        borderRadius: 10,
-      }}
+    <TouchableOpacity
+      onPress={() =>
+        navigator.navigate('TokenDetails', {
+          tokenData: token,
+          navigation: navigator,
+        })
+      }
     >
-      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-        <Image
-          style={{ width: 50, height: 50, borderRadius: 25, marginRight: 10 }}
-          source={{ uri: token.metadata.media }}
-        />
-        <PrimaryText>
-          {token.metadata.title.substring(0, 23)}
-          {token.metadata.title.length > 23 && '...'}
-        </PrimaryText>
-      </View>
-
-      <View
+      <LinearGradient
+        colors={['#71BBFF', '#E26CFF']}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 0 }}
         style={{
+          flex: 1,
+          alignSelf: 'center',
           flexDirection: 'row',
-          justifyContent: 'space-evenly',
-          gap: 16,
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          padding: 10,
+          // marginBottom: 10,
+          marginTop: 10,
+          backgroundColor: '#393644',
+          width: width - 30,
+          borderRadius: 10,
         }}
       >
-        <TouchableOpacity
-          onPress={async () => {
-            //
-            toggleModalVisibility()
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <Image
+            style={{ width: 50, height: 50, borderRadius: 25, marginRight: 10 }}
+            source={{ uri: token.metadata.media }}
+          />
+          <PrimaryText>
+            {token.metadata.title.substring(0, 23)}
+            {token.metadata.title.length > 23 && '...'}
+          </PrimaryText>
+        </View>
+
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-evenly',
+            gap: 16,
           }}
         >
-          <Icon icon={'send'} width={20} height={20} fill='#FFF' />
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={async () => {
-            await download(token.metadata.media)
-          }}
-        >
-          <Icon icon={'download'} width={18} height={20} fill='#FFF' />
-        </TouchableOpacity>
-      </View>
-    </LinearGradient>
-    // </View>
+          <TouchableOpacity
+            onPress={async () => {
+              //
+              toggleModalVisibility()
+            }}
+          >
+            <Icon icon={'send'} width={20} height={20} fill='#FFF' />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={async () => {
+              await download(token.metadata.media)
+            }}
+          >
+            <Icon icon={'download'} width={18} height={20} fill='#FFF' />
+          </TouchableOpacity>
+        </View>
+      </LinearGradient>
+    </TouchableOpacity>
   )
 }
 
@@ -295,6 +317,8 @@ const ModalSheetTokenId = ({
   toggleModalVisibility,
   setInputValue,
   inputValue,
+  contractIdValue,
+  setContractIdValue,
   fetchTokens,
 }) => {
   return (
@@ -323,7 +347,7 @@ const ModalSheetTokenId = ({
               left: '50%',
               elevation: 5,
               transform: [{ translateX: -(width * 0.4) }, { translateY: -90 }],
-              height: 180,
+              height: 230,
               width: width * 0.8,
               backgroundColor: '#fff',
               borderRadius: 7,
@@ -360,15 +384,31 @@ const ModalSheetTokenId = ({
               onChangeText={(value) => setInputValue(value)}
             />
 
+            <TextInput
+              placeholder='Enter Contract Id'
+              value={contractIdValue}
+              inputMode='text'
+              style={{
+                width: '80%',
+                borderRadius: 5,
+                paddingVertical: 8,
+                paddingHorizontal: 16,
+                borderColor: 'rgba(0, 0, 0, 0.2)',
+                borderWidth: 1,
+                marginBottom: 8,
+              }}
+              onChangeText={(value) => setContractIdValue(value)}
+            />
+
             <Button
               title='Submit'
               onPress={async () => {
-                if (inputValue.length !== 0) {
+                if (inputValue.length !== 0 && contractIdValue.length !== 0) {
                   toggleModalVisibility()
                   await fetchTokens()
                 } else {
                   ToastAndroid.show(
-                    'Token Id cannot be empty',
+                    'both fields are mandatory',
                     ToastAndroid.SHORT
                   )
                 }

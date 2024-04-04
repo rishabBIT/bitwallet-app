@@ -32,7 +32,10 @@ import TransactionHistoryOutgoing from './components/transaction_history/transac
 import Update from './components/update/update'
 
 import AccountdetailsOne from './components/accountdetails/accountdetails_one'
+import TokenDetails from './components/asset_details/asset_details'
 import LoadingPage from './components/subcomponents/loading/loadingPage'
+
+import { useFonts } from 'expo-font'
 
 const Stack = createNativeStackNavigator()
 
@@ -47,6 +50,14 @@ const linking = {
 }
 
 export default function App() {
+  // let [fontsLoaded] = useFonts({
+  //   Syne_400Regular,
+  //   Syne_500Medium,
+  //   Syne_600SemiBold,
+  //   Syne_700Bold,
+  //   Syne_800ExtraBold,
+  // })
+
   // const [fontsLoaded, setFontsLoaded] = useState(false)
 
   const [isPinRequired, setIsPinRequired] = useState(false)
@@ -71,6 +82,10 @@ export default function App() {
   //   }
   //   loadFonts()
   // }, [])
+
+  const [fontsLoaded] = useFonts({
+    'Syne-Regular': require('./assets/fonts/Syne-Regular.ttf'),
+  })
 
   useEffect(() => {
     Linking.addEventListener('url', (res) => {
@@ -384,6 +399,16 @@ export default function App() {
             }}
             name='NFTTransactionHistory'
             component={NFTTransactionHistory}
+          />
+          <Stack.Screen
+            options={{
+              headerShown: false,
+              presentation: 'modal',
+              animationTypeForReplace: 'push',
+              animation: 'slide_from_right',
+            }}
+            name='TokenDetails'
+            component={TokenDetails}
           />
         </Stack.Navigator>
       </NavigationContainer>

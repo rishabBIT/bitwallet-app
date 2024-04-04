@@ -280,7 +280,7 @@ export const getNFTTransactionHistory = async (accountId) => {
       headers: headers,
     }
 
-    await fetch(mainNetUrl, requestOptions)
+    await fetch(testNetUrl, requestOptions)
       .then((res) => res.json())
       .then((response) => {
         result.status = 'success'
@@ -292,7 +292,7 @@ export const getNFTTransactionHistory = async (accountId) => {
   return result
 }
 
-export const importTokens = async (tokenId) => {
+export const importTokens = async (tokenId, contractId) => {
   let API_URL = await AsyncStorage.getItem('node-backend')
   if (API_URL === null || API_URL === 'null') {
     await updateURLs()
@@ -303,9 +303,6 @@ export const importTokens = async (tokenId) => {
   const selectednetwork = await AsyncStorage.getItem('network')
   const networkType = JSON.parse(selectednetwork).networkType
 
-  console.log('====================================')
-  console.log(publicKey, privateKey, selectednetwork, networkType)
-  console.log('====================================')
   const endpoint = 'importTokens'
   const testNetUrl = API_URL + endpoint
   const result = { status: 'failed' }
@@ -322,7 +319,8 @@ export const importTokens = async (tokenId) => {
         privateKey: privateKey,
         contractId:
           // 'b807a5695fcaf793206ed7fd1b06c03efe2b81e759c58e4155e31a8c3410fa3e',
-          'vickyx.testnet',
+          // 'vickyx.testnet',
+          contractId,
         tokenId: tokenId.toString(),
         // tokenId: '25',
       }),

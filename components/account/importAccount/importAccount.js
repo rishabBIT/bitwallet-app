@@ -55,23 +55,26 @@ const ImportAccount = ({ navigation }) => {
       <View
         style={{
           flex: 1,
-          padding: 20,
+          paddingVertical: 20,
+          paddingHorizontal: 30,
           justifyContent: 'space-between',
           gap: 20,
         }}
       >
         <AppBar title={''} back={navigation} />
         <View style={{ gap: 10 }}>
-          <PrimaryAccentText>
-            Recover Existing Account Using Passphrase
-          </PrimaryAccentText>
+          <View style={{ paddingBottom: 20 }}>
+            <PrimaryAccentText fontColor={'#FFFFFF'} fontWeight={'bold'}>
+              Recover Existing Account Using Passphrase
+            </PrimaryAccentText>
+          </View>
           <SecondaryText>
             Enter the backup passphrase associated with the account.
           </SecondaryText>
         </View>
         <Input
           label='Passphrase (12 words)'
-          placeholder='Enter phrase...'
+          placeholder='Enter Passphrase'
           value={phrase}
           onChangeText={(e) => setPhrase(e.toString().toLowerCase())}
         />

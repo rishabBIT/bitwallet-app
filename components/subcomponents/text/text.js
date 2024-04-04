@@ -1,4 +1,5 @@
 import MaskedView from '@react-native-community/masked-view'
+import { useFonts } from 'expo-font'
 import { LinearGradient } from 'expo-linear-gradient'
 import { Text } from 'react-native'
 
@@ -18,13 +19,23 @@ export const LargeAccentText = ({ children, align }) => {
     </Text>
   )
 }
-export const PrimaryAccentText = ({ children, align }) => {
+export const PrimaryAccentText = ({
+  children,
+  align,
+  fontSize,
+  fontColor,
+  fontWeight,
+}) => {
+  const [fontsLoaded] = useFonts({
+    'Syne-Regular': require('../../../assets/fonts/Syne-Regular.ttf'),
+  })
   return (
     <Text
       style={{
-        // fontFamily: 'Syne',
-        fontSize: 24,
-        color: '#D8DD00',
+        fontWeight: fontWeight ? fontWeight : 'normal',
+        fontFamily: 'Syne-Regular',
+        fontSize: fontSize ? fontSize : 24,
+        color: fontColor ? fontColor : '#D8DD00',
         textAlign: align ? align : 'center',
       }}
     >
