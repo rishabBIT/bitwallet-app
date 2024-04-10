@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
-const Current_Version = '2.0.6'
+const Current_Version = '2.0.7'
 
 export const updateURLs = async () => {
   try {
@@ -134,7 +134,7 @@ export const importkeys = async (phrase) => {
   }
   const endpoint = 'importkeys'
   const url = API_URL + endpoint
-  // const url = 'http://192.168.29.182:3000/api/' + endpoint
+
   console.log(url)
   const result = { status: 'failed' }
   try {
@@ -163,21 +163,73 @@ export const importkeys = async (phrase) => {
 export const getCertificates = async () => {
   const API_URL = await AsyncStorage.getItem('cert-backend')
   const publicKey = await AsyncStorage.getItem('publicKey')
+
   const endpoint = 'getCertificate'
-  const url = `${API_URL}certificate/${endpoint}/?wallet=${publicKey}`
-  // const url =
-  //   "http://192.168.1.6:8000/api/v2/certificate/getCertificate/?wallet=" +
-  //   publicKey;
-  console.log(url)
+  const url = `http://15.206.186.148/api/v2/certificate/${endpoint}/?wallet=${publicKey}`
+  const mainNetUrl = `${API_URL}certificate/${endpoint}/?wallet=${publicKey}`
+
+  console.log(mainNetUrl)
   const result = { status: 'failed' }
   try {
-    const response = await fetch(url).then((res) => res.json())
+    const response = await fetch(mainNetUrl).then((res) => res.json())
     result.status = 'success'
     result.data = response
+    console.log(response)
   } catch (e) {
     console.log('Cert Error', e)
   }
   return result
+}
+
+export const transferCertificate = async (receipientId, tokenId) => {
+  let API_URL = await AsyncStorage.getItem('cert-backend')
+  if (API_URL === null || API_URL === 'null') {
+    await updateURLs()
+    API_URL = await AsyncStorage.getItem('cert-backend')
+  }
+
+  const testNetUrl =
+    'http://15.206.186.148/api/v2/certificate/transferCertificate/'
+
+  const mainNetUrl = `${API_URL}certificate/transferCertificate/`
+  const result = { status: 'failed' }
+
+  try {
+    const requestOptions = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        to: receipientId,
+        // to: '674d895a861c548d4777a124603963017e0824edf768e70c9ab28609f090c058',
+        token_id: tokenId,
+      }),
+    }
+
+    console.log(receipientId)
+    console.log(tokenId)
+    console.log(mainNetUrl)
+
+    const res = await transferNFT(
+      tokenId,
+      'b807a5695fcaf793206ed7fd1b06c03efe2b81e759c58e4155e31a8c3410fa3e',
+      receipientId
+    )
+
+    if (res.status === 'success') {
+      await fetch(mainNetUrl, requestOptions)
+        .then((res) => res.json())
+        .then((response) => {
+          console.log('transfer certificates')
+          console.log(response)
+          result.status = 'success'
+          result.data = response
+        })
+    }
+  } catch (e) {
+    console.log(`transfer certificates : ${e}`)
+  }
 }
 
 export const registerDevice = async (token) => {
@@ -243,18 +295,24 @@ export const deleteDevice = async () => {
 
 export const getTransactionHistory = async (accountId) => {
   const endpoint = 'txns'
-  const testNetUrl = `https://api-testnet.nearblocks.io/v1/account/${accountId}/${endpoint}`
-  const mainNetUl = `https://api.nearblocks.io/v1/account/${accountId}/${endpoint}`
-  console.log(testNetUrl)
+  const testNetUrl = `https://api3-testnet.nearblocks.io/v1/account/${accountId}/${endpoint}`
+  const mainNetUl = `https://api3.nearblocks.io/v1/account/${accountId}/${endpoint}`
+  console.log(mainNetUl)
+  const selectednetwork = await AsyncStorage.getItem('network')
+  const networkType = JSON.parse(selectednetwork).networkType
   const result = { status: 'failed' }
   try {
     const requestOptions = {
       method: 'GET',
     }
 
-    await fetch(testNetUrl, requestOptions)
+    await fetch(
+      networkType == 'mainnet' ? mainNetUl : testNetUrl,
+      requestOptions
+    )
       .then((res) => res.json())
       .then((response) => {
+        console.log(response)
         result.status = 'success'
         result.data = response
       })
@@ -265,8 +323,8 @@ export const getTransactionHistory = async (accountId) => {
 }
 
 export const getNFTTransactionHistory = async (accountId) => {
-  const testNetUrl = `https://api-testnet.nearblocks.io/v1/account/${accountId}/nft-txns`
-  const mainNetUrl = `https://api.nearblocks.io/v1/account/${accountId}/nft-txns`
+  const testNetUrl = `https://api3-testnet.nearblocks.io/v1/account/${accountId}/nft-txns`
+  const mainNetUrl = `https://api3.nearblocks.io/v1/account/${accountId}/nft-txns`
   const API_KEY = process.env.API_KEY
 
   const result = { status: 'failed' }
@@ -280,7 +338,10 @@ export const getNFTTransactionHistory = async (accountId) => {
       headers: headers,
     }
 
-    await fetch(testNetUrl, requestOptions)
+    await fetch(
+      networkType == 'mainnet' ? mainNetUrl : testNetUrl,
+      requestOptions
+    )
       .then((res) => res.json())
       .then((response) => {
         result.status = 'success'
@@ -304,6 +365,7 @@ export const importTokens = async (tokenId, contractId) => {
   const networkType = JSON.parse(selectednetwork).networkType
 
   const endpoint = 'importTokens'
+  // const testNetUrl = 'http://192.168.29.89:3000/api/' + endpoint
   const testNetUrl = API_URL + endpoint
   const result = { status: 'failed' }
 
@@ -329,6 +391,8 @@ export const importTokens = async (tokenId, contractId) => {
     await fetch(testNetUrl, requestOptions)
       .then((res) => res.json())
       .then((response) => {
+        console.log('import tokens response')
+        console.log(response)
         result.status = 'success'
         result.data = response
       })

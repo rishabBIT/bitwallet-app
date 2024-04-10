@@ -7,11 +7,7 @@ import Container from '../../../subcomponents/container'
 import { Loading } from '../../subcomponents/loading/loadingPage'
 
 import { AppBar } from '../../subcomponents/appbar/appbar'
-import {
-  PrimaryAccentText,
-  SecondaryText,
-  WarningText,
-} from '../../subcomponents/text/text'
+import { PrimaryAccentText, SecondaryText } from '../../subcomponents/text/text'
 import PassphraseDisplay from './phraseDisplay'
 import VerifyPhrase from './verifyPhrase'
 
@@ -47,6 +43,8 @@ const CreateAccount = ({ navigation, back }) => {
 
   return (
     <Container>
+      <AppBar title={'Create Account'} back={navigation} />
+
       <View
         style={{
           flex: 1,
@@ -55,21 +53,22 @@ const CreateAccount = ({ navigation, back }) => {
           gap: 20,
         }}
       >
-        <AppBar title={'Create Account'} back={navigation} />
-
         <View style={{ gap: 10 }}>
-          <PrimaryAccentText>Setup Your Secure Passphrase</PrimaryAccentText>
+          <PrimaryAccentText fontColor={'#FFFFFF'} fontWeight={'bold'}>
+            Setup Your Secure Passphrase
+          </PrimaryAccentText>
+          <View style={{ paddingBottom: 10 }}></View>
           <SecondaryText>
             Write down the following words in order and keep them somewhere
             safe.
           </SecondaryText>
+          <SecondaryText color={'#D8DD00'}>
+            Anyone with access to the passphrase will also have access to your
+            account!
+          </SecondaryText>
           <SecondaryText>
             You will be asked to verify your passphrase next.
           </SecondaryText>
-          <WarningText align='left'>
-            Warning: Anyone with access to the passphrase will also have access
-            to your account!
-          </WarningText>
         </View>
 
         {isLoading && <Loading />}

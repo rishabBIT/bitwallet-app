@@ -56,15 +56,9 @@ const NFTTransactionHistory = ({ navigation }) => {
   if (nftTransactionHistory.length === 0) {
     return (
       <Container>
-        <View style={{ position: 'absolute', top: 60, left: 20, zIndex: 10 }}>
-          <AppBar title={''} back={navigation} />
-        </View>
+        <AppBar title={'NFT Transaction'} back={navigation} />
         <View
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignSelf: 'center',
-          }}
+          style={{ flex: 1, padding: 20, gap: 20, justifyContent: 'center' }}
         >
           <Text style={{ color: 'white', fontSize: 30 }}>No transactions</Text>
         </View>
@@ -73,9 +67,10 @@ const NFTTransactionHistory = ({ navigation }) => {
   } else {
     return (
       <Container>
-        <View style={{ padding: 20, gap: 20, marginBottom: 30 }}>
-          <AppBar title={'NFT Transactions'} back={navigation} />
-
+        <AppBar title={'NFT Transactions'} back={navigation} />
+        <View
+          style={{ flex: 1, padding: 20, gap: 20, justifyContent: 'center' }}
+        >
           {nftTransactionHistory.length !== 0 && (
             <FlatList
               showsVerticalScrollIndicator={false}

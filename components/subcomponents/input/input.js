@@ -26,7 +26,7 @@ const Input = ({ label, ...restProps }) => {
           borderColor: '#44CCFF',
           borderRadius: 20,
           fontSize: 16,
-          color: '#FFFFFF',
+          color: '#000000',
           // color: isFocused ? '#393644' : '#FFFFFF',
         }}
         onFocus={handleFocus}

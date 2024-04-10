@@ -8,11 +8,7 @@ import { AppBar } from '../../subcomponents/appbar/appbar'
 import { PrimaryButton } from '../../subcomponents/button/button'
 import Input from '../../subcomponents/input/input'
 import { Loading } from '../../subcomponents/loading/loadingPage'
-import {
-  ErrorText,
-  PrimaryAccentText,
-  SecondaryText,
-} from '../../subcomponents/text/text'
+import { ErrorText, SecondaryText } from '../../subcomponents/text/text'
 
 const VerifyPhrase = ({ pasphrase, keys, back, navigation }) => {
   const [word, setWord] = useState('')
@@ -76,6 +72,7 @@ const VerifyPhrase = ({ pasphrase, keys, back, navigation }) => {
 
   return (
     <Container>
+      <AppBar title={'Verify Passphrase'} back={back} />
       <View
         style={{
           flex: 1,
@@ -84,16 +81,15 @@ const VerifyPhrase = ({ pasphrase, keys, back, navigation }) => {
           gap: 20,
         }}
       >
-        
-        <AppBar title={''} back={back} />
-
         <View style={{ gap: 10 }}>
-          <PrimaryAccentText>Verify Passphrase</PrimaryAccentText>
+          {/* <PrimaryAccentText>Verify Passphrase</PrimaryAccentText> */}
+          <View style={{ paddingTop: 100 }}></View>
           <SecondaryText>
             Enter the following word from your recovery phrase to complete the
             setup process.
           </SecondaryText>
         </View>
+        {/* <View style={{ paddingTop: 100 }}></View> */}
         <View>
           <Input
             label={`Enter word number ${targetIndex}`}
@@ -103,6 +99,7 @@ const VerifyPhrase = ({ pasphrase, keys, back, navigation }) => {
           />
           <ErrorText>{error}</ErrorText>
         </View>
+        {/* <View style={{ paddingTop: 150 }}></View> */}
 
         {loading ? (
           <Loading />

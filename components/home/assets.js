@@ -60,9 +60,21 @@ const Assets = ({ navigation }) => {
       setIsloading(true)
       const res = await transferNFT(tokenId, contractId, receipient)
 
+      console.log('====================================')
+      console.log('Transfer Tokens')
+      console.log(res)
+      console.log('====================================')
+
       const nftData = JSON.parse(await AsyncStorage.getItem('nfts')) || []
 
-      const index = nftData.findIndex((item) => item.token_id === tokenId)
+      const index = nftData.findIndex((item) => {
+        console.log(item.token_id)
+        item.token_id === String(tokenId)
+      })
+      console.log('====================================')
+      // console.log(nftData)
+      // console.log(tokenId)
+      console.log('====================================')
       if (index !== -1) {
         nftData.splice(index, 1)
 
@@ -71,7 +83,7 @@ const Assets = ({ navigation }) => {
       }
 
       ToastAndroid.show('Token transfer successful', ToastAndroid.SHORT)
-      // console.log(res)
+      console.log(res)
       setIsloading(false)
     } catch (error) {
       console.log(`Error transferNFT : ${error}`)
@@ -101,7 +113,8 @@ const Assets = ({ navigation }) => {
       const networkType = JSON.parse(selectednetwork).networkType
 
       const res = await importTokens(inputValue, contractIdValue)
-      // console.log(res)
+      console.log('UI')
+      console.log(res)
 
       if (!res.data || !res.data.tokens) {
         setIsloading(false)
@@ -116,7 +129,7 @@ const Assets = ({ navigation }) => {
         setTokens([...tokens, res.data.tokens])
 
         console.log('====================================')
-        console.log(tokens)
+        console.log(tokens.network)
         console.log('====================================')
 
         setIsloading(false)
@@ -136,10 +149,20 @@ const Assets = ({ navigation }) => {
   }, [])
 
   const fetchTokensFromStorage = async () => {
+    const selectednetwork = await AsyncStorage.getItem('network')
+    const networkType = JSON.parse(selectednetwork).networkType
     // setIsloading(true)
+    // if (networkType == 'mainnet') {
+    //   let nftData = []
+    //   setTokens(JSON.parse(nftData))
+    //   console.log(nftData)
+    //   setIsloading(false)
+    // } else {
     let nftData = (await AsyncStorage.getItem('nfts')) || []
     setTokens(JSON.parse(nftData))
+    // console.log(nftData)
     setIsloading(false)
+    // }
   }
 
   // download nft
@@ -179,8 +202,9 @@ const Assets = ({ navigation }) => {
 
   return (
     <ScrollView style={{ flex: 1, gap: 20, marginVertical: 20 }}>
-      <PrimaryAccentText>Tokens</PrimaryAccentText>
-      {tokens.length === 0 && (
+      <PrimaryAccentText fontColor={'#FFFFFF'}>Tokens</PrimaryAccentText>
+
+      {tokens.network === 'testnet' && (
         <View
           style={{
             padding: 50,
@@ -194,6 +218,19 @@ const Assets = ({ navigation }) => {
         </View>
       )}
 
+      {tokens.length === 0 && (
+        <View
+          style={{
+            padding: 50,
+          }}
+        >
+          {/* <LoadingPage /> */}
+          <PrimaryText>Your tokens will be shown here.</PrimaryText>
+          <PrimaryText>
+            Ask your university to send tokens to your wallet address
+          </PrimaryText>
+        </View>
+      )}
       {tokens.length > 0 &&
         tokens.map(
           (item, index) => (
@@ -213,7 +250,6 @@ const Assets = ({ navigation }) => {
             )
           )
         )}
-
       <View style={{ padding: 50, flex: 1, gap: 20 }}>
         {isReceipientModalVisible && (
           <ModalSheetReceipientId
@@ -245,7 +281,7 @@ const Assets = ({ navigation }) => {
   )
 }
 
-const TokenTile = ({ token, download, toggleModalVisibilityi, navigator }) => {
+const TokenTile = ({ token, download, toggleModalVisibility, navigator }) => {
   return (
     <TouchableOpacity
       onPress={() =>

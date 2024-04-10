@@ -6,6 +6,7 @@ import Icon from '../subcomponents/icon/icon'
 const Menu = ({ navigation }) => {
   return (
     <Container>
+      <AppBar title={'Menu'} back={navigation} />
       <View
         style={{
           flex: 1,
@@ -17,7 +18,6 @@ const Menu = ({ navigation }) => {
           gap: 30,
         }}
       >
-        <AppBar title={''} back={navigation} />
         <View
           style={{
             gap: 20,

@@ -26,7 +26,9 @@ const Pin = ({ submit, title, subtitle }) => {
   return (
     <Container>
       <View style={styles.container}>
-        <PrimaryAccentText>{title}</PrimaryAccentText>
+        <PrimaryAccentText fontColor={'#FFFFFF'} fontWeight={'bold'}>
+          {title}
+        </PrimaryAccentText>
         <SecondaryText>{subtitle}</SecondaryText>
         <View style={styles.pinContainer}>
           {displayPin.split(' ').map((circle, index) => (

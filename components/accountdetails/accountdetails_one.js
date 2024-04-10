@@ -29,6 +29,7 @@ const AccountdetailsOne = ({ navigation }) => {
 
   return (
     <Container>
+      <AppBar title={'Account Details'} back={navigation} />
       <View
         style={{
           flex: 1,
@@ -37,9 +38,14 @@ const AccountdetailsOne = ({ navigation }) => {
           gap: 20,
         }}
       >
-        <AppBar title={'Account Details'} back={navigation} />
         <View style={{ gap: 10, marginVertical: 30 }}>
-          <PrimaryAccentText align={'left'}>Account ID: </PrimaryAccentText>
+          <PrimaryAccentText
+            align={'left'}
+            fontColor={'#FFFFFF'}
+            fontWeight={'bold'}
+          >
+            Account ID:{' '}
+          </PrimaryAccentText>
           <PrimaryText align={'left'}>{account}</PrimaryText>
         </View>
         <View

@@ -37,7 +37,9 @@ const TransactionHistoryOutgoing = ({ navigation }) => {
     const trxnAmount = amount / 10 ** 24
 
     return `${
-      String(trxnAmount).length > 10 ? Math.ceil(trxnAmount) : trxnAmount
+      String(trxnAmount).length > 8
+        ? Number(trxnAmount?.toString()?.slice(0, 5))
+        : trxnAmount
     } NEAR`
   }
 

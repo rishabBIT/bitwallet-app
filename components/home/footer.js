@@ -10,27 +10,31 @@ const Footer = ({ view, setView }) => {
         justifyContent: 'space-between',
       }}
     >
-
-      <View style={{flex: 1}}>
-
-      <IconButton
-        icon={view === 'wallet' ? 'wallet_selected' : 'wallet'}
-        onPress={() => setView('wallet')}
+      <View style={{ flex: 1 }}>
+        <IconButton
+          height={46}
+          width={46}
+          icon={view === 'wallet' ? 'wallet_selected' : 'wallet'}
+          onPress={() => setView('wallet')}
         />
-        </View>
-
-      <View style={{flex: 1}}>
-      <IconButton
-        icon={view === 'certificate' ? 'certificate_selected' : 'certificate'}
-        onPress={() => setView('certificate')}
-      />
       </View>
 
-      <View style={{flex: 1}}>
-      <IconButton
-        icon={view === 'assets' ? 'token_selected' : 'token'}
-        onPress={() => setView('assets')}
-      />
+      <View style={{ flex: 1 }}>
+        <IconButton
+          height={36}
+          width={36}
+          icon={view === 'certificate' ? 'certificate_selected' : 'certificate'}
+          onPress={() => setView('certificate')}
+        />
+      </View>
+
+      <View style={{ flex: 1 }}>
+        <IconButton
+          height={36}
+          width={36}
+          icon={view === 'assets' ? 'token_selected' : 'token'}
+          onPress={() => setView('assets')}
+        />
       </View>
     </View>
   )

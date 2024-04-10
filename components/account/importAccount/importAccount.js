@@ -52,6 +52,7 @@ const ImportAccount = ({ navigation }) => {
 
   return (
     <Container>
+      <AppBar title={'Recover Account'} back={navigation} />
       <View
         style={{
           flex: 1,
@@ -61,9 +62,8 @@ const ImportAccount = ({ navigation }) => {
           gap: 20,
         }}
       >
-        <AppBar title={''} back={navigation} />
         <View style={{ gap: 10 }}>
-          <View style={{ paddingBottom: 20 }}>
+          <View style={{ paddingBottom: 20, paddingTop: 80 }}>
             <PrimaryAccentText fontColor={'#FFFFFF'} fontWeight={'bold'}>
               Recover Existing Account Using Passphrase
             </PrimaryAccentText>

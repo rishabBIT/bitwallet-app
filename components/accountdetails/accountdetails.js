@@ -30,6 +30,7 @@ const Accountdetails = ({ navigation, isExport = false }) => {
 
   return (
     <Container>
+      <AppBar title={'Account Details'} back={navigation} />
       <View
         style={{
           flex: 1,
@@ -38,17 +39,22 @@ const Accountdetails = ({ navigation, isExport = false }) => {
           gap: 20,
         }}
       >
-        <AppBar title={'Account Details'} back={navigation} />
         <View style={{ gap: 10 }}>
-          <PrimaryAccentText align={'left'}>Account ID: </PrimaryAccentText>
+          <PrimaryAccentText
+            align={'left'}
+            fontColor={'#FFFFFF'}
+            fontWeight={'bold'}
+          >
+            Account ID:{' '}
+          </PrimaryAccentText>
           <PrimaryText align={'left'}>{account}</PrimaryText>
         </View>
         <View
           style={{
-            padding: 10,
+            padding: 30,
             backgroundColor: '#FFFFFF',
             alignItems: 'center',
-            marginHorizontal: 30,
+            marginHorizontal: 40,
             // gap: 10,
             borderRadius: 20,
           }}
@@ -68,7 +74,7 @@ const Accountdetails = ({ navigation, isExport = false }) => {
           <Text
             style={{
               color: '#000000',
-              paddingTop: 10,
+              paddingTop: 24,
               fontSize: 16,
               textAlign: 'justify',
             }}

@@ -81,12 +81,15 @@ const Wallet = ({ navigation }) => {
         }}
       >
         <LinkButton
+          color={'#FFFFFF'}
+          // endIconColor={'#FFD700'}
           title={displayAddress}
           endIcon={'copy'}
           onPress={() => Clipboard.setStringAsync(address)}
         />
 
         <LinkButton
+          endIconColor={'#FFFFFF'}
           title=''
           endIcon={'share'}
           onPress={() => Share.share({ message: address })}
@@ -94,8 +97,6 @@ const Wallet = ({ navigation }) => {
       </View>
       <View style={{ alignItems: 'center', paddingTop: 50, paddingBottom: 30 }}>
         <GradientText colors={['#BD00FF', '#00B2FF']} style={styles.text}>
-          {console.log('======')}
-          {console.log(displaybalance)}
           {displaybalance}
         </GradientText>
         <Text style={{ color: '#FFFFFF', fontSize: 36 }}>NEAR</Text>
@@ -104,11 +105,15 @@ const Wallet = ({ navigation }) => {
         <View style={styles.transparentContainer}>
           <PrimaryButton
             title='SEND'
-            endIcon={'send'}
+            height={14}
+            width={14}
+            endIcon={'send_one'}
             onPress={() => navigation.navigate('SendTransaction')}
           />
           <PrimaryButton
             title='RECEIVE'
+            height={14}
+            width={14}
             endIcon={'receive'}
             onPress={() => navigation.navigate('AccountdetailsOne')}
           />

@@ -39,7 +39,12 @@ const Navbar = ({ navigation }) => {
         justifyContent: 'space-between',
       }}
     >
-      <IconButton icon='menu' onPress={() => navigation.navigate('Menu')} />
+      <IconButton
+        height={30}
+        width={30}
+        icon='menu'
+        onPress={() => navigation.navigate('Menu')}
+      />
       <View style={{ flex: 1 }}>
         <SecondaryButton
           title={network}

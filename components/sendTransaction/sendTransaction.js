@@ -7,7 +7,7 @@ import { AppBar } from '../subcomponents/appbar/appbar'
 import { PrimaryButton } from '../subcomponents/button/button'
 import Input from '../subcomponents/input/input'
 import { Loading } from '../subcomponents/loading/loadingPage'
-import { PrimaryAccentText, SecondaryText } from '../subcomponents/text/text'
+import { SecondaryText } from '../subcomponents/text/text'
 
 const checkAddressValidity = (e) => {
   const lastFiveChars = e.slice(-5)
@@ -87,6 +87,7 @@ const SendTransaction = ({ navigation }) => {
 
   return (
     <Container>
+      <AppBar title={'Send NEAR'} back={navigation} />
       <View
         style={{
           flex: 1,
@@ -95,8 +96,7 @@ const SendTransaction = ({ navigation }) => {
           gap: 20,
         }}
       >
-        <AppBar title={''} back={navigation} />
-        <PrimaryAccentText>Send NEAR</PrimaryAccentText>
+        {/* <PrimaryAccentText>Send NEAR</PrimaryAccentText> */}
         <View>
           <Input
             label='Amount'

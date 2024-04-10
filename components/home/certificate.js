@@ -6,7 +6,6 @@ import { Dimensions, ScrollView, TouchableOpacity, View } from 'react-native'
 import { getCertificates } from '../subcomponents/api/nodeserver'
 import { PrimaryButton } from '../subcomponents/button/button'
 import Icon from '../subcomponents/icon/icon'
-import { Loading } from '../subcomponents/loading/loadingPage'
 import {
   PrimaryAccentText,
   PrimaryText,
@@ -17,19 +16,24 @@ const Certificate = ({ navigation }) => {
   const [certificates, setCertificates] = useState(null)
 
   const poppulateCertificates = async () => {
+    const selectednetwork = await AsyncStorage.getItem('network')
+    const networkType = JSON.parse(selectednetwork).networkType
+    // try {
+    //   let certs = await AsyncStorage.getItem('certificates')
+    //   setCertificates(JSON.parse(certs))
+    // } catch {
+    //   console.log('no certs in storage')
+    // }
     try {
-      let certs = await AsyncStorage.getItem('certificates')
-      setCertificates(JSON.parse(certs))
-    } catch {
-      console.log('no certs in storage')
-    }
-    try {
-      const certs = await getCertificates()
-      setCertificates(certs.data.certificates)
-      AsyncStorage.setItem(
-        'certificates',
-        JSON.stringify(certs.data.certificates)
-      )
+      if (networkType == 'mainnet') {
+        const certs = await getCertificates()
+        setCertificates(certs.data.certificates)
+      } else {
+      }
+      // AsyncStorage.setItem(
+      //   'certificates',
+      //   JSON.stringify(certs.data.certificates)
+      // )
     } catch (e) {
       console.log(e)
     }
@@ -43,12 +47,26 @@ const Certificate = ({ navigation }) => {
     <ScrollView style={{ flex: 1, gap: 20, marginVertical: 20 }}>
       <PrimaryAccentText>Certificates</PrimaryAccentText>
       {!certificates && (
-        <View
-          style={{
-            padding: 50,
-          }}
-        >
-          <Loading />
+        // <View
+        //   style={{
+        //     padding: 50,
+        //   }}
+        // >
+        //   <Loading />
+        // </View>
+        <View style={{ padding: 20, flex: 1, gap: 20 }}>
+          <PrimaryText>Your certificates will be shown here.</PrimaryText>
+          <PrimaryText>
+            Ask your university to send certificates to your wallet address
+          </PrimaryText>
+          <View style={{ paddingTop: 80 }}>
+            <PrimaryButton
+              title='Receive Certificates'
+              endIcon={'receive'}
+              // onPress={() => AsyncStorage.clear()}
+              onPress={() => navigation.navigate('AccountdetailsOne')}
+            />
+          </View>
         </View>
       )}
       {certificates && certificates.length === 0 && (
@@ -118,8 +136,8 @@ const CertificateTile = ({ issuer, navigation }) => {
             justifyContent: 'space-between',
             alignItems: 'center',
             paddingHorizontal: 10,
-            paddingVertical: 10,
-            borderRadius: 20,
+            paddingVertical: 20,
+            borderRadius: 10,
           }}
         >
           <View
@@ -130,7 +148,7 @@ const CertificateTile = ({ issuer, navigation }) => {
               justifyContent: 'space-between',
             }}
           >
-            <PrimaryText>
+            <PrimaryText fontColor={'#000000'} fontSize={16}>
               {issuer.name.substring(0, 23)}
               {issuer.name.length > 23 && '...'}
             </PrimaryText>
@@ -225,39 +243,54 @@ const CertificateCard = ({ cert, navigation, issuer }) => {
     'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVjE9071LFZzNxjKM0BdvHD4s4xMZGw7QVZQ&usqp=CAU'
 
   return (
-    <TouchableOpacity
+    <LinearGradient
+      colors={['#FFFFFF', '#F0A9FF', '#57A3D6']}
+      start={{ x: 0, y: 0 }}
+      end={{ x: 0, y: 1 }}
       style={{
-        width: 90,
-        height: 115,
-        backgroundColor: '#393644',
-        borderRadius: 5,
+        // flex: 1,
+        // flexDirection: 'row',
+        // justifyContent: 'space-between',
+        // alignItems: 'center',
+        // paddingHorizontal: 10,
+        // paddingVertical: 20,
+        borderRadius: 10,
       }}
-      onPress={() =>
-        navigation.navigate('Certificate', {
-          certData: cert,
-          issuerData: issuer,
-        })
-      }
     >
-      <Image
+      <TouchableOpacity
         style={{
-          width: 90,
-          height: 67,
-          backgroundColor: '#393644',
-          borderRadius: 5,
-          borderBottomLeftRadius: 0,
-          borderBottomRightRadius: 0,
+          width: 112,
+          height: 115,
+          // backgroundColor: '#393644',
+          alignItems: 'center',
+          justifyContent: 'center',
+          borderRadius: 10,
         }}
-        source={cert.image ? cert.image : blurhash}
-        contentFit='cover'
-        transition={1000}
-      />
-      <View style={{ padding: 5 }}>
-        <SecondaryText>
-          {cert.name.substring(0, 15)}
-          {cert.name.length > 15 && '...'}
-        </SecondaryText>
-      </View>
-    </TouchableOpacity>
+        onPress={() =>
+          navigation.navigate('Certificate', {
+            certData: cert,
+            issuerData: issuer,
+          })
+        }
+      >
+        <Image
+          style={{
+            width: 90,
+            height: 67,
+            backgroundColor: '#393644',
+            borderRadius: 5,
+          }}
+          source={cert.image ? cert.image : blurhash}
+          contentFit='cover'
+          transition={1000}
+        />
+        <View style={{ padding: 5 }}>
+          <SecondaryText color={'#000000'}>
+            {cert.name.substring(0, 15)}
+            {cert.name.length > 15 && '...'}
+          </SecondaryText>
+        </View>
+      </TouchableOpacity>
+    </LinearGradient>
   )
 }

@@ -33,7 +33,7 @@ export const PrimaryAccentText = ({
     <Text
       style={{
         fontWeight: fontWeight ? fontWeight : 'normal',
-        fontFamily: 'Syne-Regular',
+        // fontFamily: 'Syne-Regular',
         fontSize: fontSize ? fontSize : 24,
         color: fontColor ? fontColor : '#D8DD00',
         textAlign: align ? align : 'center',
@@ -69,11 +69,11 @@ export const SuccessText = ({ children, align }) => {
     </Text>
   )
 }
-export const ErrorText = ({ children, align }) => {
+export const ErrorText = ({ children, align, fontSize }) => {
   return (
     <Text
       style={{
-        fontSize: 14,
+        fontSize: fontSize ? fontSize : 14,
         color: '#FF0000',
         textAlign: align ? align : 'center',
       }}
@@ -82,12 +82,12 @@ export const ErrorText = ({ children, align }) => {
     </Text>
   )
 }
-export const InfoText = ({ children, align }) => {
+export const InfoText = ({ children, align, fontColor }) => {
   return (
     <Text
       style={{
-        fontSize: 14,
-        color: '#44CCFF',
+        fontSize: 16,
+        color: fontColor ? fontColor : '#44CCFF',
         textAlign: align ? align : 'center',
       }}
     >
@@ -108,25 +108,32 @@ export const WarningText = ({ children, align }) => {
     </Text>
   )
 }
-export const PrimaryText = ({ children, align }) => {
+export const PrimaryText = ({
+  children,
+  align,
+  fontColor,
+  fontSize,
+  fontWeight,
+}) => {
   return (
     <Text
       style={{
-        fontSize: 16,
-        color: '#FFFFFF',
+        fontSize: fontSize ? fontSize : 16,
+        color: fontColor ? fontColor : '#FFFFFF',
         textAlign: align ? align : 'center',
+        fontWeight: fontWeight ? fontWeight : 'normal',
       }}
     >
       {children}
     </Text>
   )
 }
-export const SecondaryText = ({ children, align }) => {
+export const SecondaryText = ({ children, align, color }) => {
   return (
     <Text
       style={{
-        fontSize: 14,
-        color: '#ffffff',
+        fontSize: 16,
+        color: color ? color : '#ffffff',
         textAlign: align ? align : 'center',
       }}
     >

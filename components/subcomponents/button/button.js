@@ -1,7 +1,14 @@
 import { Text, TouchableOpacity } from 'react-native'
 import Icon from '../icon/icon'
 
-export const PrimaryButton = ({ title, onPress, startIcon, endIcon }) => {
+export const PrimaryButton = ({
+  title,
+  onPress,
+  startIcon,
+  endIcon,
+  height,
+  width,
+}) => {
   return (
     <TouchableOpacity
       style={{
@@ -31,7 +38,14 @@ export const PrimaryButton = ({ title, onPress, startIcon, endIcon }) => {
       >
         {title}
       </Text>
-      {endIcon && <Icon icon={endIcon} width={20} height={20} fill='#000000' />}
+      {endIcon && (
+        <Icon
+          icon={endIcon}
+          width={width ? width : 20}
+          height={height ? height : 20}
+          fill='#000000'
+        />
+      )}
     </TouchableOpacity>
   )
 }
@@ -98,7 +112,14 @@ export const TertiaryButton = ({ title, onPress, startIcon, endIcon }) => {
     </TouchableOpacity>
   )
 }
-export const LinkButton = ({ title, onPress, startIcon, endIcon }) => {
+export const LinkButton = ({
+  title,
+  onPress,
+  startIcon,
+  endIcon,
+  color,
+  endIconColor,
+}) => {
   return (
     <TouchableOpacity
       style={{
@@ -115,18 +136,25 @@ export const LinkButton = ({ title, onPress, startIcon, endIcon }) => {
 
       <Text
         style={{
-          color: '#FFD700',
+          color: color ? color : '#FFD700',
           fontSize: 20,
         }}
       >
         {title}
       </Text>
-      {endIcon && <Icon icon={endIcon} width={20} height={20} fill='#FFD700' />}
+      {endIcon && (
+        <Icon
+          icon={endIcon}
+          width={20}
+          height={20}
+          fill={endIconColor ? endIconColor : '#FFD700'}
+        />
+      )}
     </TouchableOpacity>
   )
 }
 
-export const IconButton = ({ icon, onPress }) => {
+export const IconButton = ({ icon, onPress, height, width }) => {
   return (
     <TouchableOpacity
       style={{
@@ -138,7 +166,12 @@ export const IconButton = ({ icon, onPress }) => {
       }}
       onPress={onPress}
     >
-      <Icon icon={icon} width={48} height={48} fill='#ffffff' />
+      <Icon
+        icon={icon}
+        width={width ? width : 48}
+        height={height ? height : 48}
+        fill='#ffffff'
+      />
     </TouchableOpacity>
   )
 }
