@@ -327,6 +327,9 @@ export const getNFTTransactionHistory = async (accountId) => {
   const mainNetUrl = `https://api3.nearblocks.io/v1/account/${accountId}/nft-txns`
   const API_KEY = process.env.API_KEY
 
+  const selectednetwork = await AsyncStorage.getItem('network')
+  const networkType = JSON.parse(selectednetwork).networkType
+
   const result = { status: 'failed' }
   try {
     const headers = {
