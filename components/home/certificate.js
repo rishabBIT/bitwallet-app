@@ -11,6 +11,7 @@ import {
   PrimaryText,
   SecondaryText,
 } from '../subcomponents/text/text'
+import i18n from '../../locales/i18n'
 
 const Certificate = ({ navigation }) => {
   const [certificates, setCertificates] = useState(null)
@@ -45,7 +46,7 @@ const Certificate = ({ navigation }) => {
 
   return (
     <ScrollView style={{ flex: 1, gap: 20, marginVertical: 20 }}>
-      <PrimaryAccentText>Certificates</PrimaryAccentText>
+      <PrimaryAccentText>{i18n.t('certificates')}</PrimaryAccentText>
       {!certificates && (
         // <View
         //   style={{
@@ -55,9 +56,9 @@ const Certificate = ({ navigation }) => {
         //   <Loading />
         // </View>
         <View style={{ padding: 20, flex: 1, gap: 20 }}>
-          <PrimaryText>Your certificates will be shown here.</PrimaryText>
+          <PrimaryText>{i18n.t('certificateTextOne')}</PrimaryText>
           <PrimaryText>
-            Ask your university to send certificates to your wallet address
+            {i18n.t('certificateTextTwo')}
           </PrimaryText>
           <View style={{ paddingTop: 80 }}>
             <PrimaryButton
@@ -71,13 +72,13 @@ const Certificate = ({ navigation }) => {
       )}
       {certificates && certificates.length === 0 && (
         <View style={{ padding: 20, flex: 1, gap: 20 }}>
-          <PrimaryText>Your certificates will be shown here.</PrimaryText>
+          <PrimaryText>{i18n.t('certificateTextOne')}</PrimaryText>
           <PrimaryText>
-            Ask your university to send certificates to your wallet address
+            {i18n.t('certificateTextTwo')}
           </PrimaryText>
           <View style={{ paddingTop: 80 }}>
             <PrimaryButton
-              title='Receive Certificates'
+              title={i18n.t('receiveCertificates')}
               endIcon={'receive'}
               // onPress={() => AsyncStorage.clear()}
               onPress={() => navigation.navigate('AccountdetailsOne')}

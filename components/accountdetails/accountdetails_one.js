@@ -7,6 +7,7 @@ import { AppBar } from '../subcomponents/appbar/appbar'
 import { PrimaryAccentText, PrimaryText } from '../subcomponents/text/text'
 import PinInput from './pinInput'
 import SeedPhrase from './seedPhrase'
+import i18n from '../../locales/i18n'
 
 const AccountdetailsOne = ({ navigation }) => {
   const [account, setAccount] = useState('')
@@ -29,7 +30,7 @@ const AccountdetailsOne = ({ navigation }) => {
 
   return (
     <Container>
-      <AppBar title={'Account Details'} back={navigation} />
+      <AppBar title={i18n.t('accountDetails')} back={navigation} />
       <View
         style={{
           flex: 1,
@@ -44,7 +45,7 @@ const AccountdetailsOne = ({ navigation }) => {
             fontColor={'#FFFFFF'}
             fontWeight={'bold'}
           >
-            Account ID:{' '}
+            {i18n.t('accountID')}:{' '}
           </PrimaryAccentText>
           <PrimaryText align={'left'}>{account}</PrimaryText>
         </View>
@@ -79,7 +80,7 @@ const AccountdetailsOne = ({ navigation }) => {
               textAlign: 'justify',
             }}
           >
-            Scan the qr code to send NEAR, tokens or NFTs.
+            {i18n.t('scanQRText')}
           </Text>
         </View>
 

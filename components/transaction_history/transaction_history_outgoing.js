@@ -4,6 +4,7 @@ import { FlatList, Text, View } from 'react-native'
 import Container from '../../subcomponents/container'
 import { getTransactionHistory } from '../subcomponents/api/nodeserver'
 import LoadingPage from '../subcomponents/loading/loadingPage'
+import i18n from '../../locales/i18n'
 
 const TransactionHistoryOutgoing = ({ navigation }) => {
   const [history, setHistory] = useState([])
@@ -11,7 +12,7 @@ const TransactionHistoryOutgoing = ({ navigation }) => {
   const [isLoading, setIsloading] = useState(false)
 
   useEffect(() => {
-    ;(async () => {
+    ; (async () => {
       setIsloading(true)
       const publicKey = await AsyncStorage.getItem('publicKey')
       res = await getTransactionHistory(publicKey.toString().trim())
@@ -36,11 +37,10 @@ const TransactionHistoryOutgoing = ({ navigation }) => {
   const convertDeposit = (amount) => {
     const trxnAmount = amount / 10 ** 24
 
-    return `${
-      String(trxnAmount).length > 8
-        ? Number(trxnAmount?.toString()?.slice(0, 5))
-        : trxnAmount
-    } NEAR`
+    return `${String(trxnAmount).length > 8
+      ? Number(trxnAmount?.toString()?.slice(0, 5))
+      : trxnAmount
+      } NEAR`
   }
 
   const getElapsedTime = (timestampWithMilliseconds) => {
@@ -79,7 +79,7 @@ const TransactionHistoryOutgoing = ({ navigation }) => {
           alignSelf: 'center',
         }}
       >
-        <Text style={{ color: 'white', fontSize: 30 }}>No transactions</Text>
+        <Text style={{ color: 'white', fontSize: 30 }}>{i18n.t('noTransaction')}</Text>
       </View>
       // </Container>
     )

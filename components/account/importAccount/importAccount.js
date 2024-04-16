@@ -13,6 +13,7 @@ import {
   PrimaryAccentText,
   SecondaryText,
 } from '../../subcomponents/text/text'
+import i18n from '../../../locales/i18n'
 
 const ImportAccount = ({ navigation }) => {
   const [phrase, setPhrase] = useState('')
@@ -26,7 +27,7 @@ const ImportAccount = ({ navigation }) => {
     const words = phrase.split(' ')
 
     if (words.length !== 12) {
-      setError('Passphrase should have 12 words. No extra spaces.')
+      setError(i18n.t('passphraseErrorText'))
       return
     }
 
@@ -52,7 +53,7 @@ const ImportAccount = ({ navigation }) => {
 
   return (
     <Container>
-      <AppBar title={'Recover Account'} back={navigation} />
+      <AppBar title={i18n.t('recoverAccount')} back={navigation} />
       <View
         style={{
           flex: 1,
@@ -65,16 +66,17 @@ const ImportAccount = ({ navigation }) => {
         <View style={{ gap: 10 }}>
           <View style={{ paddingBottom: 20, paddingTop: 80 }}>
             <PrimaryAccentText fontColor={'#FFFFFF'} fontWeight={'bold'}>
-              Recover Existing Account Using Passphrase
+              {i18n.t('recoverAccountTextOne')}
             </PrimaryAccentText>
           </View>
           <SecondaryText>
-            Enter the backup passphrase associated with the account.
+            {i18n.t('recoverAccountTextTwo')}
+
           </SecondaryText>
         </View>
         <Input
-          label='Passphrase (12 words)'
-          placeholder='Enter Passphrase'
+          label={`${i18n.t('passphrase')} 12 words`}
+          placeholder={i18n.t('enterPassphrase')}
           value={phrase}
           onChangeText={(e) => setPhrase(e.toString().toLowerCase())}
         />
@@ -85,7 +87,7 @@ const ImportAccount = ({ navigation }) => {
           <Loading />
         ) : (
           // </View>
-          <PrimaryButton title='Find My Account' onPress={findAccount} />
+          <PrimaryButton title={i18n.t('findMyAccount')} onPress={findAccount} />
         )}
       </View>
     </Container>

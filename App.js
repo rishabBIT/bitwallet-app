@@ -36,6 +36,8 @@ import TokenDetails from './components/asset_details/asset_details'
 import LoadingPage from './components/subcomponents/loading/loadingPage'
 
 import { useFonts } from 'expo-font'
+import I18n from 'i18n-js'
+import i18n, { loadTranslations } from './locales/i18n'
 
 const Stack = createNativeStackNavigator()
 
@@ -82,10 +84,15 @@ export default function App() {
   //   }
   //   loadFonts()
   // }, [])
+  //
+  // Locales
 
-  const [fontsLoaded] = useFonts({
-    'Syne-Regular': require('./assets/fonts/Syne-Regular.ttf'),
-  })
+
+  // const [fontsLoaded] = useFonts({
+  //   'Syne-Regular': require('./assets/fonts/Syne-Regular.ttf'),
+  // })
+
+  // const i18n = new I18n();
 
   useEffect(() => {
     Linking.addEventListener('url', (res) => {
@@ -99,6 +106,7 @@ export default function App() {
   }, [])
 
   useEffect(() => {
+
     if (deepLink === false) {
       checkStatus()
       checkConnection()
@@ -197,7 +205,7 @@ export default function App() {
   // if (error) return console.log(error)
 
   if (isPinRequired)
-    return <Pin title='Enter Pin' subtitle={status} submit={enterPin} />
+    return <Pin title={i18n.t('enterPin')} subtitle={status} submit={enterPin} />
 
   if (!isConnected) return <NoInternet retry={checkConnection} />
 
@@ -386,7 +394,7 @@ export default function App() {
           <Stack.Screen
             name='Pin'
             component={Pin}
-            title={'Enter Pin'}
+            title={i18n.t('enterPin')}
             subtitle={status}
             submit={enterPin}
           />

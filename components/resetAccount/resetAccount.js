@@ -14,6 +14,7 @@ import Pin from '../pin/keypad'
 import { deleteDevice } from '../subcomponents/api/nodeserver'
 import { PrimaryButton } from '../subcomponents/button/button'
 import LoadingPage from '../subcomponents/loading/loadingPage'
+import i18n from '../../locales/i18n'
 
 const ResetAccount = ({ navigation }) => {
   const [isPin, setIsPin] = useState(false)
@@ -54,7 +55,7 @@ const ResetAccount = ({ navigation }) => {
   if (isLoading) return <LoadingPage />
 
   if (isPin)
-    return <Pin title={'Enter Pin'} subtitle={status} submit={submitPin} />
+    return <Pin title={i18n.t('enterPin')} subtitle={status} submit={submitPin} />
 
   return (
     <Container>
@@ -66,27 +67,24 @@ const ResetAccount = ({ navigation }) => {
           justifyContent: 'center',
         }}
       >
-        <PrimaryAccentText>Reset Account</PrimaryAccentText>
+        <PrimaryAccentText>{i18n.t('resetAccount')}</PrimaryAccentText>
         <PrimaryText>
-          Delete all data and account information from the app and start over
+          {i18n.t('resetAccounTextOne')}
         </PrimaryText>
         <WarningText>
-          Warning: Account once deleted can not be recovered. Make sure you have
-          copied your secret passphrase before resetting.
+          {i18n.t('resetAccounTextTwo')}
+
         </WarningText>
         <View>
-          <SecondaryText>Secret phrase can be copied from:</SecondaryText>
-          <SecondaryText>
-            Menu {'>'} Account-Details {'>'} Export Passphrase{' '}
-          </SecondaryText>
+          <SecondaryText>{i18n.t('resetAccounTextThree')}</SecondaryText>
         </View>
         <PrimaryButton
-          title='Reset Account'
+          title={i18n.t('resetAccount')}
           endIcon={'refresh'}
           onPress={() => setIsPin(true)}
         />
         <SecondaryButton
-          title='Cancel X'
+          title={i18n.t('cancel')}
           onPress={() => navigation.navigate('Home')}
         />
       </View>

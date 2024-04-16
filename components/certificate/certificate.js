@@ -23,6 +23,7 @@ import { transferCertificate } from '../subcomponents/api/nodeserver'
 import { AppBar } from '../subcomponents/appbar/appbar'
 import Icon from '../subcomponents/icon/icon'
 import { ErrorText, PrimaryText } from '../subcomponents/text/text'
+import i18n from '../../locales/i18n'
 
 const { width } = Dimensions.get('window')
 
@@ -36,13 +37,11 @@ const Certificate = ({ navigation }) => {
   const [contractIdValue, setContractIdValue] = useState('')
   const [receipientInputValue, setReceipientInputValue] = useState('')
 
-  let tokenItem = {}
 
   const toggleReceipientModalVisibility = () => {
     setReceipientModalVisible(!isReceipientModalVisible)
   }
 
-  const menuRef = useRef(null)
 
   useEffect(() => {
     Sharing.isAvailableAsync().then((available) => {
@@ -99,7 +98,7 @@ const Certificate = ({ navigation }) => {
 
   return (
     <Container>
-      <AppBar title={'Certificate'} back={navigation} />
+      <AppBar title={i18n.t('certificates')} back={navigation} />
       <View
         style={{
           flex: 1,
@@ -125,7 +124,7 @@ const Certificate = ({ navigation }) => {
         >
           <TouchableOpacity onPress={() => shareImage(certData.image)}>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Text style={styles.text}>Share</Text>
+              <Text style={styles.text}>{i18n.t('share')}</Text>
               {isMenu && (
                 <Icon icon={'share'} fill={'#000000'} height={20} width={18} />
               )}
@@ -136,7 +135,7 @@ const Certificate = ({ navigation }) => {
           /> */}
           <TouchableOpacity onPress={() => toggleReceipientModalVisibility()}>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Text style={styles.text}>Transfer</Text>
+              <Text style={styles.text}>{i18n.t('transfer')}</Text>
               {isMenu && (
                 <Icon
                   icon={'transfer_black'}
@@ -150,7 +149,7 @@ const Certificate = ({ navigation }) => {
           {/* <View style={styles.separator} /> */}
           <TouchableOpacity onPress={() => downloadImage(certData.image)}>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Text style={styles.text}>Download</Text>
+              <Text style={styles.text}>{i18n.t('download')}</Text>
               {isMenu && (
                 <Icon
                   icon={'download_one'}
@@ -171,7 +170,7 @@ const Certificate = ({ navigation }) => {
                   color: 'red',
                 }}
               >
-                Delete
+                {i18n.t('delete')}
               </Text>
               {isMenu && (
                 <Icon icon={'bin'} fill={'red'} height={20} width={18} />
@@ -195,11 +194,11 @@ const Certificate = ({ navigation }) => {
                 alignItems: 'center',
               }}
             >
-              <Text style={{ color: '#00FF00', fontSize: 24 }}>Verified</Text>
+              <Text style={{ color: '#00FF00', fontSize: 24 }}>{i18n.t('verified')}</Text>
               <Icon icon='verified' width={20} height={20} />
             </View>
           ) : (
-            <ErrorText fontSize={24}>Not Verified</ErrorText>
+            <ErrorText fontSize={24}>{i18n.t('notVerified')}</ErrorText>
           )}
 
           {/* Popup Menu */}

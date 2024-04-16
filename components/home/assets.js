@@ -25,6 +25,7 @@ import Icon from '../subcomponents/icon/icon'
 import * as FileSystem from 'expo-file-system'
 import { LinearGradient } from 'expo-linear-gradient'
 import * as MediaLibrary from 'expo-media-library'
+import i18n from '../../locales/i18n'
 // import { StorageAccessFramework } from 'expo-file-system'
 
 // import notifee from '@notifee/react-native'
@@ -202,7 +203,7 @@ const Assets = ({ navigation }) => {
 
   return (
     <ScrollView style={{ flex: 1, gap: 20, marginVertical: 20 }}>
-      <PrimaryAccentText fontColor={'#FFFFFF'}>Tokens</PrimaryAccentText>
+      <PrimaryAccentText fontColor={'#FFFFFF'}>{i18n.t('tokens')}</PrimaryAccentText>
 
       {tokens.network === 'testnet' && (
         <View
@@ -211,10 +212,7 @@ const Assets = ({ navigation }) => {
           }}
         >
           {/* <LoadingPage /> */}
-          <PrimaryText>Your tokens will be shown here.</PrimaryText>
-          <PrimaryText>
-            Ask your university to send tokens to your wallet address
-          </PrimaryText>
+          <PrimaryText>{i18n.t('tokensText')}</PrimaryText>
         </View>
       )}
 
@@ -225,10 +223,7 @@ const Assets = ({ navigation }) => {
           }}
         >
           {/* <LoadingPage /> */}
-          <PrimaryText>Your tokens will be shown here.</PrimaryText>
-          <PrimaryText>
-            Ask your university to send tokens to your wallet address
-          </PrimaryText>
+          <PrimaryText>{i18n.t('tokensText')}</PrimaryText>
         </View>
       )}
       {tokens.length > 0 &&
@@ -269,10 +264,10 @@ const Assets = ({ navigation }) => {
           contractIdValue={contractIdValue}
           setContractIdValue={setContractIdValue}
           fetchTokens={fetchTokens}
-          // token={token}
+        // token={token}
         />
         <PrimaryButton
-          title='Import tokens'
+          title={i18n.t('importTokens')}
           endIcon={'receive'}
           onPress={toggleModalVisibility}
         />

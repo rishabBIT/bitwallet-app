@@ -2,11 +2,12 @@ import { Text, TouchableOpacity, View } from 'react-native'
 import Container from '../../subcomponents/container'
 import { AppBar } from '../subcomponents/appbar/appbar'
 import Icon from '../subcomponents/icon/icon'
+import i18n from '../../locales/i18n'
 
 const Menu = ({ navigation }) => {
   return (
     <Container>
-      <AppBar title={'Menu'} back={navigation} />
+      <AppBar title={i18n.t('menu')} back={navigation} />
       <View
         style={{
           flex: 1,
@@ -35,7 +36,7 @@ const Menu = ({ navigation }) => {
             onPress={() => navigation.navigate('Accountdetails')}
           >
             <Text align={'left'} style={{ fontSize: 20, letterSpacing: 0.2 }}>
-              Account Details
+              {i18n.t('accountDetails')}
             </Text>
             <Icon icon={'account'} height={30} width={30} fill='#000000' />
           </TouchableOpacity>
@@ -51,7 +52,7 @@ const Menu = ({ navigation }) => {
             onPress={() => navigation.navigate('ResetAccount')}
           >
             <Text style={{ fontSize: 20, letterSpacing: 0.2 }} align={'left'}>
-              Reset Account
+              {i18n.t('resetAccount')}
             </Text>
             <Icon icon={'refresh'} height={30} width={30} fill='#000000' />
           </TouchableOpacity>
@@ -65,10 +66,10 @@ const Menu = ({ navigation }) => {
               gap: 10,
             }}
             onPress={() => navigation.navigate('TabViewExample')}
-            // onPress={() => navigation.navigate('TransactionHistoryOutgoing')}
+          // onPress={() => navigation.navigate('TransactionHistoryOutgoing')}
           >
             <Text align={'left'} style={{ fontSize: 20, letterSpacing: 0.2 }}>
-              Transaction History
+              {i18n.t('transactionHistory')}
             </Text>
             <Icon icon={'history'} height={30} width={30} fill='#000000' />
           </TouchableOpacity>
@@ -83,10 +84,10 @@ const Menu = ({ navigation }) => {
               gap: 10,
             }}
             onPress={() => navigation.navigate('NFTTransactionHistory')}
-            // onPress={() => navigation.navigate('TransactionHistoryOutgoing')}
+          // onPress={() => navigation.navigate('TransactionHistoryOutgoing')}
           >
             <Text align={'left'} style={{ fontSize: 20, letterSpacing: 0.2 }}>
-              NFT Transactions
+              {i18n.t('nftTransactions')}
             </Text>
             <Icon icon={'history'} height={30} width={30} fill='#000000' />
           </TouchableOpacity>

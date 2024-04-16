@@ -4,7 +4,9 @@
     "slug": "BitWallet",
     "package": "beimagine.tech",
     "version": "2.0.7",
-    "assets": ["./assets/fonts/"],
+    "assets": [
+      "./assets/fonts/"
+    ],
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -13,7 +15,9 @@
       "resizeMode": "contain",
       "backgroundColor": "#020105"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true,
       "infoPlist": {
@@ -49,7 +53,10 @@
               "pathPrefix": "/deep-link"
             }
           ],
-          "category": ["BROWSABLE", "DEFAULT"]
+          "category": [
+            "BROWSABLE",
+            "DEFAULT"
+          ]
         }
       ]
     },
@@ -71,7 +78,8 @@
           "isAccessMediaLocationEnabled": true
         }
       ],
-      "expo-font"
+      "expo-font",
+      "expo-localization"
     ],
     "extra": {
       "eas": {
