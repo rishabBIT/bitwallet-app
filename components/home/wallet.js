@@ -2,6 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import * as Clipboard from 'expo-clipboard'
 import { useEffect, useState } from 'react'
 import { Share, StyleSheet, Text, View } from 'react-native'
+import i18n from '../../locales/i18n'
 import useNotifications from '../notifications/notifications'
 import { getbalance } from '../subcomponents/api/nodeserver'
 import { LinkButton, PrimaryButton } from '../subcomponents/button/button'
@@ -34,7 +35,7 @@ const Wallet = ({ navigation }) => {
   useEffect(() => {
     poppulateAddress()
     poppulateBalance()
-    console.log('triggred')
+    // console.log('triggred')
   }, [])
 
   const poppulateBalance = async () => {
@@ -68,7 +69,8 @@ const Wallet = ({ navigation }) => {
     >
       <View style={{ alignItems: 'center', paddingBottom: 20 }}>
         <Text style={{ color: '#FFFFFF', fontSize: 36, fontWeight: '500' }}>
-          Account
+          {i18n.t('account')}
+          {/* Account */}
         </Text>
       </View>
 
@@ -99,23 +101,26 @@ const Wallet = ({ navigation }) => {
         <GradientText colors={['#BD00FF', '#00B2FF']} style={styles.text}>
           {displaybalance}
         </GradientText>
-        <Text style={{ color: '#FFFFFF', fontSize: 36 }}>NEAR</Text>
+        <Text style={{ color: '#FFFFFF', fontSize: 36 }}>{i18n.t('near')}</Text>
       </View>
       <View style={styles.viewContainer}>
         <View style={styles.transparentContainer}>
           <PrimaryButton
-            title='SEND'
+            title={i18n.t('send')}
             height={14}
             width={14}
             endIcon={'send_one'}
             onPress={() => navigation.navigate('SendTransaction')}
           />
           <PrimaryButton
-            title='RECEIVE'
+            title={i18n.t('receive')}
             height={14}
             width={14}
             endIcon={'receive'}
-            onPress={() => navigation.navigate('AccountdetailsOne')}
+            onPress={() =>
+              // changeLocale("es")
+              navigation.navigate('AccountdetailsOne')
+            }
           />
         </View>
       </View>

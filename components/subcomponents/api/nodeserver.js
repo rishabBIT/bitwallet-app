@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
-const Current_Version = '2.0.7'
+const Current_Version = '2.0.8'
 
 export const updateURLs = async () => {
   try {
@@ -213,11 +213,16 @@ export const transferCertificate = async (receipientId, tokenId) => {
 
     const res = await transferNFT(
       tokenId,
-      'b807a5695fcaf793206ed7fd1b06c03efe2b81e759c58e4155e31a8c3410fa3e',
+      // 'b807a5695fcaf793206ed7fd1b06c03efe2b81e759c58e4155e31a8c3410fa3e',
+      '224bfc053dcb78b69cfce2065e510ed7c4daff72ace3ff48526c4963a4d90079',
       receipientId
     )
 
-    if (res.status === 'success') {
+    // console.log('====================================')
+    // console.log(res)
+    // console.log('====================================')
+
+    if (res.status !== 'failed') {
       await fetch(mainNetUrl, requestOptions)
         .then((res) => res.json())
         .then((response) => {
@@ -451,6 +456,7 @@ export const transferNFT = async (tokenId, contractId, receipient) => {
   const selectednetwork = await AsyncStorage.getItem('network')
   const networkType = JSON.parse(selectednetwork).networkType
   const endpoint = 'transferNFT'
+  // const testNetUrl = 'http://192.168.29.89:3000/api/' + endpoint
   const testNetUrl = API_URL + endpoint
   const result = { status: 'failed' }
 

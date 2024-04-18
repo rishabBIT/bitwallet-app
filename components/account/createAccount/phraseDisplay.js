@@ -5,6 +5,7 @@ import {
   InfoText,
   PassPhraseSecondaryText,
 } from '../../subcomponents/text/text'
+import i18n from '../../../locales/i18n'
 
 const PassphraseDisplay = ({ pasphrase, poppulateKeys }) => {
   function getWordsFromSentence(sentence) {
@@ -47,12 +48,12 @@ const PassphraseDisplay = ({ pasphrase, poppulateKeys }) => {
       ))}
       <View style={{ flexDirection: 'row', gap: 20 }}>
         <TertiaryButton
-          title='Copy'
+          title={i18n.t('copy')}
           endIcon={'copy'}
           onPress={() => Clipboard.setStringAsync(pasphrase)}
         />
         <TertiaryButton
-          title='Generate New'
+          title={i18n.t('generateNew')}
           endIcon={'refresh'}
           onPress={() => poppulateKeys()}
         />

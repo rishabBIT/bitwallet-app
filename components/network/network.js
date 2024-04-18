@@ -4,6 +4,7 @@ import { TouchableOpacity, View } from 'react-native'
 import Container from '../../subcomponents/container'
 import Icon from '../subcomponents/icon/icon'
 import { PrimaryAccentText } from '../subcomponents/text/text'
+import i18n from '../../locales/i18n'
 
 const Network = ({ navigation }) => {
   const [network, setNetwork] = useState('')
@@ -40,7 +41,7 @@ const Network = ({ navigation }) => {
   return (
     <Container>
       <View style={{ padding: 20, gap: 20 }}>
-        <PrimaryAccentText>Select Network</PrimaryAccentText>
+        <PrimaryAccentText>{i18n.t('selectNetwork')}</PrimaryAccentText>
         <TouchableOpacity
           style={{
             padding: 20,
@@ -52,7 +53,7 @@ const Network = ({ navigation }) => {
           }}
           onPress={() => selectNetwork('mainnet', 'Mainnet')}
         >
-          <PrimaryAccentText align={'left'}>Mainnet</PrimaryAccentText>
+          <PrimaryAccentText align={'left'}>{i18n.t('mainnet')}</PrimaryAccentText>
           {network === 'Mainnet' && (
             <Icon icon={'check'} height={30} width={30} fill='#3498DB' />
           )}
@@ -68,7 +69,7 @@ const Network = ({ navigation }) => {
           }}
           onPress={() => selectNetwork('testnet', 'Testnet')}
         >
-          <PrimaryAccentText align={'left'}>Testnet</PrimaryAccentText>
+          <PrimaryAccentText align={'left'}>{i18n.t('testnet')}</PrimaryAccentText>
           {network === 'Testnet' && (
             <Icon icon={'check'} height={30} width={30} fill='#3498DB' />
           )}

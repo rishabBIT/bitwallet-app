@@ -14,6 +14,7 @@ import { SceneMap, TabBar, TabView } from 'react-native-tab-view'
 import Icon from '../subcomponents/icon/icon'
 import TransactionHistoryIncoming from '../transaction_history/transaction_history_incoming'
 import TransactionHistoryOutgoing from '../transaction_history/transaction_history_outgoing'
+import i18n from '../../locales/i18n'
 
 // const initialLayout = { width: Dimensions.get('window').width }
 
@@ -148,8 +149,8 @@ const { width } = Dimensions.get('window')
 const TabViewExample = ({ navigation }) => {
   const [index, setIndex] = React.useState(0)
   const [routes] = React.useState([
-    { key: 'sent', title: 'Sent' },
-    { key: 'received', title: 'Received' },
+    { key: 'sent', title: i18n.t('sent') },
+    { key: 'received', title: i18n.t('received') },
   ])
 
   const renderScene = SceneMap({
@@ -189,7 +190,7 @@ const TabViewExample = ({ navigation }) => {
               <Text
                 style={{ color: 'white', fontSize: 20, fontWeight: 'bold' }}
               >
-                Transaction History
+                {i18n.t('transactionHistory')}
               </Text>
             </View>
           </View>

@@ -5,13 +5,14 @@ import Container from '../../subcomponents/container'
 import { getNFTTransactionHistory } from '../subcomponents/api/nodeserver'
 import { AppBar } from '../subcomponents/appbar/appbar'
 import LoadingPage from '../subcomponents/loading/loadingPage'
+import i18n from '../../locales/i18n'
 
 const NFTTransactionHistory = ({ navigation }) => {
   const [nftTransactionHistory, setNftTransactionHistory] = useState([])
   const [isLoading, setIsloading] = useState(false)
 
   useEffect(() => {
-    ;(async () => {
+    ; (async () => {
       setIsloading(true)
       const publicKey = await AsyncStorage.getItem('publicKey')
       res = await getNFTTransactionHistory(publicKey.toString().trim())
@@ -56,18 +57,18 @@ const NFTTransactionHistory = ({ navigation }) => {
   if (nftTransactionHistory.length === 0) {
     return (
       <Container>
-        <AppBar title={'NFT Transaction'} back={navigation} />
+        <AppBar title={i18n.t('nftTransactions')} back={navigation} />
         <View
           style={{ flex: 1, padding: 20, gap: 20, justifyContent: 'center' }}
         >
-          <Text style={{ color: 'white', fontSize: 30 }}>No transactions</Text>
+          <Text style={{ color: 'white', fontSize: 30 }}>{i18n.t('noTransaction')}</Text>
         </View>
       </Container>
     )
   } else {
     return (
       <Container>
-        <AppBar title={'NFT Transactions'} back={navigation} />
+        <AppBar title={i18n.t('nftTransactions')} back={navigation} />
         <View
           style={{ flex: 1, padding: 20, gap: 20, justifyContent: 'center' }}
         >

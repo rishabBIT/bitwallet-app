@@ -50,7 +50,7 @@ const DeepLinkHandler = ({ app_name, redirectUrl, setDeepLink }) => {
   }
 
   if (isPinRequired)
-    return <Pin title='Enter Pin' subtitle={status} submit={enterPin} />
+    return <Pin title={i18n.t('enterPin')} subtitle={status} submit={enterPin} />
 
   return (
     <Container>

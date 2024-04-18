@@ -8,6 +8,7 @@ import { PrimaryButton } from '../subcomponents/button/button'
 import { PrimaryAccentText, PrimaryText } from '../subcomponents/text/text'
 import PinInput from './pinInput'
 import SeedPhrase from './seedPhrase'
+import i18n from '../../locales/i18n'
 
 const Accountdetails = ({ navigation, isExport = false }) => {
   const [account, setAccount] = useState('')
@@ -30,7 +31,7 @@ const Accountdetails = ({ navigation, isExport = false }) => {
 
   return (
     <Container>
-      <AppBar title={'Account Details'} back={navigation} />
+      <AppBar title={i18n.t('accountDetails')} back={navigation} />
       <View
         style={{
           flex: 1,
@@ -45,7 +46,7 @@ const Accountdetails = ({ navigation, isExport = false }) => {
             fontColor={'#FFFFFF'}
             fontWeight={'bold'}
           >
-            Account ID:{' '}
+            {i18n.t('accountID')}:{' '}
           </PrimaryAccentText>
           <PrimaryText align={'left'}>{account}</PrimaryText>
         </View>
@@ -79,11 +80,12 @@ const Accountdetails = ({ navigation, isExport = false }) => {
               textAlign: 'justify',
             }}
           >
-            Scan the qr code to send NEAR, tokens or NFTs.
+            {i18n.t('scanQRText')}
+            {/* Scan the qr code to send NEAR, tokens or NFTs. */}
           </Text>
         </View>
 
-        <PrimaryButton title='Export Passphrase' onPress={() => setView(2)} />
+        <PrimaryButton title={i18n.t('exportPassphrase')} onPress={() => setView(2)} />
       </View>
     </Container>
   )

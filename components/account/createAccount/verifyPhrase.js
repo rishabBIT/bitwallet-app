@@ -9,6 +9,7 @@ import { PrimaryButton } from '../../subcomponents/button/button'
 import Input from '../../subcomponents/input/input'
 import { Loading } from '../../subcomponents/loading/loadingPage'
 import { ErrorText, SecondaryText } from '../../subcomponents/text/text'
+import i18n from '../../../locales/i18n'
 
 const VerifyPhrase = ({ pasphrase, keys, back, navigation }) => {
   const [word, setWord] = useState('')
@@ -72,7 +73,7 @@ const VerifyPhrase = ({ pasphrase, keys, back, navigation }) => {
 
   return (
     <Container>
-      <AppBar title={'Verify Passphrase'} back={back} />
+      <AppBar title={i18n.t('verifyPassphrase')} back={back} />
       <View
         style={{
           flex: 1,
@@ -85,14 +86,13 @@ const VerifyPhrase = ({ pasphrase, keys, back, navigation }) => {
           {/* <PrimaryAccentText>Verify Passphrase</PrimaryAccentText> */}
           <View style={{ paddingTop: 100 }}></View>
           <SecondaryText>
-            Enter the following word from your recovery phrase to complete the
-            setup process.
+            {i18n.t('verifyPassphraseText')}
           </SecondaryText>
         </View>
         {/* <View style={{ paddingTop: 100 }}></View> */}
         <View>
           <Input
-            label={`Enter word number ${targetIndex}`}
+            label={`${i18n.t('wordNumberText')} ${targetIndex}`}
             placeholder='Enter word...'
             value={word}
             onChangeText={(e) => setWord(e.toString().toLowerCase())}
@@ -105,7 +105,7 @@ const VerifyPhrase = ({ pasphrase, keys, back, navigation }) => {
           <Loading />
         ) : (
           <PrimaryButton
-            title='Verify and Complete'
+            title={i18n.t('verifyAndComplete')}
             onPress={() => {
               handleSubmit()
               getWordsFromSentence(pasphrase)

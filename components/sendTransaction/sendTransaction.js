@@ -8,6 +8,7 @@ import { PrimaryButton } from '../subcomponents/button/button'
 import Input from '../subcomponents/input/input'
 import { Loading } from '../subcomponents/loading/loadingPage'
 import { SecondaryText } from '../subcomponents/text/text'
+import i18n from '../../locales/i18n'
 
 const checkAddressValidity = (e) => {
   const lastFiveChars = e.slice(-5)
@@ -87,7 +88,7 @@ const SendTransaction = ({ navigation }) => {
 
   return (
     <Container>
-      <AppBar title={'Send NEAR'} back={navigation} />
+      <AppBar title={i18n.t('sendNear')} back={navigation} />
       <View
         style={{
           flex: 1,
@@ -99,22 +100,21 @@ const SendTransaction = ({ navigation }) => {
         {/* <PrimaryAccentText>Send NEAR</PrimaryAccentText> */}
         <View>
           <Input
-            label='Amount'
+            label={i18n.t('amount')}
             type='number'
             keyboardType='numeric'
             value={amount.toString()}
             onChangeText={updateAmount}
           />
-          <SecondaryText>Available balance : {displaybalance}</SecondaryText>
+          <SecondaryText>{i18n.t('availableBalance')} : {displaybalance}</SecondaryText>
         </View>
         <Input
-          label='Account ID'
+          label={i18n.t('accountID')}
           value={address.toString()}
           onChangeText={updateAddress}
         />
         <SecondaryText>
-          The account ID must include a Top Level Account such as .near or
-          contain exactly 64 characters
+          {i18n.t('sendNearText')}
         </SecondaryText>
         {isAddressValid && !isLoading && (
           <PrimaryButton title='Send' endIcon={'send'} onPress={send} />

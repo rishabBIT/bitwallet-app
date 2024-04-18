@@ -16,6 +16,7 @@ import {
   PrimaryText,
   SecondaryText,
 } from '../subcomponents/text/text'
+import i18n from '../../locales/i18n'
 
 export default function Scanner({ navigation }) {
   const [hasPermission, setHasPermission] = useState(null)
@@ -62,10 +63,9 @@ export default function Scanner({ navigation }) {
           gap: 20,
         }}
       >
-        <PrimaryAccentText>Bit-Scan</PrimaryAccentText>
+        <PrimaryAccentText>{i18n.t('bitScan')}</PrimaryAccentText>
         <SecondaryText>
-          Scan QR-code to send Tokens, Verify Certificate, Connect a DAPP or
-          Open a URL.
+          {i18n.t('bitScanText')}
         </SecondaryText>
         <View
           style={{
@@ -78,7 +78,7 @@ export default function Scanner({ navigation }) {
           />
         </View>
         <SecondaryButton
-          title='Cancel X'
+          title={i18n.t('cancel')}
           onPress={() => navigation.navigate('Home')}
         />
       </View>
@@ -131,11 +131,11 @@ const ScannedPage = ({ navigation, data, setScanned }) => {
     try {
       const urlPattern = new RegExp(
         '^(https?:\\/\\/)?' +
-          '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' +
-          '((\\d{1,3}\\.){3}\\d{1,3}))' +
-          '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' +
-          '(\\?[;&a-z\\d%_.~+=-]*)?' +
-          '(\\#[-a-z\\d_]*)?$',
+        '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' +
+        '((\\d{1,3}\\.){3}\\d{1,3}))' +
+        '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' +
+        '(\\?[;&a-z\\d%_.~+=-]*)?' +
+        '(\\#[-a-z\\d_]*)?$',
         'i'
       )
       if (urlPattern.test(data)) {
@@ -252,15 +252,15 @@ const ConnectionPage = ({ data, navigation }) => {
 
   const connectSocket = async (wsURL) => {
     const chatSocket = new WebSocket(wsURL)
-    chatSocket.onmessage = function (e) {
+    chatSocket.onmessage = function(e) {
       const data = JSON.parse(e.data)
       console.log(data)
     }
-    chatSocket.onclose = function (e) {
+    chatSocket.onclose = function(e) {
       setIsConnected(false)
       console.log('Chat socket closed unexpectedly')
     }
-    chatSocket.onopen = function (e) {
+    chatSocket.onopen = function(e) {
       setSocket(chatSocket)
       setIsConnected(true)
     }

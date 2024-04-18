@@ -1,6 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useState } from 'react'
 import Pin from './keypad'
+import i18n from '../../locales/i18n'
 
 const CreatePin = ({ navigation }) => {
   const [step, setStep] = useState(1)
@@ -30,16 +31,16 @@ const CreatePin = ({ navigation }) => {
     return (
       <Pin
         submit={handleSubmit}
-        title='Create PIN'
-        subtitle='4-digit numeric pin'
+        title={i18n.t('createPin')}
+        subtitle={i18n.t('createPinText')}
       />
     )
   } else {
     return (
       <Pin
         submit={handleSubmit}
-        title='Confirm Pin'
-        subtitle='Enter Pin Again'
+        title={i18n.t('confirmPin')}
+        subtitle={i18n.t('confirmPinText')}
       />
     )
   }

@@ -10,6 +10,7 @@ import { AppBar } from '../../subcomponents/appbar/appbar'
 import { PrimaryAccentText, SecondaryText } from '../../subcomponents/text/text'
 import PassphraseDisplay from './phraseDisplay'
 import VerifyPhrase from './verifyPhrase'
+import i18n from '../../../locales/i18n'
 
 const CreateAccount = ({ navigation, back }) => {
   const [pasphrase, setPassphrase] = useState(null)
@@ -43,7 +44,7 @@ const CreateAccount = ({ navigation, back }) => {
 
   return (
     <Container>
-      <AppBar title={'Create Account'} back={navigation} />
+      <AppBar title={i18n.t('createAccount')} back={navigation} />
 
       <View
         style={{
@@ -55,19 +56,17 @@ const CreateAccount = ({ navigation, back }) => {
       >
         <View style={{ gap: 10 }}>
           <PrimaryAccentText fontColor={'#FFFFFF'} fontWeight={'bold'}>
-            Setup Your Secure Passphrase
+            {i18n.t('setupPassphrase')}
           </PrimaryAccentText>
           <View style={{ paddingBottom: 10 }}></View>
           <SecondaryText>
-            Write down the following words in order and keep them somewhere
-            safe.
+            {i18n.t('createAccountTextOne')}
           </SecondaryText>
           <SecondaryText color={'#D8DD00'}>
-            Anyone with access to the passphrase will also have access to your
-            account!
+            {i18n.t('createAccountTextTwo')}
           </SecondaryText>
           <SecondaryText>
-            You will be asked to verify your passphrase next.
+            {i18n.t('createAccountTextThree')}
           </SecondaryText>
         </View>
 
@@ -82,7 +81,7 @@ const CreateAccount = ({ navigation, back }) => {
 
         {!isLoading && (
           <PrimaryButton
-            title='Continue'
+            title={i18n.t('continue')}
             onPress={() => {
               setIsVerifying(true)
             }}
