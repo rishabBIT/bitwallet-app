@@ -3,8 +3,8 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Container from "../../subcomponents/container";
 import Icon from "../subcomponents/icon/icon";
 
-const TokenDetails = ({ route, navigation }) => {
-  const { tokenData } = route.params;
+const TokenDetails = ({ props, navigation }) => {
+  const { tokenData } = props;
 
   return (
     <Container>

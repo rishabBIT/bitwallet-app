@@ -27,9 +27,13 @@ import { useState } from "react";
 
 const NavigationContainer = ({ children }) => {
   const [currentPage, setCurrentPage] = useState("Home");
+  const [currentComponentprops, setCurrentComponentProps] = useState({});
 
   const navigation = {
-    navigate: (page) => setCurrentPage(page),
+    navigate: (page, props = {}) => {
+      setCurrentComponentProps(props);
+      setCurrentPage(page);
+    },
   };
 
   const routes = {
@@ -50,14 +54,22 @@ const NavigationContainer = ({ children }) => {
       <TransactionHistoryIncoming navigation={navigation} />
     ),
     TabViewExample: <TabViewExample navigation={navigation} />,
-    SendTransaction: <SendTransaction navigation={navigation} />,
+    SendTransaction: (
+      <SendTransaction navigation={navigation} props={currentComponentprops} />
+    ),
     Scanner: <Scanner navigation={navigation} />,
-    Certificate: <Certificate navigation={navigation} />,
-    Connection: <Connection navigation={navigation} />,
+    Certificate: (
+      <Certificate navigation={navigation} props={currentComponentprops} />
+    ),
+    Connection: (
+      <Connection navigation={navigation} props={currentComponentprops} />
+    ),
     Deeplink: <DeepLinkHandler navigation={navigation} />,
     Pin: <Pin navigation={navigation} />,
     NFTTransactionHistory: <NFTTransactionHistory navigation={navigation} />,
-    TokenDetails: <TokenDetails navigation={navigation} />,
+    TokenDetails: (
+      <TokenDetails navigation={navigation} props={currentComponentprops} />
+    ),
   };
 
   return routes[currentPage];

@@ -1,4 +1,3 @@
-import { useRoute } from "@react-navigation/native";
 import React, { useEffect } from "react";
 
 import * as FileSystem from "expo-file-system";
@@ -27,9 +26,8 @@ import i18n from "../../locales/i18n";
 
 const { width } = Dimensions.get("window");
 
-const Certificate = ({ navigation }) => {
-  const route = useRoute();
-  const { certData, issuerData } = route.params;
+const Certificate = ({ navigation, props }) => {
+  const { certData, issuerData } = props;
   const [isSharingAvailable, setIsSharingAvailable] = useState(false);
   const [isReceipientModalVisible, setReceipientModalVisible] = useState(false);
 

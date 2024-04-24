@@ -1,4 +1,3 @@
-import { useRoute } from "@react-navigation/native";
 import { useEffect, useState } from "react";
 import { View } from "react-native";
 import Container from "../../subcomponents/container";
@@ -21,9 +20,7 @@ const checkAddressValidity = (e) => {
   );
 };
 
-const SendTransaction = ({ navigation }) => {
-  const route = useRoute();
-
+const SendTransaction = ({ navigation, props }) => {
   const [balance, setBalance] = useState(0);
   const [displaybalance, setDisplayBalance] = useState("0.00");
   const [amount, setAmount] = useState(0);
@@ -33,7 +30,7 @@ const SendTransaction = ({ navigation }) => {
 
   const poppulateInitialData = () => {
     try {
-      const { transactionData } = route.params;
+      const { transactionData } = props;
       setAddress(transactionData.address);
       setIsAddressValid(checkAddressValidity(transactionData.address));
     } catch (e) {

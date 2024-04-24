@@ -2,14 +2,12 @@ import Container from "../subcomponents/container/container";
 import { View } from "react-native";
 import { PrimaryAccentText, PrimaryText } from "../subcomponents/text/text";
 import { PrimaryButton, SecondaryButton } from "../subcomponents/button/button";
-import { useRoute } from "@react-navigation/native";
 import { useState, useEffect } from "react";
 import { Loading } from "../subcomponents/loading/loadingPage";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const Connection = ({ navigation }) => {
-  const route = useRoute();
-  const { data } = route.params;
+const Connection = ({ navigation, props }) => {
+  const { data } = props;
   const [isLoading, setIsLoading] = useState(false);
   const [isConnected, setIsConnected] = useState(false);
   const [socket, setSocket] = useState(null);
