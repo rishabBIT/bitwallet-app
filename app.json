@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "bitwallet-app",
-    "slug": "bitwallet-app",
+    "name": "BitWallet",
+    "slug": "BitWallet",
     "version": "2.0.8",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -11,7 +11,9 @@
       "resizeMode": "contain",
       "backgroundColor": "#020105"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true,
       "infoPlist": {
@@ -46,7 +48,10 @@
               "pathPrefix": "/deep-link"
             }
           ],
-          "category": ["BROWSABLE", "DEFAULT"]
+          "category": [
+            "BROWSABLE",
+            "DEFAULT"
+          ]
         }
       ]
     },
@@ -67,11 +72,12 @@
           "savePhotosPermission": "Allow $(PRODUCT_NAME) to save photos.",
           "isAccessMediaLocationEnabled": true
         }
-      ]
+      ],
+      "expo-router"
     ],
     "extra": {
       "eas": {
-        "projectId": "560b13d6-dd0f-4789-9a8c-ceee565006e5"
+        "projectId": "05f10cf9-197e-4ad5-86d5-abca73325315"
       }
     }
   }
