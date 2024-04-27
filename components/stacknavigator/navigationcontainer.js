@@ -1,40 +1,38 @@
-import CreateAccount from "../account/createAccount/createAccount";
-import CreateorImport from "../account/createorimport";
-import ImportAccount from "../account/importAccount/importAccount";
-import Accountdetails from "../accountdetails/accountdetails";
-import Certificate from "../certificate/certificate";
-import Connection from "../connection/connection";
-import DeepLinkHandler from "../deepLinking/deepLinking";
-import Home from "../home/home";
-import Menu from "../menu/menu";
-import Network from "../network/network";
-import NFTTransactionHistory from "../nft_transaction_history/nft_transaction_history";
-import NoInternet from "../noInternet/noInternet";
-import CreatePin from "../pin/createPin";
-import Pin from "../pin/keypad";
-import ResetAccount from "../resetAccount/resetAccount";
-import Scanner from "../scanner/scanner";
-import SendTransaction from "../sendTransaction/sendTransaction";
-import TabViewExample from "../tabview/tabview";
-import TransactionHistoryIncoming from "../transaction_history/transaction_history_incoming";
-import TransactionHistoryOutgoing from "../transaction_history/transaction_history_outgoing";
-import Update from "../update/update";
-import AccountdetailsOne from "../accountdetails/accountdetails_one";
-import TokenDetails from "../asset_details/asset_details";
-import LoadingPage from "../subcomponents/loading/loadingPage";
+import CreateAccount from '../account/createAccount/createAccount'
+import CreateorImport from '../account/createorimport'
+import ImportAccount from '../account/importAccount/importAccount'
+import Accountdetails from '../accountdetails/accountdetails'
+import AccountdetailsOne from '../accountdetails/accountdetails_one'
+import TokenDetails from '../asset_details/asset_details'
+import Certificate from '../certificate/certificate'
+import Connection from '../connection/connection'
+import DeepLinkHandler from '../deepLinking/deepLinking'
+import Home from '../home/home'
+import Menu from '../menu/menu'
+import Network from '../network/network'
+import NFTTransactionHistory from '../nft_transaction_history/nft_transaction_history'
+import CreatePin from '../pin/createPin'
+import Pin from '../pin/keypad'
+import ResetAccount from '../resetAccount/resetAccount'
+import Scanner from '../scanner/scanner'
+import SendTransaction from '../sendTransaction/sendTransaction'
+import TabViewExample from '../tabview/tabview'
+import TransactionHistoryIncoming from '../transaction_history/transaction_history_incoming'
+import TransactionHistoryOutgoing from '../transaction_history/transaction_history_outgoing'
 
-import { useState } from "react";
+import { useState } from 'react'
+import TabSwitcher from '../tabview/tabSwitcher'
 
 const NavigationContainer = ({ children }) => {
-  const [currentPage, setCurrentPage] = useState("Home");
-  const [currentComponentprops, setCurrentComponentProps] = useState({});
+  const [currentPage, setCurrentPage] = useState('Home')
+  const [currentComponentprops, setCurrentComponentProps] = useState({})
 
   const navigation = {
     navigate: (page, props = {}) => {
-      setCurrentComponentProps(props);
-      setCurrentPage(page);
+      setCurrentComponentProps(props)
+      setCurrentPage(page)
     },
-  };
+  }
 
   const routes = {
     Home: <Home navigation={navigation} currentPage={currentPage} />,
@@ -57,6 +55,7 @@ const NavigationContainer = ({ children }) => {
     SendTransaction: (
       <SendTransaction navigation={navigation} props={currentComponentprops} />
     ),
+    TabSwitcher: <TabSwitcher navigation={navigation} />,
     Scanner: <Scanner navigation={navigation} />,
     Certificate: (
       <Certificate navigation={navigation} props={currentComponentprops} />
@@ -70,9 +69,9 @@ const NavigationContainer = ({ children }) => {
     TokenDetails: (
       <TokenDetails navigation={navigation} props={currentComponentprops} />
     ),
-  };
+  }
 
-  return routes[currentPage];
-};
+  return routes[currentPage]
+}
 
-export default NavigationContainer;
+export default NavigationContainer

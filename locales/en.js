@@ -94,6 +94,7 @@ export default {
   delete: 'Delete',
   verified: 'Verified',
   notVerified: 'Not Verified',
+  language: 'Language',
 }
 
 // wallet and extension sentences don't match

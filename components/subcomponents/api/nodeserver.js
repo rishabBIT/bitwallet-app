@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
-const Current_Version = '2.0.8'
+const Current_Version = '2.0.9'
 
 export const updateURLs = async () => {
   try {
@@ -233,6 +233,7 @@ export const transferCertificate = async (receipientId, tokenId) => {
           result.data = response
         })
     }
+    return result
   } catch (e) {
     console.log(`transfer certificates : ${e}`)
   }

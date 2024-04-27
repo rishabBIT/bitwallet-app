@@ -1,12 +1,13 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import * as Clipboard from 'expo-clipboard'
 import { useEffect, useState } from 'react'
-import { Share, StyleSheet, Text, View } from 'react-native'
+import { Dimensions, Share, StyleSheet, Text, View } from 'react-native'
 import i18n from '../../locales/i18n'
+import Container from '../../subcomponents/container'
 import useNotifications from '../notifications/notifications'
 import { getbalance } from '../subcomponents/api/nodeserver'
 import { LinkButton, PrimaryButton } from '../subcomponents/button/button'
-import LoadingPage from '../subcomponents/loading/loadingPage'
+import { Loading } from '../subcomponents/loading/loadingPage'
 import { GradientText } from '../subcomponents/text/text'
 
 const Wallet = ({ navigation }) => {
@@ -58,7 +59,21 @@ const Wallet = ({ navigation }) => {
       })
   }
 
-  if (loading) return <LoadingPage />
+  if (loading)
+    return (
+      <Container>
+        <View
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignSelf: 'center',
+            width: Dimensions.get('window').width,
+          }}
+        >
+          <Loading />
+        </View>
+      </Container>
+    )
 
   return (
     <View

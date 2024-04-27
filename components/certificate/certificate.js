@@ -1,10 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect } from 'react'
 
-import * as FileSystem from "expo-file-system";
-import { Image } from "expo-image";
-import * as MediaLibrary from "expo-media-library";
-import * as Sharing from "expo-sharing";
-import { useRef, useState } from "react";
+import * as FileSystem from 'expo-file-system'
+import { Image } from 'expo-image'
+import * as MediaLibrary from 'expo-media-library'
+import * as Sharing from 'expo-sharing'
+import { useState } from 'react'
 import {
   Button,
   Dimensions,
@@ -15,88 +15,88 @@ import {
   ToastAndroid,
   TouchableOpacity,
   View,
-} from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import Container from "../../subcomponents/container";
-import { transferCertificate } from "../subcomponents/api/nodeserver";
-import { AppBar } from "../subcomponents/appbar/appbar";
-import Icon from "../subcomponents/icon/icon";
-import { ErrorText, PrimaryText } from "../subcomponents/text/text";
-import i18n from "../../locales/i18n";
+} from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
+import i18n from '../../locales/i18n'
+import Container from '../../subcomponents/container'
+import { transferCertificate } from '../subcomponents/api/nodeserver'
+import { AppBar } from '../subcomponents/appbar/appbar'
+import Icon from '../subcomponents/icon/icon'
+import { ErrorText, PrimaryText } from '../subcomponents/text/text'
 
-const { width } = Dimensions.get("window");
+const { width } = Dimensions.get('window')
 
 const Certificate = ({ navigation, props }) => {
-  const { certData, issuerData } = props;
-  const [isSharingAvailable, setIsSharingAvailable] = useState(false);
-  const [isReceipientModalVisible, setReceipientModalVisible] = useState(false);
+  const { certData, issuerData } = props
+  const [isSharingAvailable, setIsSharingAvailable] = useState(false)
+  const [isReceipientModalVisible, setReceipientModalVisible] = useState(false)
 
-  const [isMenu, setIsMenu] = useState(false);
-  const [contractIdValue, setContractIdValue] = useState("");
-  const [receipientInputValue, setReceipientInputValue] = useState("");
+  const [isMenu, setIsMenu] = useState(false)
+  const [contractIdValue, setContractIdValue] = useState('')
+  const [receipientInputValue, setReceipientInputValue] = useState('')
 
   const toggleReceipientModalVisibility = () => {
-    setReceipientModalVisible(!isReceipientModalVisible);
-  };
+    setReceipientModalVisible(!isReceipientModalVisible)
+  }
 
   useEffect(() => {
     Sharing.isAvailableAsync().then((available) => {
       if (available) {
-        setIsSharingAvailable(true);
+        setIsSharingAvailable(true)
       } else {
-        setIsSharingAvailable(false);
+        setIsSharingAvailable(false)
       }
-    });
-  }, []);
+    })
+  }, [])
 
   async function downloadImage(uri) {
     try {
       const downloadedFile = await FileSystem.downloadAsync(
         uri,
-        FileSystem.documentDirectory + "certificate.png"
-      );
+        FileSystem.documentDirectory + 'certificate.png'
+      )
 
-      const permission = await MediaLibrary.requestPermissionsAsync();
-      const asset = await MediaLibrary.createAssetAsync(downloadedFile.uri);
-      const album = await MediaLibrary.getAlbumAsync("Certificates");
-      alert("Image is saved in your photo gallery.");
+      const permission = await MediaLibrary.requestPermissionsAsync()
+      const asset = await MediaLibrary.createAssetAsync(downloadedFile.uri)
+      const album = await MediaLibrary.getAlbumAsync('Certificates')
+      alert('Image is saved in your photo gallery.')
       if (album == null) {
-        await MediaLibrary.createAlbumAsync("Certificates", asset, false);
+        await MediaLibrary.createAlbumAsync('Certificates', asset, false)
       } else {
-        await MediaLibrary.addAssetsToAlbumAsync([asset], album, false);
+        await MediaLibrary.addAssetsToAlbumAsync([asset], album, false)
       }
     } catch (e) {
-      Linking.openURL(uri);
+      Linking.openURL(uri)
     }
   }
 
   async function shareImage(uri) {
     const downloadedFile = await FileSystem.downloadAsync(
       uri,
-      FileSystem.documentDirectory + "certificate.png"
-    );
+      FileSystem.documentDirectory + 'certificate.png'
+    )
 
     Sharing.shareAsync(downloadedFile.uri)
       .then((data) => {
-        console.log(data);
+        console.log(data)
       })
       .catch((err) => {
-        console.log(JSON.stringify(err));
-      });
+        console.log(JSON.stringify(err))
+      })
   }
 
   const toggleMenu = () => {
-    setIsMenu(!isMenu);
-  };
+    setIsMenu(!isMenu)
+  }
 
   const blurhash =
-    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVjE9071LFZzNxjKM0BdvHD4s4xMZGw7QVZQ&usqp=CAU";
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVjE9071LFZzNxjKM0BdvHD4s4xMZGw7QVZQ&usqp=CAU'
 
   return (
     <Container>
       <AppBar
-        title={i18n.t("certificates")}
-        back={() => navigation.navigate("Home")}
+        title={i18n.t('certificates')}
+        back={() => navigation.navigate('Home')}
       />
       <View
         style={{
@@ -105,27 +105,27 @@ const Certificate = ({ navigation, props }) => {
           gap: 20,
           width: width,
           zIndex: 1,
-          position: "relative",
+          position: 'relative',
         }}
       >
         <View
           style={{
             height: isMenu ? 180 : 0,
-            backgroundColor: "#FFFFFF",
-            position: "absolute",
+            backgroundColor: '#FFFFFF',
+            position: 'absolute',
             right: 0,
             top: 82,
             zIndex: 9999,
-            alignItems: "center",
+            alignItems: 'center',
             marginRight: 20,
             paddingHorizontal: 10,
           }}
         >
           <TouchableOpacity onPress={() => shareImage(certData.image)}>
-            <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <Text style={styles.text}>{i18n.t("share")}</Text>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <Text style={styles.text}>{i18n.t('share')}</Text>
               {isMenu && (
-                <Icon icon={"share"} fill={"#000000"} height={20} width={18} />
+                <Icon icon={'share'} fill={'#000000'} height={20} width={18} />
               )}
             </View>
           </TouchableOpacity>
@@ -133,12 +133,12 @@ const Certificate = ({ navigation, props }) => {
             style={{ height: 1, width: '100%', backgroundColor: '#CCCCCC' }}
           /> */}
           <TouchableOpacity onPress={() => toggleReceipientModalVisibility()}>
-            <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <Text style={styles.text}>{i18n.t("transfer")}</Text>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <Text style={styles.text}>{i18n.t('transfer')}</Text>
               {isMenu && (
                 <Icon
-                  icon={"transfer_black"}
-                  fill={"#000000"}
+                  icon={'transfer_black'}
+                  fill={'#000000'}
                   height={20}
                   width={18}
                 />
@@ -147,32 +147,32 @@ const Certificate = ({ navigation, props }) => {
           </TouchableOpacity>
           {/* <View style={styles.separator} /> */}
           <TouchableOpacity onPress={() => downloadImage(certData.image)}>
-            <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <Text style={styles.text}>{i18n.t("download")}</Text>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <Text style={styles.text}>{i18n.t('download')}</Text>
               {isMenu && (
                 <Icon
-                  icon={"download_one"}
-                  fill={"#000000"}
+                  icon={'download_one'}
+                  fill={'#000000'}
                   height={20}
                   width={18}
                 />
               )}
             </View>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => console.log("Third option clicked")}>
-            <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <TouchableOpacity onPress={() => console.log('Third option clicked')}>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <Text
                 style={{
                   paddingVertical: 10,
                   paddingHorizontal: 20,
                   fontSize: 16,
-                  color: "red",
+                  color: 'red',
                 }}
               >
-                {i18n.t("delete")}
+                {i18n.t('delete')}
               </Text>
               {isMenu && (
-                <Icon icon={"bin"} fill={"red"} height={20} width={18} />
+                <Icon icon={'bin'} fill={'red'} height={20} width={18} />
               )}
             </View>
           </TouchableOpacity>
@@ -180,26 +180,26 @@ const Certificate = ({ navigation, props }) => {
         {/* <PrimaryAccentText>{certData?.name}</PrimaryAccentText> */}
         <View
           style={{
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "space-between",
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
             // paddingBottom: 160,
           }}
         >
           {issuerData.is_verified ? (
             <View
               style={{
-                flexDirection: "row",
-                alignItems: "center",
+                flexDirection: 'row',
+                alignItems: 'center',
               }}
             >
-              <Text style={{ color: "#00FF00", fontSize: 24 }}>
-                {i18n.t("verified")}
+              <Text style={{ color: '#00FF00', fontSize: 24 }}>
+                {i18n.t('verified')}
               </Text>
-              <Icon icon="verified" width={20} height={20} />
+              <Icon icon='verified' width={20} height={20} />
             </View>
           ) : (
-            <ErrorText fontSize={24}>{i18n.t("notVerified")}</ErrorText>
+            <ErrorText fontSize={24}>{i18n.t('notVerified')}</ErrorText>
           )}
 
           {/* Popup Menu */}
@@ -244,10 +244,10 @@ const Certificate = ({ navigation, props }) => {
           </MenuProvider> */}
           <TouchableOpacity onPress={() => toggleMenu()}>
             {isMenu === false ? (
-              <Icon height={30} width={30} icon="menu" />
+              <Icon height={30} width={30} icon='menu' />
             ) : (
               <Image
-                source={require("../../assets/close.png")}
+                source={require('../../assets/close.png')}
                 style={{ height: 30, width: 30 }}
               />
             )}
@@ -271,28 +271,28 @@ const Certificate = ({ navigation, props }) => {
             // zIndex: -1,
           }}
           source={certData.image ? certData.image : blurhash}
-          contentFit="contain"
+          contentFit='contain'
           transition={1000}
         />
         <View
           style={{
-            backgroundColor: "rgba(0, 0, 0, 0.2)",
+            backgroundColor: 'rgba(0, 0, 0, 0.2)',
             padding: 14,
             borderRadius: 20,
-            borderColor: "#FFFFFF",
+            borderColor: '#FFFFFF',
             borderWidth: 0.3,
           }}
         >
           <View style={{ paddingBottom: 6 }}>
             <Text
               style={{
-                color: "#FFFFFF",
-                fontWeight: "bold",
+                color: '#FFFFFF',
+                fontWeight: 'bold',
                 fontSize: 16,
               }}
             >
-              Certificate ID:{" "}
-              <Text style={{ color: "white", fontWeight: "normal" }}>
+              Certificate ID:{' '}
+              <Text style={{ color: 'white', fontWeight: 'normal' }}>
                 {certData.id}
               </Text>
             </Text>
@@ -301,13 +301,13 @@ const Certificate = ({ navigation, props }) => {
           <View style={{ paddingBottom: 6 }}>
             <Text
               style={{
-                color: "#FFFFFF",
-                fontWeight: "bold",
+                color: '#FFFFFF',
+                fontWeight: 'bold',
                 fontSize: 16,
               }}
             >
-              CID:{" "}
-              <Text style={{ color: "white", fontWeight: "normal" }}>
+              CID:{' '}
+              <Text style={{ color: 'white', fontWeight: 'normal' }}>
                 {certData.cid}
               </Text>
             </Text>
@@ -315,31 +315,31 @@ const Certificate = ({ navigation, props }) => {
         </View>
         <View
           style={{
-            backgroundColor: "rgba(0, 0, 0, 0.2)",
+            backgroundColor: 'rgba(0, 0, 0, 0.2)',
             padding: 14,
             borderRadius: 20,
-            borderColor: "#FFFFFF",
+            borderColor: '#FFFFFF',
             borderWidth: 0.3,
           }}
         >
           <View style={{ paddingBottom: 6 }}>
             <Text
               style={{
-                color: "#FFFFFF",
-                fontWeight: "bold",
+                color: '#FFFFFF',
+                fontWeight: 'bold',
                 fontSize: 16,
               }}
             >
-              Issued By:{" "}
+              Issued By:{' '}
             </Text>
           </View>
 
-          <PrimaryText align={"left"} fontWeight={"bold"}>
+          <PrimaryText align={'left'} fontWeight={'bold'}>
             {issuerData.name}
           </PrimaryText>
-          <PrimaryText align={"left"}>{issuerData.address}</PrimaryText>
-          <PrimaryText align={"left"}>{issuerData.website}</PrimaryText>
-          <PrimaryText align={"left"}>{issuerData.wallet}</PrimaryText>
+          <PrimaryText align={'left'}>{issuerData.address}</PrimaryText>
+          <PrimaryText align={'left'}>{issuerData.website}</PrimaryText>
+          <PrimaryText align={'left'}>{issuerData.wallet}</PrimaryText>
         </View>
         {/* <View style={{ flexDirection: 'row', gap: 10 }}>
           <View style={{ flex: 1 }}>
@@ -376,17 +376,22 @@ const Certificate = ({ navigation, props }) => {
             toggleModalVisibility={toggleReceipientModalVisibility}
             setInputValue={setReceipientInputValue}
             inputValue={receipientInputValue}
-            transferCertificate={() => {
-              console.log(certData);
-              transferCertificate(receipientInputValue, certData.id);
-              ToastAndroid.show("Certificate transfered", ToastAndroid.SHORT);
+            transferCertificate={async () => {
+              console.log(certData)
+              const res = await transferCertificate(
+                receipientInputValue,
+                certData.id
+              )
+              if (res.status == 'success') {
+                ToastAndroid.show('Certificate transfered', ToastAndroid.SHORT)
+              }
             }}
           />
         )}
       </View>
     </Container>
-  );
-};
+  )
+}
 const styles = {
   text: {
     paddingVertical: 10,
@@ -395,10 +400,10 @@ const styles = {
   },
   separator: {
     height: 1,
-    width: "100%",
-    backgroundColor: "#CCCCCC",
+    width: '100%',
+    backgroundColor: '#CCCCCC',
   },
-};
+}
 
 const ModalSheetReceipientId = ({
   isModalVisible,
@@ -410,38 +415,38 @@ const ModalSheetReceipientId = ({
   return (
     <SafeAreaView>
       <Modal
-        animationType="slide"
+        animationType='slide'
         transparent
         visible={isModalVisible}
-        presentationStyle="overFullScreen"
+        presentationStyle='overFullScreen'
         onDismiss={toggleModalVisibility}
       >
         <View
           style={{
             flex: 1,
-            alignItems: "center",
-            justifyContent: "center",
-            backgroundColor: "rgba(0, 0, 0, 0.2)",
+            alignItems: 'center',
+            justifyContent: 'center',
+            backgroundColor: 'rgba(0, 0, 0, 0.2)',
           }}
         >
           <View
             style={{
-              alignItems: "center",
-              justifyContent: "center",
-              position: "absolute",
-              top: "50%",
-              left: "50%",
+              alignItems: 'center',
+              justifyContent: 'center',
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
               elevation: 5,
               transform: [{ translateX: -(width * 0.4) }, { translateY: -90 }],
               height: 180,
               width: width * 0.8,
-              backgroundColor: "#fff",
+              backgroundColor: '#fff',
               borderRadius: 7,
             }}
           >
             <TouchableOpacity
               style={{
-                position: "absolute",
+                position: 'absolute',
                 top: 8,
                 right: 8,
                 zIndex: 1,
@@ -449,21 +454,21 @@ const ModalSheetReceipientId = ({
               onPress={toggleModalVisibility}
             >
               <Image
-                source={require("../../assets/close.png")}
+                source={require('../../assets/close.png')}
                 style={{ height: 20, width: 20 }}
               />
             </TouchableOpacity>
 
             <TextInput
-              placeholder="Enter receipient id"
+              placeholder='Enter receipient id'
               value={inputValue}
-              inputMode="numeric"
+              inputMode='numeric'
               style={{
-                width: "80%",
+                width: '80%',
                 borderRadius: 5,
                 paddingVertical: 8,
                 paddingHorizontal: 16,
-                borderColor: "rgba(0, 0, 0, 0.2)",
+                borderColor: 'rgba(0, 0, 0, 0.2)',
                 borderWidth: 1,
                 marginBottom: 8,
               }}
@@ -471,16 +476,16 @@ const ModalSheetReceipientId = ({
             />
 
             <Button
-              title="Submit"
+              title='Submit'
               onPress={async () => {
                 if (inputValue.length !== 0) {
-                  toggleModalVisibility();
-                  transferCertificate();
+                  toggleModalVisibility()
+                  transferCertificate()
                 } else {
                   ToastAndroid.show(
-                    "Receipient Id cannot be empty",
+                    'Receipient Id cannot be empty',
                     ToastAndroid.SHORT
-                  );
+                  )
                 }
               }}
             />
@@ -488,7 +493,7 @@ const ModalSheetReceipientId = ({
         </View>
       </Modal>
     </SafeAreaView>
-  );
-};
+  )
+}
 
-export default Certificate;
+export default Certificate

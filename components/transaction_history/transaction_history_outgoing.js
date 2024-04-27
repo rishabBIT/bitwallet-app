@@ -1,10 +1,10 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import React, { useEffect, useState } from 'react'
-import { FlatList, Text, View } from 'react-native'
+import { Dimensions, FlatList, Text, View } from 'react-native'
+import i18n from '../../locales/i18n'
 import Container from '../../subcomponents/container'
 import { getTransactionHistory } from '../subcomponents/api/nodeserver'
-import LoadingPage from '../subcomponents/loading/loadingPage'
-import i18n from '../../locales/i18n'
+import { Loading } from '../subcomponents/loading/loadingPage'
 
 const TransactionHistoryOutgoing = ({ navigation }) => {
   const [history, setHistory] = useState([])
@@ -12,35 +12,40 @@ const TransactionHistoryOutgoing = ({ navigation }) => {
   const [isLoading, setIsloading] = useState(false)
 
   useEffect(() => {
-    ; (async () => {
-      setIsloading(true)
-      const publicKey = await AsyncStorage.getItem('publicKey')
-      res = await getTransactionHistory(publicKey.toString().trim())
-      setHistory(res.data.txns)
-      const outgoing = []
+    ;(async () => {
+      try {
+        setIsloading(true)
+        const publicKey = await AsyncStorage.getItem('publicKey')
+        res = await getTransactionHistory(publicKey.toString().trim())
+        setHistory(res.data.txns)
+        const outgoing = []
 
-      for (const txn of res.data.txns) {
-        if (
-          txn.receiver_account_id !== publicKey.toString().trim() &&
-          txn.predecessor_account_id !== 'system'
-        ) {
-          outgoing.push(txn)
+        for (const txn of res.data.txns) {
+          if (
+            txn.receiver_account_id !== publicKey.toString().trim() &&
+            txn.predecessor_account_id !== 'system'
+          ) {
+            outgoing.push(txn)
+          }
         }
+
+        setOutgoingHistory(outgoing)
+
+        setIsloading(false)
+      } catch (error) {
+        console.log(error)
       }
-
-      setOutgoingHistory(outgoing)
-
-      setIsloading(false)
     })()
   }, [])
 
   const convertDeposit = (amount) => {
     const trxnAmount = amount / 10 ** 24
 
-    return `${String(trxnAmount).length > 8
-      ? Number(trxnAmount?.toString()?.slice(0, 5))
-      : trxnAmount
-      } NEAR`
+    return `${
+      String(trxnAmount).length > 8
+        ? Number(trxnAmount?.toString()?.slice(0, 5))
+        : trxnAmount
+    } NEAR`
   }
 
   const getElapsedTime = (timestampWithMilliseconds) => {
@@ -68,7 +73,21 @@ const TransactionHistoryOutgoing = ({ navigation }) => {
     return `${weeks}w ago`
   }
 
-  if (isLoading) return <LoadingPage />
+  if (isLoading)
+    return (
+      <Container>
+        <View
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignSelf: 'center',
+            width: Dimensions.get('window').width,
+          }}
+        >
+          <Loading />
+        </View>
+      </Container>
+    )
   if (outgoingHistory.length === 0) {
     return (
       // <Container>
@@ -79,7 +98,9 @@ const TransactionHistoryOutgoing = ({ navigation }) => {
           alignSelf: 'center',
         }}
       >
-        <Text style={{ color: 'white', fontSize: 30 }}>{i18n.t('noTransaction')}</Text>
+        <Text style={{ color: 'white', fontSize: 30 }}>
+          {i18n.t('noTransaction')}
+        </Text>
       </View>
       // </Container>
     )

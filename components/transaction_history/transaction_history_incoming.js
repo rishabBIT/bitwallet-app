@@ -1,10 +1,10 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import React, { useEffect, useState } from 'react'
-import { FlatList, Text, View } from 'react-native'
+import { Button, Dimensions, FlatList, Text, View } from 'react-native'
+import i18n from '../../locales/i18n'
 import Container from '../../subcomponents/container'
 import { getTransactionHistory } from '../subcomponents/api/nodeserver'
-import LoadingPage from '../subcomponents/loading/loadingPage'
-import i18n from '../../locales/i18n'
+import { Loading } from '../subcomponents/loading/loadingPage'
 
 const TransactionHistoryIncoming = ({ navigation }) => {
   const [history, setHistory] = useState([])
@@ -12,34 +12,52 @@ const TransactionHistoryIncoming = ({ navigation }) => {
   const [isLoading, setIsloading] = useState(false)
 
   useEffect(() => {
-    ; (async () => {
-      setIsloading(true)
-      const publicKey = await AsyncStorage.getItem('publicKey')
-      res = await getTransactionHistory(publicKey.toString().trim())
-      setHistory(res.data.txns)
-      const incoming = []
+    ;(async () => {
+      try {
+        setIsloading(true)
+        const publicKey = await AsyncStorage.getItem('publicKey')
+        res = await getTransactionHistory(publicKey.toString().trim())
+        setHistory(res.data.txns)
+        console.log(res.data.txns)
 
-      for (const txn of res.data.txns) {
-        if (
-          txn.receiver_account_id === publicKey.toString().trim() &&
-          txn.predecessor_account_id !== 'system'
-        ) {
-          incoming.push(txn)
+        const incoming = []
+
+        for (const txn of res.data.txns) {
+          // console.log('====================================')
+          // console.log(txn.receiver_account_id)
+          // console.log(txn.predecessor_account_id)
+          // console.log('====================================')
+          if (
+            // txn.receiver_account_id ===  &&
+            txn.predecessor_account_id !== publicKey.toString().trim()
+          ) {
+            // console.log('====================================')
+            // console.log('IF STATEMENT')
+            // console.log('====================================')
+            incoming.push(txn)
+          } else {
+            console.log(txn.receiver_account_id)
+            console.log(publicKey.toString().trim())
+            console.log(txn.predecessor_account_id)
+          }
         }
-      }
 
-      setIncomingHistory(incoming)
-      setIsloading(false)
+        setIncomingHistory(incoming)
+        setIsloading(false)
+      } catch (error) {
+        console.log(error)
+      }
     })()
   }, [])
 
   const convertDeposit = (amount) => {
     const trxnAmount = amount / 10 ** 24
 
-    return `${String(trxnAmount).length > 8
-      ? Number(trxnAmount?.toString()?.slice(0, 5))
-      : trxnAmount
-      } NEAR`
+    return `${
+      String(trxnAmount).length > 8
+        ? Number(trxnAmount?.toString()?.slice(0, 5))
+        : trxnAmount
+    } NEAR`
   }
 
   const getElapsedTime = (timestampWithMilliseconds) => {
@@ -67,20 +85,42 @@ const TransactionHistoryIncoming = ({ navigation }) => {
     return `${weeks}w ago`
   }
 
-  if (isLoading) return <LoadingPage />
+  if (isLoading)
+    return (
+      <Container>
+        <View
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignSelf: 'center',
+            width: Dimensions.get('window').width,
+          }}
+        >
+          <Loading />
+        </View>
+      </Container>
+    )
   if (incomingHistory.length === 0) {
     return (
-      // <Container>
-      <View
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignSelf: 'center',
-        }}
-      >
-        <Text style={{ color: 'white', fontSize: 30 }}>{i18n.t('noTransaction')}</Text>
-      </View>
-      // </Container>
+      <Container>
+        <View
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignSelf: 'center',
+          }}
+        >
+          <Text style={{ color: 'white', fontSize: 30 }}>
+            {i18n.t('noTransaction')}
+          </Text>
+          <Button
+            title={'Click'}
+            onPress={() => {
+              console.log(incomingHistory)
+            }}
+          />
+        </View>
+      </Container>
     )
   } else {
     return (

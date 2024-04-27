@@ -1,49 +1,49 @@
-import { useEffect, useState } from "react";
-import { View } from "react-native";
-import Container from "../../../subcomponents/container";
+import { useEffect, useState } from 'react'
+import { View } from 'react-native'
+import Container from '../../../subcomponents/container'
 
 const LoadingPage = () => {
   return (
     <Container>
       <Loading />
     </Container>
-  );
-};
+  )
+}
 
-export default LoadingPage;
+export default LoadingPage
 
 const Dot = ({ isActive }) => (
   <View
     style={{
       width: 50,
       height: 50,
-      backgroundColor: isActive ? "#3498DB" : "rgba(204, 204, 204, 0.5)",
+      backgroundColor: isActive ? '#3498DB' : 'rgba(204, 204, 204, 0.5)',
       borderRadius: 50,
     }}
   />
-);
+)
 
 export const Loading = () => {
-  const [loadingState, setLoadingState] = useState(0);
+  const [loadingState, setLoadingState] = useState(0)
 
   useEffect(() => {
     const interval = setInterval(() => {
       setLoadingState((prev) => {
-        if (prev === 3) return 0;
-        else return prev + 1;
-      });
-    }, 1000);
+        if (prev === 3) return 0
+        else return prev + 1
+      })
+    }, 1000)
 
-    return () => clearInterval(interval);
-  }, []);
+    return () => clearInterval(interval)
+  }, [])
 
   return (
     <View
       style={{
         flex: 1,
-        alignItems: "center",
-        justifyContent: "center",
-        flexDirection: "row",
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'row',
         gap: 20,
       }}
     >
@@ -51,5 +51,5 @@ export const Loading = () => {
       <Dot isActive={loadingState > 1} />
       <Dot isActive={loadingState > 2} />
     </View>
-  );
-};
+  )
+}
