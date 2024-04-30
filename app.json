@@ -2,7 +2,7 @@
   "expo": {
     "name": "bitwallet-app",
     "slug": "bitwallet-app",
-    "version": "2.0.9",
+    "version": "3.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -23,7 +23,7 @@
       "bundleIdentifier": "com.navraj2071.BitWallet"
     },
     "android": {
-      "versionCode": 19,
+      "versionCode": 20,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#020105"

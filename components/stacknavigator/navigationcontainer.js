@@ -21,7 +21,9 @@ import TransactionHistoryIncoming from '../transaction_history/transaction_histo
 import TransactionHistoryOutgoing from '../transaction_history/transaction_history_outgoing'
 
 import { useState } from 'react'
+import { PrivacyPolicy } from '../privacy_policy/privacyPolicy'
 import TabSwitcher from '../tabview/tabSwitcher'
+import { TermsAndConds } from '../terms_and_conditions/termsAndConds'
 
 const NavigationContainer = ({ children }) => {
   const [currentPage, setCurrentPage] = useState('Home')
@@ -69,6 +71,8 @@ const NavigationContainer = ({ children }) => {
     TokenDetails: (
       <TokenDetails navigation={navigation} props={currentComponentprops} />
     ),
+    TermsAndConds: <TermsAndConds navigation={navigation} />,
+    PrivacyPolicy: <PrivacyPolicy navigation={navigation} />,
   }
 
   return routes[currentPage]

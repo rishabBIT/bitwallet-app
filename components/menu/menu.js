@@ -58,6 +58,7 @@ const Menu = ({ navigation }) => {
             </Text>
             <Icon icon={'refresh'} height={30} width={30} fill='#000000' />
           </TouchableOpacity>
+
           <TouchableOpacity
             style={{
               padding: 20,
@@ -94,6 +95,38 @@ const Menu = ({ navigation }) => {
             </Text>
             <Icon icon={'history'} height={30} width={30} fill='#000000' />
           </TouchableOpacity>
+          <TouchableOpacity
+            style={{
+              padding: 20,
+              backgroundColor: '#D8DD00',
+              borderRadius: 20,
+              flexDirection: 'row',
+              alignItems: 'center',
+              gap: 10,
+            }}
+            onPress={() => navigation.navigate('TermsAndConds')}
+          >
+            <Text style={{ fontSize: 20, letterSpacing: 0.2 }} align={'left'}>
+              {i18n.t('termsConds')}
+            </Text>
+            <Icon icon={'terms'} height={30} width={30} />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{
+              padding: 20,
+              backgroundColor: '#D8DD00',
+              borderRadius: 20,
+              flexDirection: 'row',
+              alignItems: 'center',
+              gap: 10,
+            }}
+            onPress={() => navigation.navigate('PrivacyPolicy')}
+          >
+            <Text style={{ fontSize: 20, letterSpacing: 0.2 }} align={'left'}>
+              {i18n.t('privacyPolicy')}
+            </Text>
+            <Icon icon={'privacy'} height={30} width={30} fill='#000000' />
+          </TouchableOpacity>
 
           <TouchableOpacity
             style={{
@@ -119,7 +152,7 @@ const Menu = ({ navigation }) => {
               position: 'absolute',
               right: 200,
               top: 434,
-              zIndex: -1,
+              zIndex: 9999,
               alignItems: 'center',
               marginRight: 20,
               paddingHorizontal: 10,

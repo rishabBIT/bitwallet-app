@@ -41,18 +41,31 @@ const CreateorImport = ({ navigation }) => {
 
         <View
           style={{
-            height: isMenu ? 80 : 0,
+            height: isMenu ? 90 : 0,
             backgroundColor: '#FFFFFF',
             position: 'absolute',
             right: 0,
-            top: 94,
-            zIndex: 9999,
+            top: 70,
+            zIndex: -1,
             alignItems: 'center',
             marginRight: 20,
             paddingHorizontal: 10,
           }}
         >
-          <TouchableOpacity
+          <TouchableOpacity onPress={() => changeLocale('en')}>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              {isMenu && <Icon icon={'englishUs'} height={20} width={18} />}
+              <Text style={styles.text}>English</Text>
+            </View>
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={() => changeLocale('es')}>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              {isMenu && <Icon icon={'spanish'} height={20} width={18} />}
+              <Text style={styles.text}>Spanish</Text>
+            </View>
+          </TouchableOpacity>
+          {/* <TouchableOpacity
             onPress={() => {
               changeLocale('en')
             }}
@@ -72,7 +85,7 @@ const CreateorImport = ({ navigation }) => {
               {isMenu && <Icon icon={'spanish'} height={20} width={18} />}
               <Text style={styles.text}>Spanish</Text>
             </View>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
         <Image
           source={require('../../assets/new/Bitwallet-logo.png')}
@@ -100,6 +113,27 @@ const CreateorImport = ({ navigation }) => {
           title={i18n.t('recoverExistingAccount')}
           onPress={() => navigation.navigate('ImportAccount')}
         />
+        <View
+          style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
+        >
+          <TouchableOpacity
+            onPress={() => navigation.navigate('TermsAndConds')}
+          >
+            <Text style={styles.link}>{i18n.t('termsConds')}</Text>
+          </TouchableOpacity>
+        </View>
+        {/* <View style={styles.container}>
+          <Text style={styles.text}>
+            By signing in, you agree to our{' '}
+            <TouchableOpacity onPress={() => {}}>
+              <Text style={styles.link}>terms of use</Text>
+            </TouchableOpacity>{' '}
+            and acknowledge that you have read our{' '}
+            <TouchableOpacity onPress={() => {}}>
+              <Text style={styles.link}>privacy policy</Text>
+            </TouchableOpacity>
+          </Text>
+        </View> */}
       </View>
     </Container>
   )
@@ -115,6 +149,31 @@ const styles = {
     height: 1,
     width: '100%',
     backgroundColor: '#CCCCCC',
+  },
+  // link: {
+  //   textDecorationLine: 'underline',
+  //   color: 'white',
+  // },
+  container: {
+    // flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  text: {
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    fontSize: 16,
+  },
+  separator: {
+    height: 1,
+    width: '100%',
+    backgroundColor: '#CCCCCC',
+  },
+  link: {
+    fontSize: 16,
+    textAlign: 'center',
+    color: 'white',
+    textDecorationLine: 'underline',
   },
 }
 
