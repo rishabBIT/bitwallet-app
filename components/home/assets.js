@@ -59,35 +59,22 @@ const Assets = ({ navigation }) => {
   const transferTokens = async (tokenId, contractId, receipient) => {
     try {
       setIsloading(true)
-      // const res = await transferNFT(tokenId, contractId, receipient)
       const res = await transferCertificate(receipient, tokenId)
-
-      console.log('====================================')
-      console.log('Transfer Tokens')
-      console.log(res)
-      console.log('====================================')
 
       if (res.status === 'success') {
         const nftData = JSON.parse(await AsyncStorage.getItem('nfts')) || []
 
         const index = nftData.findIndex(
-          (item) =>
-            // console.log(item.token_id)
-            item.token_id === String(tokenId)
+          (item) => item.token_id === String(tokenId)
         )
-        console.log('====================================')
-        // console.log(nftData)
-        // console.log(tokenId)
-        console.log('====================================')
+
         if (index !== -1) {
           nftData.splice(index, 1)
 
           await AsyncStorage.setItem('nfts', JSON.stringify(nftData))
           setTokens(nftData)
         }
-
         ToastAndroid.show('Token transfer successful', ToastAndroid.SHORT)
-        console.log(res)
         setIsloading(false)
       }
     } catch (error) {
@@ -107,10 +94,6 @@ const Assets = ({ navigation }) => {
         'This NFT already exists in your wallet',
         ToastAndroid.SHORT
       )
-
-      // const nft = await transferNFT(inputValue)
-      console.log(nft)
-
       setIsloading(false)
     } else {
       try {
@@ -134,9 +117,9 @@ const Assets = ({ navigation }) => {
           await AsyncStorage.setItem('nfts', JSON.stringify(nftData))
           setTokens([...tokens, res.data.tokens])
 
-          console.log('====================================')
-          console.log(tokens.network)
-          console.log('====================================')
+          // console.log('====================================')
+          // console.log(tokens.network)
+          // console.log('====================================')
 
           setIsloading(false)
         } else {
@@ -170,8 +153,9 @@ const Assets = ({ navigation }) => {
     let nftData = (await AsyncStorage.getItem('nfts')) || []
     try {
       setTokens(JSON.parse(nftData))
-    } catch {
+    } catch (e) {
       console.log('Storage tokens fetch failed!!')
+      console.log(e)
     }
     // console.log(nftData)
     setIsloading(false)

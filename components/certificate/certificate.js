@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import * as FileSystem from 'expo-file-system'
 import { Image } from 'expo-image'
 import * as MediaLibrary from 'expo-media-library'
@@ -22,6 +23,7 @@ import Container from '../../subcomponents/container'
 import { transferCertificate } from '../subcomponents/api/nodeserver'
 import { AppBar } from '../subcomponents/appbar/appbar'
 import Icon from '../subcomponents/icon/icon'
+import LoadingPage from '../subcomponents/loading/loadingPage'
 import { ErrorText, PrimaryText } from '../subcomponents/text/text'
 
 const { width } = Dimensions.get('window')
@@ -34,6 +36,8 @@ const Certificate = ({ navigation, props }) => {
   const [isMenu, setIsMenu] = useState(false)
   const [contractIdValue, setContractIdValue] = useState('')
   const [receipientInputValue, setReceipientInputValue] = useState('')
+
+  const [isLoading, setIsLoading] = useState(false)
 
   const toggleReceipientModalVisibility = () => {
     setReceipientModalVisible(!isReceipientModalVisible)
@@ -89,6 +93,10 @@ const Certificate = ({ navigation, props }) => {
     setIsMenu(!isMenu)
   }
 
+  if (isLoading) {
+    return <LoadingPage />
+  }
+
   const blurhash =
     'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVjE9071LFZzNxjKM0BdvHD4s4xMZGw7QVZQ&usqp=CAU'
 
@@ -129,9 +137,6 @@ const Certificate = ({ navigation, props }) => {
               )}
             </View>
           </TouchableOpacity>
-          {/* <View
-            style={{ height: 1, width: '100%', backgroundColor: '#CCCCCC' }}
-          /> */}
           <TouchableOpacity onPress={() => toggleReceipientModalVisibility()}>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <Text style={styles.text}>{i18n.t('transfer')}</Text>
@@ -145,7 +150,6 @@ const Certificate = ({ navigation, props }) => {
               )}
             </View>
           </TouchableOpacity>
-          {/* <View style={styles.separator} /> */}
           <TouchableOpacity onPress={() => downloadImage(certData.image)}>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <Text style={styles.text}>{i18n.t('download')}</Text>
@@ -202,46 +206,6 @@ const Certificate = ({ navigation, props }) => {
             <ErrorText fontSize={24}>{i18n.t('notVerified')}</ErrorText>
           )}
 
-          {/* Popup Menu */}
-          {/* <View style={{ zIndex: 9999, height: 100 }}> */}
-          {/* <MenuProvider>
-            <Menu
-              ref={menuRef}
-              // rendererProps={{ anchorStyle: { zIndex: 9999 } }}
-            >
-              <MenuTrigger
-                customStyles={{
-                  triggerOuterWrapper: {
-                    // position: 'absolute',
-                    // top: -50,
-                    right: 20,
-                  },
-                }}
-              >
-                <Icon height={30} width={30} icon='menu' />
-              </MenuTrigger>
-              <MenuOptions
-                customStyles={{
-                  optionsContainer: {
-                    position: 'absolute',
-                    right: 20,
-                    top: 60,
-                    zIndex: 9999,
-                  },
-                }}
-              >
-                <MenuOption onSelect={() => alert('Option 1')}>
-                  <Text>Option 1</Text>
-                </MenuOption>
-                <MenuOption onSelect={() => alert('Option 2')}>
-                  <Text>Option 2</Text>
-                </MenuOption>
-                <MenuOption onSelect={() => alert('Option 3')}>
-                  <Text>Option 3</Text>
-                </MenuOption>
-              </MenuOptions>
-            </Menu>
-          </MenuProvider> */}
           <TouchableOpacity onPress={() => toggleMenu()}>
             {isMenu === false ? (
               <Icon height={30} width={30} icon='menu' />
@@ -253,15 +217,6 @@ const Certificate = ({ navigation, props }) => {
             )}
           </TouchableOpacity>
         </View>
-
-        {/* <View>
-            <SimpleMenu />
-          </View> */}
-        {/* <LinkButton
-            title='Delete'
-            endIcon={'delete'}
-            // onPress={}
-          /> */}
 
         <Image
           style={{
@@ -341,35 +296,7 @@ const Certificate = ({ navigation, props }) => {
           <PrimaryText align={'left'}>{issuerData.website}</PrimaryText>
           <PrimaryText align={'left'}>{issuerData.wallet}</PrimaryText>
         </View>
-        {/* <View style={{ flexDirection: 'row', gap: 10 }}>
-          <View style={{ flex: 1 }}>
-            <PrimaryButton
-              title=''
-              endIcon={'download'}
-              onPress={() => downloadImage(certData.image)}
-            />
-          </View>
-          {isSharingAvailable && (
-            <View style={{ flex: 1 }}>
-              <PrimaryButton
-                title=''
-                endIcon={'share'}
-                onPress={() => shareImage(certData.image)}
-              />
-            </View>
-          )}
-          <View style={{ flex: 1 }}>
-            <PrimaryButton
-              title=''
-              endIcon={'send'}
-              onPress={() => {
-                console.log(certData.id)
-                // transferCertificate()}
-                toggleReceipientModalVisibility()
-              }}
-            />
-          </View> */}
-        {/* </View> */}
+
         {isReceipientModalVisible && (
           <ModalSheetReceipientId
             isReceipientModalVisible={isReceipientModalVisible}
@@ -377,13 +304,38 @@ const Certificate = ({ navigation, props }) => {
             setInputValue={setReceipientInputValue}
             inputValue={receipientInputValue}
             transferCertificate={async () => {
-              console.log(certData)
+              setIsLoading(true)
               const res = await transferCertificate(
                 receipientInputValue,
                 certData.id
               )
-              if (res.status == 'success') {
+
+              if (res === undefined) {
+                const failedCerts =
+                  JSON.parse(await AsyncStorage.getItem('failedCerts')) || []
+
+                certData.receipientInputValue = receipientInputValue
+
+                failedCerts.push(certData)
+
+                console.log('====================================')
+                console.log(failedCerts)
+                console.log('====================================')
+
+                await AsyncStorage.setItem(
+                  'failedCerts',
+                  JSON.stringify(failedCerts)
+                )
+
+                ToastAndroid.show(
+                  'Certificate transfer failed',
+                  ToastAndroid.SHORT
+                )
+                setIsLoading(false)
+              } else if (res.status == 'success') {
                 ToastAndroid.show('Certificate transfered', ToastAndroid.SHORT)
+                setIsLoading(false)
+                // navigation.navigate('Home')
               }
             }}
           />

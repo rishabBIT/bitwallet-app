@@ -4,17 +4,37 @@ import { View } from 'react-native'
 import Container from '../../subcomponents/container'
 import LoadingPage from '../subcomponents/loading/loadingPage'
 import Assets from './assets'
-import Certificate from './certificate'
 import Footer from './footer'
 import Navbar from './navbar'
 
 import { changeLocale } from '../../locales/i18n'
+import TabSwitcherCertificates from '../tabview/tabSwitcherCertificates'
+import Certificate from './certificate'
 import Wallet from './wallet'
 
 const Home = ({ navigation, currentPage }) => {
   const [isLoading, setIsloading] = useState(true)
   const [status, setStatus] = useState(null)
   const [view, setView] = useState('wallet')
+
+  const [certificates, setCertificates] = useState(null)
+
+  // let failedCerts = []
+
+  const checkFailedCerts = async () => {
+    try {
+      const failedCerts = (await AsyncStorage.getItem('failedCerts')) || null
+      if (failedCerts !== null) {
+        setCertificates(JSON.parse(failedCerts))
+      }
+    } catch (error) {
+      console.error('Error retrieving failed certificates:', error)
+    }
+  }
+
+  useEffect(() => {
+    checkFailedCerts()
+  }, [])
 
   useEffect(() => {
     checkStatus()
@@ -59,7 +79,14 @@ const Home = ({ navigation, currentPage }) => {
       />
       <View style={{ flex: 1, justifyContent: 'space-between' }}>
         {view === 'wallet' && <Wallet navigation={navigation} />}
-        {view === 'certificate' && <Certificate navigation={navigation} />}
+
+        {view === 'certificate' &&
+          (certificates === null ? (
+            <Certificate navigation={navigation} />
+          ) : (
+            <TabSwitcherCertificates navigation={navigation} />
+          ))}
+
         {view === 'assets' && <Assets navigation={navigation} />}
       </View>
       <Footer view={view} setView={setView} />

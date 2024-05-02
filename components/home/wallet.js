@@ -5,7 +5,7 @@ import { Dimensions, Share, StyleSheet, Text, View } from 'react-native'
 import i18n from '../../locales/i18n'
 import Container from '../../subcomponents/container'
 import useNotifications from '../notifications/notifications'
-import { getbalance } from '../subcomponents/api/nodeserver'
+import { getbalance, retryFailedCerts } from '../subcomponents/api/nodeserver'
 import { LinkButton, PrimaryButton } from '../subcomponents/button/button'
 import { Loading } from '../subcomponents/loading/loadingPage'
 import { GradientText } from '../subcomponents/text/text'
@@ -36,7 +36,7 @@ const Wallet = ({ navigation }) => {
   useEffect(() => {
     poppulateAddress()
     poppulateBalance()
-    // console.log('triggred')
+    retryFailedCerts()
   }, [])
 
   const poppulateBalance = async () => {
@@ -132,10 +132,11 @@ const Wallet = ({ navigation }) => {
             height={14}
             width={14}
             endIcon={'receive'}
-            onPress={() =>
+            onPress={async () => {
               // changeLocale("es")
               navigation.navigate('AccountdetailsOne')
-            }
+              // AsyncStorage.clear()
+            }}
           />
         </View>
       </View>

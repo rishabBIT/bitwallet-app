@@ -15,22 +15,6 @@ import Icon from '../subcomponents/icon/icon'
 import TransactionHistoryIncoming from '../transaction_history/transaction_history_incoming'
 import TransactionHistoryOutgoing from '../transaction_history/transaction_history_outgoing'
 
-// const Tab1 = () => {
-//   return (
-//     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-//       <Text>Tab 1 Content</Text>
-//     </View>
-//   )
-// }
-
-// const Tab2 = () => {
-//   return (
-//     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-//       <Text>Tab 2 Content</Text>
-//     </View>
-//   )
-// }
-
 const TabSwitcher = ({ navigation }) => {
   const [activeTab, setActiveTab] = useState(1)
 

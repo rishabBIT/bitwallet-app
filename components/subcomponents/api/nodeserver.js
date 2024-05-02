@@ -1,6 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { ToastAndroid } from 'react-native'
 
-const Current_Version = '3.0.0'
+const Current_Version = '3.0.1'
 
 export const updateURLs = async () => {
   try {
@@ -202,38 +203,26 @@ export const transferCertificate = async (receipientId, tokenId) => {
       },
       body: JSON.stringify({
         to: receipientId,
-        // to: '674d895a861c548d4777a124603963017e0824edf768e70c9ab28609f090c058',
         token_id: tokenId,
       }),
     }
 
-    console.log(receipientId)
-    console.log(tokenId)
-    console.log(mainNetUrl)
-
     const res = await transferNFT(
       tokenId,
-      // 'b807a5695fcaf793206ed7fd1b06c03efe2b81e759c58e4155e31a8c3410fa3e',
-      // '224bfc053dcb78b69cfce2065e510ed7c4daff72ace3ff48526c4963a4d90079',
       '6441ca44740123ecfe4b740638ee2e2331b3b92b6357a442e271a3152bbcd665',
       receipientId
     )
-
-    // console.log('====================================')
-    // console.log(res)
-    // console.log('====================================')
 
     if (res.status !== 'failed') {
       await fetch(mainNetUrl, requestOptions)
         .then((res) => res.json())
         .then((response) => {
           console.log('transfer certificates')
-          console.log(response)
           result.status = 'success'
           result.data = response
         })
+      return result
     }
-    return result
   } catch (e) {
     console.log(`transfer certificates : ${e}`)
   }
@@ -521,4 +510,57 @@ export const downloadNFT = async (uri) => {
     console.log(`download nft : ${e}`)
   }
   return result
+}
+
+// trigger failed transactions
+export const retryFailedCerts = async () => {
+  const failedCerts =
+    JSON.parse(await AsyncStorage.getItem('failedCerts')) || []
+
+  console.log('====================================')
+  console.log('failed certs')
+  console.log(failedCerts)
+  console.log('====================================')
+
+  if (failedCerts.length > 0) {
+    for (let i = 0; i < failedCerts.length; i++) {
+      console.log('====================================')
+      console.log(failedCerts[i])
+      console.log('====================================')
+
+      const res = await transferCertificate(
+        failedCerts[i].receipientInputValue,
+        failedCerts[i].id
+      )
+
+      if (res === undefined) {
+        // const failedCerts =
+        //   JSON.parse(await AsyncStorage.getItem('failedCerts')) || []
+
+        // failedCerts.push(certData)
+
+        // await AsyncStorage.setItem('failedCerts', JSON.stringify(failedCerts))
+
+        ToastAndroid.show('Certificate transfer failed', ToastAndroid.SHORT)
+        setIsLoading(false)
+      } else if (res.status == 'success') {
+        const index = failedCerts.findIndex(
+          (item) => item.id === failedCerts[i].id
+        )
+
+        if (index !== -1) {
+          failedCerts.splice(index, 1)
+
+          await AsyncStorage.setItem('failedCerts', JSON.stringify(failedCerts))
+
+          console.log('====================================')
+          console.log(failedCerts)
+          console.log('====================================')
+
+          ToastAndroid.show('Certificate transfered', ToastAndroid.SHORT)
+          // setIsLoading(false)
+        }
+      }
+    }
+  }
 }

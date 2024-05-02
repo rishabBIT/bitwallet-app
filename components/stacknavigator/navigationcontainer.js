@@ -21,8 +21,9 @@ import TransactionHistoryIncoming from '../transaction_history/transaction_histo
 import TransactionHistoryOutgoing from '../transaction_history/transaction_history_outgoing'
 
 import { useState } from 'react'
+import FailedCertificate from '../home/failedCertificates'
 import { PrivacyPolicy } from '../privacy_policy/privacyPolicy'
-import TabSwitcher from '../tabview/tabSwitcher'
+import TabSwitcher from '../tabview/tabSwitcher_transaction'
 import { TermsAndConds } from '../terms_and_conditions/termsAndConds'
 
 const NavigationContainer = ({ children }) => {
@@ -61,6 +62,13 @@ const NavigationContainer = ({ children }) => {
     Scanner: <Scanner navigation={navigation} />,
     Certificate: (
       <Certificate navigation={navigation} props={currentComponentprops} />
+    ),
+
+    FailedCertificate: (
+      <FailedCertificate
+        navigation={navigation}
+        props={currentComponentprops}
+      />
     ),
     Connection: (
       <Connection navigation={navigation} props={currentComponentprops} />
