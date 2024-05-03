@@ -24,8 +24,10 @@ const Home = ({ navigation, currentPage }) => {
   const checkFailedCerts = async () => {
     try {
       const failedCerts = (await AsyncStorage.getItem('failedCerts')) || null
-      if (failedCerts !== null) {
+      if (JSON.parse(failedCerts).length > 0) {
         setCertificates(JSON.parse(failedCerts))
+      } else {
+        setCertificates(null)
       }
     } catch (error) {
       console.error('Error retrieving failed certificates:', error)

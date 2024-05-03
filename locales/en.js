@@ -83,7 +83,7 @@ export default {
   recoverAccountTextOne: 'Recover Existing Account Using Passphrase',
   recoverAccountTextTwo:
     'Enter the backup passphtase associated with the account',
-  passphrase: 'Passphrase',
+  passphrase: 'Passphrase 12 words',
   enterPassphrase: 'Enter Passphrase',
   findMyAccount: 'Find My Account',
   noTransaction: 'No Transaction',
@@ -198,7 +198,7 @@ export default {
     'Monitor, maintain, troubleshoot and / or improve Our products and services and any associated features, including evaluation or devising new features',
   privTxt37: 'Internal record keeping',
   privTxt38: 'To build user profiles and marketing profiles',
-  privTxt39: 'To audit usage of our products and services.',
+  // privTxt39: 'To audit usage of our products and services.',
   privTxt40:
     'Preventing any potentially illegal activity and preventing screening of any undesirable or abusive activity',
   privTxt41:
@@ -294,6 +294,10 @@ export default {
   privTxt99:
     'By registering with BIT, you grant permission to BIT to use your company logo and name as our client in our marketing collaterals website and social media posts ',
   privacyPolicy: 'Privacy Policy',
+  updateAvailable: 'Update Available',
+  updateAvailableTxt: 'A new version of Bit Wallet is available',
+  updateAvailableWarningTxt: 'Update now for latest features!',
+  update: 'Update',
 }
 
 // wallet and extension sentences don't match

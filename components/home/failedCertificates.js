@@ -10,6 +10,7 @@ import { PrimaryText, SecondaryText } from '../subcomponents/text/text'
 
 const FailedCertificate = ({ navigation }) => {
   const [certificates, setCertificates] = useState(null)
+  const [isloading, setIsLoading] = useState(false)
 
   const poppulateCertificates = async () => {
     const selectednetwork = await AsyncStorage.getItem('network')
@@ -18,37 +19,46 @@ const FailedCertificate = ({ navigation }) => {
       const networkType = JSON.parse(selectednetwork).networkType
       if (networkType == 'mainnet') {
         const certs = await getCertificates()
-        const failedCerts =
-          JSON.parse(await AsyncStorage.getItem('failedCerts')) || []
+        if (certs.data.certificates.length > 0) {
+          const failedCerts =
+            JSON.parse(await AsyncStorage.getItem('failedCerts')) || []
 
-        const failedCertIds = new Set(failedCerts.map((cert) => cert.id))
-        const filteredCertificates =
-          certs.data.certificates[0].certificates.filter((cert) =>
-            failedCertIds.has(cert.id)
-          )
+          const failedCertIds = new Set(failedCerts.map((cert) => cert.id))
+          const filteredCertificates =
+            certs.data.certificates[0].certificates.filter((cert) =>
+              failedCertIds.has(cert.id)
+            )
 
-        let certificates = [
-          {
-            address: certs.data.certificates[0].address,
-            certificates: filteredCertificates,
-            description: certs.data.certificates[0].description,
-            is_verified: certs.data.certificates[0].is_verified,
-            name: certs.data.certificates[0].name,
-            wallet: certs.data.certificates[0].wallet,
-            website: certs.data.certificates[0].website,
-          },
-        ]
+          let certificates = [
+            {
+              address: certs.data.certificates[0].address,
+              certificates: filteredCertificates,
+              description: certs.data.certificates[0].description,
+              is_verified: certs.data.certificates[0].is_verified,
+              name: certs.data.certificates[0].name,
+              wallet: certs.data.certificates[0].wallet,
+              website: certs.data.certificates[0].website,
+            },
+          ]
 
-        console.log('====================================')
-        console.log('failed certificated page')
-        console.log(certificates)
-        console.log('====================================')
+          console.log('====================================')
+          console.log('failed certificated page')
+          console.log(certificates)
+          console.log('====================================')
 
-        setCertificates(certificates)
-        // setCertificates(certs.data.certificates)
+          setCertificates(certificates)
+          // setCertificates(certs.data.certificates)
+          setIsLoading(false)
+        } else {
+          setIsLoading(false)
+          setCertificates(null)
+        }
       } else {
+        setIsLoading(false)
+        setCertificates(null)
       }
     } catch (e) {
+      setIsLoading(false)
       console.log(e)
     }
   }
@@ -83,6 +93,23 @@ const FailedCertificate = ({ navigation }) => {
   useEffect(() => {
     poppulateCertificates()
   }, [])
+
+  if (isloading)
+    return (
+      <View
+        style={{
+          display: 'flex',
+          flex: 1,
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignSelf: 'center',
+          alignItems: 'center',
+          width: Dimensions.get('window').width,
+        }}
+      >
+        <Loading />
+      </View>
+    )
 
   return (
     <ScrollView style={{ flex: 1, gap: 20, marginVertical: 20 }}>

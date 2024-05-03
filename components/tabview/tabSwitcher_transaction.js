@@ -36,7 +36,7 @@ const TabSwitcher = ({ navigation }) => {
                   left: 0,
                   right: 0,
                   flexDirection: 'row',
-                  justifyContent: 'flex-start',
+                  // justifyContent: 'flex-start',
                   zIndex: 2,
                 }}
               >
@@ -53,6 +53,8 @@ const TabSwitcher = ({ navigation }) => {
                     fontWeight: 'bold',
                     paddingTop: 5,
                     justifyContent: 'center',
+                    alignItems: 'center',
+                    alignSelf: 'center',
                   }}
                 >
                   {i18n.t('transactionHistory')}
@@ -79,7 +81,7 @@ const TabSwitcher = ({ navigation }) => {
                     fontSize: 20,
                   }}
                 >
-                  Sent
+                  {i18n.t('sent')}
                 </Text>
               </TouchableOpacity>
               <TouchableOpacity
@@ -93,7 +95,7 @@ const TabSwitcher = ({ navigation }) => {
                     fontSize: 20,
                   }}
                 >
-                  Received
+                  {i18n.t('received')}
                 </Text>
               </TouchableOpacity>
             </View>

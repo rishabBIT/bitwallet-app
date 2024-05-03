@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { ToastAndroid } from 'react-native'
 
-const Current_Version = '3.0.1'
+const Current_Version = '3.0.2'
 
 export const updateURLs = async () => {
   try {

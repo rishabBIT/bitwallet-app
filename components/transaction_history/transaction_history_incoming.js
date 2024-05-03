@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import React, { useEffect, useState } from 'react'
-import { Button, Dimensions, FlatList, Text, View } from 'react-native'
+import { Dimensions, FlatList, Text, View } from 'react-native'
 import i18n from '../../locales/i18n'
 import Container from '../../subcomponents/container'
 import { getTransactionHistory } from '../subcomponents/api/nodeserver'
@@ -108,17 +108,19 @@ const TransactionHistoryIncoming = ({ navigation }) => {
             display: 'flex',
             justifyContent: 'center',
             alignSelf: 'center',
+            alignItems: 'center',
+            width: Dimensions.get('window').width,
           }}
         >
           <Text style={{ color: 'white', fontSize: 30 }}>
             {i18n.t('noTransaction')}
           </Text>
-          <Button
+          {/* <Button
             title={'Click'}
             onPress={() => {
               console.log(incomingHistory)
             }}
-          />
+          /> */}
         </View>
       </Container>
     )

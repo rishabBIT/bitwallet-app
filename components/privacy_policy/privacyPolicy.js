@@ -87,7 +87,7 @@ export const PrivacyPolicy = ({ navigation }) => {
               <Text style={styles.listItem}>• {i18n.t('privTxt36')}</Text>
               <Text style={styles.listItem}>• {i18n.t('privTxt37')}</Text>
               <Text style={styles.listItem}>• {i18n.t('privTxt38')}</Text>
-              <Text style={styles.listItem}>• {i18n.t('privTxt39')}</Text>
+              {/* <Text style={styles.listItem}>• {i18n.t('privTxt39')}</Text> */}
               <Text style={styles.listItem}>• {i18n.t('privTxt40')}</Text>
               <Text style={styles.listItem}>• {i18n.t('privTxt41')}</Text>
               <Text style={styles.listItem}>• {i18n.t('privTxt42')}</Text>

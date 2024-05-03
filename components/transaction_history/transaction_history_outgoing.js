@@ -90,19 +90,21 @@ const TransactionHistoryOutgoing = ({ navigation }) => {
     )
   if (outgoingHistory.length === 0) {
     return (
-      // <Container>
-      <View
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignSelf: 'center',
-        }}
-      >
-        <Text style={{ color: 'white', fontSize: 30 }}>
-          {i18n.t('noTransaction')}
-        </Text>
-      </View>
-      // </Container>
+      <Container>
+        <View
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignSelf: 'center',
+            alignItems: 'center',
+            width: Dimensions.get('window').width,
+          }}
+        >
+          <Text style={{ color: 'white', fontSize: 30 }}>
+            {i18n.t('noTransaction')}
+          </Text>
+        </View>
+      </Container>
     )
   } else {
     return (

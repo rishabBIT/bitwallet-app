@@ -17,9 +17,9 @@ export default {
     'Tus tokens se mostrarán aquí.\nPide a tu universidad que envíe tokens a tu dirección de monedero.',
   importTokens: 'Importar Tokens',
   menu: 'Menú',
-  accountDetails: 'Detalles de la Cuenta',
-  resetAccount: 'Restablecer Cuenta',
-  transactionHistory: 'Historial de Transacciones',
+  accountDetails: 'Detalles de la cuenta',
+  resetAccount: 'Restablecer cuenta',
+  transactionHistory: 'Historial de transacciones',
   nftTransactions: 'Transacciones NFT',
   accountID: 'ID de Cuenta',
   exportPassphrase: 'Exportar Frase de Contraseña',
@@ -36,8 +36,8 @@ export default {
   resetAccounTextThree:
     'La frase secreta se puede copiar desde:\nMenú > Detalles de la Cuenta > Exportar Frase de Contraseña',
   cancel: 'Cancelar',
-  sent: 'Enviado',
-  received: 'Recibido',
+  sent: 'Enviar',
+  received: 'Recibir',
   receiverId: 'ID del Receptor',
   senderId: 'ID del Remitente',
   deposit: 'Depósito',
@@ -85,7 +85,7 @@ export default {
     'Recuperar Cuenta Existente Usando Frase de Contraseña',
   recoverAccountTextTwo:
     'Introduce la frase de contraseña de respaldo asociada con la cuenta',
-  passphrase: 'Frase de Contraseña',
+  passphrase: 'Frase de contraseña 12 palabras',
   enterPassphrase: 'Introducir Frase de Contraseña',
   findMyAccount: 'Encontrar Mi Cuenta',
   noTransaction: 'Sin Transacciones',
@@ -207,7 +207,7 @@ export default {
     'Supervisar, mantener, solucionar problemas y/o mejorar nuestros productos y servicios y cualquier función asociada, incluida la evaluación o el diseño de nuevas características.',
   privTxt37: 'Mantenimiento de registros internos.',
   privTxt38: 'Crear perfiles de usuario y perfiles de marketing.',
-  privTxt39: 'Auditar el uso de nuestros productos y servicios.',
+  // privTxt39: 'Auditar el uso de nuestros productos y servicios.',
   privTxt40:
     'Prevenir cualquier actividad potencialmente ilegal y realizar controles para evitar cualquier actividad indeseable o abusiva.',
   privTxt41:
@@ -302,5 +302,10 @@ export default {
   privTxt98: 'Permiso para usar el logotipo y el nombre de su empresa',
   privTxt99:
     'Al registrarse en BIT, otorga permiso a BIT para usar el logotipo y el nombre de su empresa como nuestro cliente en nuestros materiales de marketing, sitio web y publicaciones en redes sociales.',
-  privacyPolicy: 'Ppolítica de privacidad',
+  privacyPolicy: 'Políticas públicas',
+  updateAvailable: 'Actualización disponible',
+  updateAvailableTxt: 'Hay una nueva versión de Bit Wallet disponible',
+  updateAvailableWarningTxt:
+    '¡Actualiza ahora para obtener las últimas características!',
+  update: 'Actualizar',
 }
