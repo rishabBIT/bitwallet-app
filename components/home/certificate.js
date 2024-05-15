@@ -23,11 +23,6 @@ const Certificate = ({ navigation }) => {
       if (networkType == 'mainnet') {
         const certs = await getCertificates()
 
-        console.log('====================================')
-        console.log('certs')
-        console.log(certs)
-        console.log('====================================')
-
         if (certs.data.certificates.length > 0) {
           const failedCerts =
             JSON.parse(await AsyncStorage.getItem('failedCerts')) || []
@@ -140,7 +135,7 @@ const Certificate = ({ navigation }) => {
           <PrimaryText>{i18n.t('certificateTextTwo')}</PrimaryText>
           <View style={{ paddingTop: 80 }}>
             <PrimaryButton
-              title='Receive Certificates'
+              title={i18n.t('receiveCertificates')}
               endIcon={'receive'}
               // onPress={() => AsyncStorage.clear()}
               onPress={() => navigation.navigate('AccountdetailsOne')}

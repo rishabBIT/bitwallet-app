@@ -92,7 +92,7 @@ export const PrivacyPolicy = ({ navigation }) => {
               <Text style={styles.listItem}>• {i18n.t('privTxt41')}</Text>
               <Text style={styles.listItem}>• {i18n.t('privTxt42')}</Text>
               <Text style={styles.listItem}>• {i18n.t('privTxt43')}</Text>
-              <Text style={styles.listItem}>• {i18n.t('privTxt44')}</Text>
+              {/* <Text style={styles.listItem}>• {i18n.t('privTxt44')}</Text> */}
               <Text style={styles.listItem}>• {i18n.t('privTxt45')}</Text>
             </View>
           </View>
@@ -206,6 +206,7 @@ const HeaderText = ({ children }) => {
         fontSize: 28,
         color: 'white',
         paddingBottom: 10,
+        // justifyContent: 'center',
       }}
     >
       {children}
@@ -222,6 +223,7 @@ const ParaText = ({ children, padding }) => {
         color: 'white',
         // textAlign: 'justify',
         paddingBottom: padding ? padding : 20,
+        // includeFontPadding: false,
       }}
     >
       {children}
@@ -238,6 +240,11 @@ const ParaTextBold = ({ children, padding }) => {
         color: 'white',
         // textAlign: 'justify',
         paddingBottom: padding ? padding : 20,
+        // includeFontPadding: false,
+        letterSpacing: 0,
+        // flex: 1,
+        // alignItems: 'center',
+        // justifyContent: 'center',
       }}
     >
       {children}

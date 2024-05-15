@@ -2,6 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import * as Clipboard from 'expo-clipboard'
 import { useEffect, useState } from 'react'
 import { View } from 'react-native'
+import i18n from '../../locales/i18n'
 import Container from '../../subcomponents/container'
 import { AppBar } from '../subcomponents/appbar/appbar'
 import { TertiaryButton } from '../subcomponents/button/button'
@@ -28,7 +29,7 @@ const SeedPhrase = ({ setView, navigation }) => {
 
   return (
     <Container>
-      <AppBar title={'Export Passphrase'} back={() => setView(1)} />
+      <AppBar title={i18n.t('exportPassphrase')} back={() => setView(1)} />
       <View
         style={{
           flex: 1,
@@ -43,16 +44,17 @@ const SeedPhrase = ({ setView, navigation }) => {
         {/* <View style={{ width: 80 }}>
           <LinkButton title='< Back' onPress={() => setView(1)} />
         </View> */}
-        <PrimaryAccentText>Secret Passphrase</PrimaryAccentText>
-        <SecondaryText>Click to copy</SecondaryText>
+        <PrimaryAccentText>{i18n.t('secretPassphrase')}</PrimaryAccentText>
+        <SecondaryText>{i18n.t('clickToCopy')}</SecondaryText>
         <TertiaryButton
           title={phrase}
           onPress={() => Clipboard.setStringAsync(phrase)}
         />
-        <WarningText align={'left'}>Warning: Do not disclose.</WarningText>
         <WarningText align={'left'}>
-          Anyone with access to the passphrase will also have access to your
-          account!
+          {i18n.t('exportPassphraseTextOne')}
+        </WarningText>
+        <WarningText align={'left'}>
+          {i18n.t('exportPassphraseTextTwo')}
         </WarningText>
       </View>
     </Container>

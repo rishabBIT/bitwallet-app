@@ -13,6 +13,7 @@ export const TermsAndConds = ({ navigation }) => {
           back={() => navigation.navigate('Home')}
         />
         <ScrollView
+          contentContainerStyle={{ paddingBottom: 60 }}
           style={{
             flex: 1,
             // padding: 20,
@@ -90,7 +91,7 @@ const ParaText = ({ children }) => {
         fontWeight: 'normal',
         fontSize: 16,
         color: 'white',
-        textAlign: 'justify',
+        // textAlign: 'justify',
         paddingBottom: 20,
       }}
     >

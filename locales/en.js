@@ -204,9 +204,8 @@ export default {
   privTxt41:
     ' Contact for market research purposes including transmission of marketing materials that may be of interest to you whether by soft - opt - in or by opt - in methods.',
   privTxt42: 'Find and prevent fraud ',
-  privTxt43: 'Please note that',
-  privTxt44:
-    'soft opt - in consent is a specific type of consent which applies when You have previously engaged with Us( for example, You contact Us to ask Us for more details about a particular product / service, and We are marketing similar products / services).Under“ soft opt - in ”consent, We will take Your consent as given unless You opt - out.',
+  privTxt43:
+    'Please note that soft opt - in consent is a specific type of consent which applies when You have previously engaged with Us( for example, You contact Us to ask Us for more details about a particular product / service, and We are marketing similar products / services).Under“ soft opt - in ”consent, We will take Your consent as given unless You opt - out.',
   privTxt45:
     'for other types of e - marketing, We are required to obtain Your explicit consent; that is, You need to take positive and affirmative action when consenting by, for example, checking a tick box that We will provide.',
   privTxt46:

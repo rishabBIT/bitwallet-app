@@ -21,7 +21,7 @@ export default {
   resetAccount: 'Restablecer cuenta',
   transactionHistory: 'Historial de transacciones',
   nftTransactions: 'Transacciones NFT',
-  accountID: 'ID de Cuenta',
+  accountID: 'ID de cuenta',
   exportPassphrase: 'Exportar Frase de Contraseña',
   exportPassphraseTextOne: 'Advertencia: No divulgar',
   exportPassphraseTextTwo:
@@ -100,7 +100,7 @@ export default {
   language: 'Idioma',
   termsConds: 'Condiciones generales',
   termsPara1:
-    'Beyond Imagination Technologies Private Limited (en lo sucesivo, BIT, nosotros o nuestro) se compromete a respetar su privacidad y a cumplir la legislación aplicable en materia de protección de datos y privacidad de la India. Esta Política se aplica a los Sitios, aplicaciones, productos y servicios (denominados colectivamente Servicios) en los que se publica, enlaza o a los que se hace referencia. Entendemos que la confidencialidad de la información es importante para los visitantes de nuestro sitio web y nos comprometemos a garantizar la protección de su privacidad. Esta Política de Privacidad de Beyond Imagination Technologies Private Limited (Política de Privacidad) proporciona información detallada sobre el razonamiento y el propósito de la recopilación de su información personal, y los procedimientos que tenemos en marcha para salvaguardar su privacidad de acuerdo con las directrices de protección de datos prevalentes. Al acceder y utilizar nuestro sitio web, así como las soluciones que proporcionamos, y al enviarnos su información por correo electrónico, a través de nuestro sitio web o de cualquier otro modo, se considerará que ha dado su consentimiento para la recopilación y el uso de dicha información según lo establecido en esta Política de privacidad. Esta Política de Privacidad y las Condiciones de Uso regirán su uso del Sitio Web, así como de todas las demás aplicaciones que proporcionemos ahora o en el futuro. Al acceder o utilizar nuestros Servicios y funciones, usted acepta las prácticas descritas en la presente Política de Privacidad. En la presente Política de Privacidad, se aplicarán los significados atribuidos a los términos en las Condiciones de Uso. En general, puede visitar nuestro sitio web sin decirnos quién es ni revelar ninguna información personal sobre usted (como su nombre, empresa, número de teléfono, dirección o dirección de correo electrónico).',
+    'Beyond Imagination Technologies Private Limited (en lo sucesivo, BIT, nosotros o nuestro) se compromete a respetar su privacidad y a cumplir la legislación aplicable en materia de protección de datos y privacidad de la India. Esta Política se aplica a los Sitios, aplicaciones, productos y servicios (denominados colectivamente Servicios) en los que se publica, enlaza o a los que se hace referencia. Entendemos que la confidencialidad de la información es importante para los visitantes de nuestro sitio web y nos comprometemos a garantizar la protección de su privacidad. Esta Política de Privacidad de Beyond Imagination Technologies Private Limited (Política de Privacidad) proporciona información detallada sobre el razonamiento y el propósito de la recopilación de su información personal, y los procedimientos que tenemos en marcha para salvaguardar su privacidad de acuerdo con las directrices de protección de datos prevalentes. Al acceder y utilizar nuestro sitio web, así como las soluciones que proporcionamos, y al enviarnos su información por correo electrónico, a través de nuestro sitio web o de cualquier otro modo, se considerará que ha dado su consentimiento para la recopilación y el uso de dicha información según lo establecido en esta Política de privacidad. Esta Política de Privacidad y los Condiciones de Uso regirán su uso del Sitio Web, así como de todas las demás aplicaciones que proporcionemos ahora o en el futuro. Al acceder o utilizar nuestros Servicios y funciones, usted acepta las prácticas descritas en la presente Política de Privacidad. En la presente Política de Privacidad, se aplicarán los significados atribuidos a los términos en los Condiciones de Uso. En general, puede visitar nuestro sitio web sin decirnos quién es ni revelar ninguna información personal sobre usted (como su nombre, empresa, número de teléfono, dirección o dirección de correo electrónico).',
   termHead2: 'Confidencialidad de los datos',
   termsPara2:
     'De acuerdo con las directrices del Reglamento General de Protección de Datos (RGPD) de la UE, las personas / organizaciones tienen derechos sobre el uso de sus datos personales. Cuando usted nos facilita sus datos personales, estamos obligados a proporcionarle determinada información, incluidos sus derechos',
@@ -128,7 +128,7 @@ export default {
   termsHead9: 'Conservación de datos',
   termsPara9:
     'A menos que la ley exija o permita un período de conservación más largo, la Empresa sólo conservará la información en nuestros sistemas durante el período necesario para cumplir los fines descritos en la presente Política de Privacidad.',
-  termsHead10: 'Sus derechos en virtud del GDPR',
+  termsHead10: 'Sus derechos en virtud del GDPR ',
   termsPara10:
     'Si se encuentra en el EEE (Espacio Económico Europeo), tiene los siguientes derechos con respecto a la información que posee BIT: De conformidad con el artículo 15 del RGPD, tiene derecho a acceder a la información que le facilitemos, incluida la finalidad del tratamiento y las categorías de datos personales en cuestión, así como derecho a obtener una copia; de conformidad con el artículo 16 del RGPD, tiene derecho a rectificar sus datos personales en caso de que sean inexactos o incompletos; de conformidad con el artículo 17 del RGPD, tiene derecho a solicitar la supresión de sus datos personales en determinadas circunstancias, de conformidad con nuestra Política de conservación; De conformidad con el artículo 18 del RGPD, tiene derecho a solicitar que se restrinja el tratamiento de sus datos en casos tales como cuando haya objetado a la exactitud de los datos que necesitan verificación en determinadas circunstancias; De conformidad con el artículo 20 del RGPD, tiene derecho a transferir su información a un tercero en un formato estructurado, de uso común y lectura mecánica, en circunstancias en las que la información se trate con su consentimiento o por medios automatizados;  En virtud del artículo 21 del RGPD, tiene derecho a oponerse por motivos relacionados con una situación particular, como fines de marketing directo; En todos los casos, tendremos que asegurarnos de su identidad antes de poder dar curso a una solicitud de acceso del sujeto en virtud del RGPD. Normalmente le pediremos una prueba de identidad, como un pasaporte o un permiso de conducir. Cambio de propiedad y control de la empresa: La Compañía puede, de vez en cuando, ampliar o reducir nuestro negocio y esto puede implicar la venta y / o la transferencia de control de la totalidad o parte de la Compañía. La información facilitada, cuando sea relevante para cualquier parte de nuestro negocio que se transfiera, se transferirá junto con esa parte y el nuevo propietario o la nueva parte que ejerza el control, de acuerdo con los términos de esta Política de privacidad, podrá utilizar la información para los fines para los que se nos facilitó originalmente. También podemos revelar Información a un posible comprador de nuestro negocio o de cualquier parte del mismo. En los casos anteriores, tomaremos medidas para garantizar la protección de su privacidad.',
   termsHead11: 'Revisiones de la política de privacidad',
@@ -148,14 +148,14 @@ export default {
     'Podemos revelar información personal si creemos de buena fe que dicha revelación es necesaria para cumplir con la ley o un proceso legal (por ejemplo, en respuesta a una orden judicial o citación u otra orden judicial), para proteger contra el uso indebido o no autorizado de Nuestro sitio web, o para proteger los derechos, la propiedad o la seguridad personal de Nosotros, nuestros clientes o el público o los requisitos de seguridad nacional. NOSOTROS, NUESTROS FUNCIONARIOS, DIRECTORES, EMPLEADOS, AFILIADOS Y AGENTES NO SEREMOS RESPONSABLES POR ACTOS U OMISIONES DE TERCEROS, O POR CUALQUIER INTERCEPCIÓN NO AUTORIZADA DE DATOS O INFRACCIONES ATRIBUIBLES EN SU TOTALIDAD O EN PARTE A LOS ACTOS U OMISIONES DE TERCEROS, O POR DAÑOS ASOCIADOS QUE RESULTEN DE LAS OPERACIONES SISTEMAS, EQUIPOS, INSTALACIONES O SERVICIOS PROPORCIONADOS POR TERCEROS QUE ESTÉN INTERCONECTADOS CON LOS SERVIDORES. Autorización para utilizar el logotipo y el nombre de su empresa Al registrarse en BIT, usted autoriza a BIT a utilizar el logotipo y el nombre de su empresa como nuestro cliente en nuestros materiales de marketing, sitio web y publicaciones en las redes sociales.',
   privTxt1:
     'Beyond Imagination Technologies Private Limited (en lo sucesivo, BIT, nosotros, nos o nuestro) se compromete a respetar su privacidad y a cumplir las leyes de protección de datos y privacidad aplicables en la India. Esta política se aplica a los sitios, aplicaciones, productos y servicios (colectivamente, servicios) en los que se publica, enlaza o hace referencia a ella.',
-  privTxt2: '(“Política de privacidad”)',
+  privTxt2: ' (“Política de privacidad”)',
   privTxt3:
-    'proporciona información detallada sobre el motivo y la finalidad de la recogida de sus datos personales, así como sobre los procedimientos que aplicamos para salvaguardar su privacidad conforme a las directrices vigentes sobre protección de datos.',
+    ' proporciona información detallada sobre el motivo y la finalidad de la recogida de sus datos personales, así como sobre los procedimientos que aplicamos para salvaguardar su privacidad conforme a las directrices vigentes sobre protección de datos.',
   privTxt4:
     'Al acceder y utilizar nuestro sitio web, así como las soluciones que proporcionamos, y al enviarnos su información por correo electrónico, a través de nuestro sitio web o de cualquier otro modo, se considerará que ha consentido la recopilación y el uso de dicha información tal y como se establece en la presente Política de privacidad.La presente Política de privacidad y los',
-  privTxt5: 'Condiciones de uso',
+  privTxt5: ' Condiciones de uso ',
   privTxt6:
-    'Al acceder o utilizar nuestros Servicios y funciones, usted acepta las prácticas descritas en esta Política de Privacidad. En esta Política de Privacidad, se aplicarán los significados atribuidos a los términos en las Condiciones de Uso. En general, puede visitar nuestro Sitio Web sin decirnos quién es ni revelar ninguna información personal sobre usted (como su nombre, empresa, número de teléfono, dirección o dirección de correo electrónico).',
+    'Al acceder o utilizar nuestros Servicios y funciones, usted acepta las prácticas descritas en esta Política de Privacidad. En esta Política de Privacidad, se aplicarán los significados atribuidos a los términos en los Condiciones de Uso. En general, puede visitar nuestro Sitio Web sin decirnos quién es ni revelar ninguna información personal sobre usted (como su nombre, empresa, número de teléfono, dirección o dirección de correo electrónico).',
   privTxt7: 'Confidencialidad de los datos',
   privTxt8:
     ' De acuerdo con las directrices del Reglamento General de Protección de Datos (RGPD) de la UE, las personas u organizaciones tienen derechos sobre el uso de sus datos personales.',
@@ -213,9 +213,8 @@ export default {
   privTxt41:
     'Contacto con fines de investigación de mercado, incluida la transmisión de materiales de marketing que puedan ser de interés para usted ya sea por consentimiento implícito o por métodos de consentimiento explícito.',
   privTxt42: 'Detectar y prevenir fraudes.',
-  privTxt43: 'Tenga en cuenta que',
-  privTxt44:
-    'el consentimiento implícito es un tipo específico de consentimiento que se aplica cuando previamente ha interactuado con nosotros (por ejemplo, nos contacta para solicitar más detalles sobre un producto/servicio en particular, y estamos comercializando productos/servicios similares). Bajo el consentimiento de “opt-in implícito”, consideraremos que ha dado su consentimiento a menos que decida no hacerlo.',
+  privTxt43:
+    'Tenga en cuenta que el consentimiento implícito es un tipo específico de consentimiento que se aplica cuando previamente ha interactuado con nosotros (por ejemplo, nos contacta para solicitar más detalles sobre un producto/servicio en particular, y estamos comercializando productos/servicios similares). Bajo el consentimiento de “opt-in implícito”, consideraremos que ha dado su consentimiento a menos que decida no hacerlo.',
   privTxt45:
     'para otros tipos de marketing electrónico, estamos obligados a obtener su consentimiento explícito; es decir, usted debe tomar una acción positiva y afirmativa al consentir, por ejemplo, marcando una casilla de verificación que proporcionaremos.',
   privTxt46:
@@ -236,24 +235,24 @@ export default {
   privTxt56: 'Retención de datos',
   privTxt57:
     'A menos que la ley requiera o permita un período de retención más largo, la Compañía solo conservará la información en nuestros sistemas durante el período necesario para cumplir con los fines descritos en esta Política de privacidad.',
-  privTxt58: 'Sus derechos bajo el GDPR',
+  privTxt58: 'Sus derechos bajo el GDPR ',
   privTxt59:
     'Si se encuentra en el EEE (Espacio Económico Europeo), tiene los siguientes derechos con respecto a la información que BIT tiene:',
-  privTxt60: 'Según el Artículo 15 del GDPR',
+  privTxt60: 'Según el Artículo 15 del GDPR ',
   privTxt61:
     ', tiene derecho de acceso a la información de nuestra parte, incluido el propósito del procesamiento y las categorías de datos personales en cuestión, y el derecho a obtener una copia;',
-  privTxt62: 'Según el Artículo 16 del GDPR',
+  privTxt62: 'Según el Artículo 16 del GDPR ',
   privTxt63:
     'tiene derecho a rectificar sus datos personales en caso de inexactitud o incompletitud;',
-  privTxt64: 'Según el Artículo 17 del GDPR',
+  privTxt64: 'Según el Artículo 17 del GDPR ',
   privTxt65:
     'tiene derecho a solicitar la eliminación de su información personal en determinadas circunstancias, sujeto a nuestra Política de retención.',
   privTxt66:
     'Según el Artículo 18 del GDPR</b>, tiene derecho a solicitar la restricción del procesamiento de sus datos en casos como cuando ha objetado la exactitud de los datos que necesitan verificación en determinadas circunstancias;',
-  privTxt67: 'Según el Artículo 20 del GDPR',
+  privTxt67: 'Según el Artículo 20 del GDPR ',
   privTxt68:
-    'Tiene derecho a transferir su información a un tercero en un formato estructurado, de uso común y legible por máquina, en circunstancias en las que la información se procese con su consentimiento o mediante medios automatizados;',
-  privTxt69: 'Según el Artículo 21 del GDPR',
+    'tiene derecho a transferir su información a un tercero en un formato estructurado, de uso común y legible por máquina, en circunstancias en las que la información se procese con su consentimiento o mediante medios automatizados;',
+  privTxt69: 'Según el Artículo 21 del GDPR ',
   privTxt70:
     'tiene derecho a objetar por motivos relacionados con situaciones particulares, como fines de marketing directo.',
   privTxt71:
@@ -302,7 +301,7 @@ export default {
   privTxt98: 'Permiso para usar el logotipo y el nombre de su empresa',
   privTxt99:
     'Al registrarse en BIT, otorga permiso a BIT para usar el logotipo y el nombre de su empresa como nuestro cliente en nuestros materiales de marketing, sitio web y publicaciones en redes sociales.',
-  privacyPolicy: 'Políticas públicas',
+  privacyPolicy: 'Políticas de privacidad',
   updateAvailable: 'Actualización disponible',
   updateAvailableTxt: 'Hay una nueva versión de Bit Wallet disponible',
   updateAvailableWarningTxt:
