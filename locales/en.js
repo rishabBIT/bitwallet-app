@@ -82,7 +82,7 @@ export default {
   recoverAccount: 'Recover Account',
   recoverAccountTextOne: 'Recover Existing Account Using Passphrase',
   recoverAccountTextTwo:
-    'Enter the backup passphtase associated with the account',
+    'Enter the backup passphrase associated with the account',
   passphrase: 'Passphrase 12 words',
   enterPassphrase: 'Enter Passphrase',
   findMyAccount: 'Find My Account',

@@ -2,7 +2,7 @@
   "expo": {
     "name": "bitwallet-app",
     "slug": "bitwallet-app",
-    "version": "3.0.3",
+    "version": "3.0.6",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -20,10 +20,10 @@
         "NSPhotoLibraryUsageDescription": "Allow $(PRODUCT_NAME) to access your photos.",
         "NSPhotoLibraryAddUsageDescription": "Allow $(PRODUCT_NAME) to save photos."
       },
-      "bundleIdentifier": "com.navraj2071.BitWallet"
+      "bundleIdentifier": "com.beimagine.technology"
     },
     "android": {
-      "versionCode": 23,
+      "versionCode": 26,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#020105"

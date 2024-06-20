@@ -1,5 +1,5 @@
 import React from 'react'
-import { ImageBackground, StyleSheet } from 'react-native'
+import { ImageBackground, Platform, StyleSheet, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 const Container = ({ children }) => {
@@ -8,7 +8,9 @@ const Container = ({ children }) => {
       source={require('../assets/new/Background.png')}
       style={styles.background}
     >
-      <SafeAreaView style={styles.container}>{children}</SafeAreaView>
+      <SafeAreaView style={styles.safeArea}>
+        <View style={styles.container}>{children}</View>
+      </SafeAreaView>
     </ImageBackground>
   )
 }
@@ -17,7 +19,12 @@ const styles = StyleSheet.create({
   background: {
     flex: 1,
     resizeMode: 'cover',
-    justifyContent: 'center',
+    // justifyContent: 'center',
+  },
+  safeArea: {
+    flex: 1,
+    paddingTop: Platform.OS === 'ios' ? 40 : 0,
+    paddingBottom: Platform.OS === 'ios' ? 40 : 0,
   },
   container: {
     flex: 1,

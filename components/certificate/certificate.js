@@ -318,9 +318,9 @@ const Certificate = ({ navigation, props }) => {
 
                 failedCerts.push(certData)
 
-                console.log('====================================')
-                console.log(failedCerts)
-                console.log('====================================')
+                // console.log('====================================')
+                // console.log(failedCerts)
+                // console.log('====================================')
 
                 await AsyncStorage.setItem(
                   'failedCerts',

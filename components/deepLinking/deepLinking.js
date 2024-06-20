@@ -1,6 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import React, { useState } from 'react'
 import { Linking, View } from 'react-native'
+import i18n from '../../locales/i18n'
 import Pin from '../pin/keypad'
 import { PrimaryButton, SecondaryButton } from '../subcomponents/button/button'
 import Container from '../subcomponents/container/container'
@@ -50,7 +51,9 @@ const DeepLinkHandler = ({ app_name, redirectUrl, setDeepLink }) => {
   }
 
   if (isPinRequired)
-    return <Pin title={i18n.t('enterPin')} subtitle={status} submit={enterPin} />
+    return (
+      <Pin title={i18n.t('enterPin')} subtitle={status} submit={enterPin} />
+    )
 
   return (
     <Container>
@@ -67,8 +70,11 @@ const DeepLinkHandler = ({ app_name, redirectUrl, setDeepLink }) => {
             <PrimaryButton
               title='Accept'
               onPress={() => {
-                checkStatus()
+                console.log('====================================')
+                console.log('accept')
+                console.log('====================================')
                 // setDeepLink(true)
+                checkStatus()
               }}
             />
           </View>
@@ -88,4 +94,3 @@ const DeepLinkHandler = ({ app_name, redirectUrl, setDeepLink }) => {
 }
 
 export default DeepLinkHandler
-

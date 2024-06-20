@@ -125,7 +125,10 @@ const Wallet = ({ navigation }) => {
             height={14}
             width={14}
             endIcon={'send_one'}
-            onPress={() => navigation.navigate('SendTransaction')}
+            onPress={() => {
+              navigation.navigate('SendTransaction')
+              // Toast.show('Hello')
+            }}
           />
           <PrimaryButton
             title={i18n.t('receive')}

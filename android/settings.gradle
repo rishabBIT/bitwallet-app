@@ -1,4 +1,4 @@
-rootProject.name = 'BitWallet'
+rootProject.name = 'bitwallet-app'
 
 dependencyResolutionManagement {
   versionCatalogs {

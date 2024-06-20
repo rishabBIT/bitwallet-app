@@ -46,6 +46,10 @@ const Certificate = ({ navigation }) => {
             },
           ]
 
+          console.log('====================================')
+          console.log(certificates[0])
+          console.log('====================================')
+
           setCertificates(certificates)
           // setCertificates(certs.data.certificates)
           setIsLoading(false)
