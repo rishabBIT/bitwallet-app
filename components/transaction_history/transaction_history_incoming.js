@@ -18,7 +18,7 @@ const TransactionHistoryIncoming = ({ navigation }) => {
         const publicKey = await AsyncStorage.getItem('publicKey')
         res = await getTransactionHistory(publicKey.toString().trim())
         setHistory(res.data.txns)
-        console.log(res.data.txns)
+        // console.log(res.data.txns)
 
         const incoming = []
 
@@ -36,9 +36,9 @@ const TransactionHistoryIncoming = ({ navigation }) => {
             // console.log('====================================')
             incoming.push(txn)
           } else {
-            console.log(txn.receiver_account_id)
-            console.log(publicKey.toString().trim())
-            console.log(txn.predecessor_account_id)
+            // console.log(txn.receiver_account_id)
+            // console.log(publicKey.toString().trim())
+            // console.log(txn.predecessor_account_id)
           }
         }
 

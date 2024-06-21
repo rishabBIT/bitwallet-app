@@ -308,7 +308,7 @@ export const getTransactionHistory = async (accountId) => {
     )
       .then((res) => res.json())
       .then((response) => {
-        console.log(response)
+        // console.log(response)
         result.status = 'success'
         result.data = response
       })

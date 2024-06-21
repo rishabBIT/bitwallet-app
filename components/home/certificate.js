@@ -34,23 +34,21 @@ const Certificate = ({ navigation }) => {
             (cert) => !failedCertIds.has(cert.id)
           )
 
-          let certificates = [
-            {
-              address: certs.data.certificates[0].address,
-              certificates: filteredCertificates,
-              description: certs.data.certificates[0].description,
-              is_verified: certs.data.certificates[0].is_verified,
-              name: certs.data.certificates[0].name,
-              wallet: certs.data.certificates[0].wallet,
-              website: certs.data.certificates[0].website,
-            },
-          ]
+          let certificates = {
+            address: certs.data.certificates[0].address,
+            certificates: filteredCertificates,
+            description: certs.data.certificates[0].description,
+            is_verified: certs.data.certificates[0].is_verified,
+            name: certs.data.certificates[0].name,
+            wallet: certs.data.certificates[0].wallet,
+            website: certs.data.certificates[0].website,
+          }
 
           console.log('====================================')
-          console.log(certificates[0])
+          console.log(certs)
           console.log('====================================')
 
-          setCertificates(certificates)
+          setCertificates([certificates])
           // setCertificates(certs.data.certificates)
           setIsLoading(false)
         } else {
@@ -66,33 +64,6 @@ const Certificate = ({ navigation }) => {
       console.log(e)
     }
   }
-
-  //  [
-  //    {
-  //      address: 'Haridwar, Uttarakhand',
-  //      certificates: [
-  //        [Object],
-  //        [Object],
-  //        [Object],
-  //        [Object],
-  //        [Object],
-  //        [Object],
-  //        [Object],
-  //        [Object],
-  //        [Object],
-  //        [Object],
-  //        [Object],
-  //        [Object],
-  //      ],
-  //      description:
-  //        'Fully decentralised bridge to swap tokens between two chains.',
-  //      is_verified: true,
-  //      name: 'Bit Testing Team',
-  //      wallet:
-  //        '674d895a861c548d4777a124603963017e0824edf768e70c9ab28609f090c058',
-  //      website: 'https://bitmemoir.com/kyc',
-  //    },
-  //  ]
 
   useEffect(() => {
     poppulateCertificates()
@@ -117,22 +88,6 @@ const Certificate = ({ navigation }) => {
 
   return (
     <ScrollView style={{ flex: 1, gap: 20, marginVertical: 20 }}>
-      {/* <PrimaryAccentText>{i18n.t('certificates')}</PrimaryAccentText> */}
-      {/* {isloading && (
-        <View
-          style={{
-            display: 'flex',
-            flex: 1,
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignSelf: 'center',
-            alignItems: 'center',
-            width: Dimensions.get('window').width,
-          }}
-        >
-          <Loading />
-        </View>
-      )} */}
       {!certificates && (
         <View style={{ padding: 20, flex: 1, gap: 20 }}>
           <PrimaryText>{i18n.t('certificateTextOne')}</PrimaryText>
@@ -162,8 +117,19 @@ const Certificate = ({ navigation }) => {
           </View>
         </View>
       )}
+
       {certificates &&
-        certificates.length > 0 &&
+        // const data = certificates
+        certificates.map((issuer, index) => {
+          console.log('====================================')
+          console.log(certificates.length)
+          console.log(issuer.name)
+          console.log(index)
+          console.log('====================================')
+        })}
+
+      {certificates &&
+        // certificates.length > 0 &&
         certificates.map((issuer, index) => (
           <CertificateTile
             issuer={issuer}
@@ -244,50 +210,6 @@ const CertificateTile = ({ issuer, navigation }) => {
         <CertificateContainer issuer={issuer} navigation={navigation} />
       )}
     </View>
-
-    // <View>
-    //   <TouchableOpacity
-    //     onPress={() => setExpanded(!expanded)}
-    //     style={{
-    //       flexDirection: 'row',
-    //       justifyContent: 'space-between',
-    //       alignItems: 'center',
-    //       padding: 10,
-    //       backgroundColor: '#393644',
-    //     }}
-    //   >
-    //     <View
-    //       style={{
-    //         padding: 10,
-    //         flexDirection: 'row',
-    //         gap: 10,
-    //         flexWrap: 'wrap',
-    //         alignItems: 'center',
-    //         justifyContent: 'space-between',
-    //         maxWidth: 800,
-    //       }}
-    //     >
-    //       {/* <View
-    //       style={{
-    //         flexDirection: 'row',
-    //         // justifyContent: 'space-between',
-    //         gap: 10,
-    //       }} */}
-    //       {/* > */}
-    //       <PrimaryText>
-    //         {issuer.name.substring(0, 23)}
-    //         {issuer.name.length > 23 && '...'}
-    //       </PrimaryText>
-    //       {issuer.is_verified && (
-    //         <Icon icon='verified' width={20} height={20} />
-    //       )}
-    //     </View>
-    //     <PrimaryText>{expanded ? '-' : '+'}</PrimaryText>
-    //   </TouchableOpacity>
-    //   {expanded && (
-    //     <CertificateContainer issuer={issuer} navigation={navigation} />
-    //   )}
-    // </View>
   )
 }
 
