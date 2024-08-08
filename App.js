@@ -1,43 +1,21 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 // import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useEffect, useState } from "react";
 import { Linking } from "react-native";
-import { SafeAreaProvider } from "react-native-safe-area-context";
-import { FlatList, Text, View } from "react-native";
-import CreateAccount from "./components/account/createAccount/createAccount";
-import CreateorImport from "./components/account/createorimport";
-import ImportAccount from "./components/account/importAccount/importAccount";
-import Accountdetails from "./components/accountdetails/accountdetails";
-import Certificate from "./components/certificate/certificate";
-import Connection from "./components/connection/connection";
 import DeepLinkHandler from "./components/deepLinking/deepLinking";
-import Home from "./components/home/home";
-import Menu from "./components/menu/menu";
-import Network from "./components/network/network";
-import NFTTransactionHistory from "./components/nft_transaction_history/nft_transaction_history";
 import NoInternet from "./components/noInternet/noInternet";
-import CreatePin from "./components/pin/createPin";
 import Pin from "./components/pin/keypad";
-import ResetAccount from "./components/resetAccount/resetAccount";
-import Scanner from "./components/scanner/scanner";
-import SendTransaction from "./components/sendTransaction/sendTransaction";
 import {
   checkForUpdates,
   updateURLs,
 } from "./components/subcomponents/api/nodeserver";
-import TabViewExample from "./components/tabview/tabview";
-import TransactionHistoryIncoming from "./components/transaction_history/transaction_history_incoming";
-import TransactionHistoryOutgoing from "./components/transaction_history/transaction_history_outgoing";
 
 import Update from "./components/update/update";
 
-import AccountdetailsOne from "./components/accountdetails/accountdetails_one";
-import TokenDetails from "./components/asset_details/asset_details";
 import LoadingPage from "./components/subcomponents/loading/loadingPage";
 
-import i18n from "./locales/i18n";
 import NavigationContainer from "./components/stacknavigator/navigationcontainer";
+import i18n from "./locales/i18n";
 
 // const Stack = createNativeStackNavigator();
 

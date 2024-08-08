@@ -9,7 +9,7 @@ import Navbar from './navbar'
 
 import { changeLocale } from '../../locales/i18n'
 import TabSwitcherCertificates from '../tabview/tabSwitcherCertificates'
-import Certificate from './certificate'
+import CertificateMasonry from './certificate_masonry'
 import Wallet from './wallet'
 
 const Home = ({ navigation, currentPage }) => {
@@ -84,7 +84,8 @@ const Home = ({ navigation, currentPage }) => {
 
         {view === 'certificate' &&
           (certificates === null ? (
-            <Certificate navigation={navigation} />
+            // <Certificate navigation={navigation} />
+            <CertificateMasonry navigation={navigation} />
           ) : (
             <TabSwitcherCertificates navigation={navigation} />
           ))}

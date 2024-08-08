@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { ToastAndroid } from 'react-native'
 
-const Current_Version = '3.0.7'
+const Current_Version = '3.0.8'
 
 export const updateURLs = async () => {
   try {
@@ -166,10 +166,9 @@ export const getCertificates = async () => {
   const publicKey = await AsyncStorage.getItem('publicKey')
 
   const endpoint = 'getCertificate'
-  const url = `http://15.206.186.148/api/v2/certificate/${endpoint}/?wallet=${publicKey}`
+  const testnetUrl = `http://15.206.186.148/api/v2/certificate/${endpoint}/?email=vivek@beimagine.tech`
   const mainNetUrl = `${API_URL}certificate/${endpoint}/?wallet=${publicKey}`
 
-  console.log(mainNetUrl)
   const result = { status: 'failed' }
   try {
     const response = await fetch(mainNetUrl).then((res) => res.json())

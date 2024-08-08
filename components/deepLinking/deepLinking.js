@@ -1,4 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import dynamicLinks from '@react-native-firebase/dynamic-links'
 import React, { useState } from 'react'
 import { Linking, View } from 'react-native'
 import i18n from '../../locales/i18n'
@@ -20,7 +21,22 @@ const DeepLinkHandler = ({ app_name, redirectUrl, setDeepLink }) => {
     }
 
     const appUrl = redirectUrl
-    const appDeepLink = `${appUrl}?action=${accepted}&app=BitWallet&publicKey=${publicKey}`
+    // const appDeepLink = `${appUrl}?action=${accepted}&app=BitWallet&publicKey=${publicKey}`
+    const appDeepLink = await dynamicLinks().buildLink({
+      link: `login?action=${accepted}&app=BitWallet&publicKey=${publicKey}`,
+      // domainUriPrefix is created in your Firebase console
+      domainUriPrefix: 'https://app.eastmojoconnect.com',
+      // optional setup which updates Firebase analytics campaign
+      // "banner". This also needs setting up before hand
+      analytics: {
+        campaign: 'banner',
+      },
+      android: {
+        packageName: 'com.eastmojo_app',
+        fallbackUrl:
+          'https://play.google.com/store/apps/details?id=com.eastmojo_app',
+      },
+    })
 
     Linking.openURL(appDeepLink)
       .then(() => {

@@ -29,7 +29,7 @@ import { ErrorText, PrimaryText } from '../subcomponents/text/text'
 const { width } = Dimensions.get('window')
 
 const Certificate = ({ navigation, props }) => {
-  const { certData, issuerData } = props
+  const { certData, issuerData, aspectRatio } = props
   const [isSharingAvailable, setIsSharingAvailable] = useState(false)
   const [isReceipientModalVisible, setReceipientModalVisible] = useState(false)
 
@@ -221,12 +221,13 @@ const Certificate = ({ navigation, props }) => {
         <Image
           style={{
             flex: 1,
-            // backgroundColor: '#393644',
+            width: '100%',
             borderRadius: 10,
-            // zIndex: -1,
+            aspectRatio: aspectRatio,
+            alignSelf: 'center',
           }}
           source={certData.image ? certData.image : blurhash}
-          contentFit='contain'
+          contentFit='fill'
           transition={1000}
         />
         <View
