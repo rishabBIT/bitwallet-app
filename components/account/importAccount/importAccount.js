@@ -1,19 +1,16 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useState } from 'react'
 import { View } from 'react-native'
+import { importkeys, registerDevice } from '../../../api/nodeserver'
 import i18n from '../../../locales/i18n'
+import { AppBar } from '../../../subcomponents/appbar/appbar'
+import { PrimaryButton } from '../../../subcomponents/button/button'
 import Container from '../../../subcomponents/container'
+import Input from '../../../subcomponents/input/input'
+import { Loading } from '../../../subcomponents/loading/loadingPage'
+import { ErrorText } from '../../../subcomponents/text/text'
 import useNotifications from '../../notifications/notifications'
-import { importkeys, registerDevice } from '../../subcomponents/api/nodeserver'
-import { AppBar } from '../../subcomponents/appbar/appbar'
-import { PrimaryButton } from '../../subcomponents/button/button'
-import Input from '../../subcomponents/input/input'
-import { Loading } from '../../subcomponents/loading/loadingPage'
-import {
-  ErrorText,
-  PrimaryAccentText,
-  SecondaryText,
-} from '../../subcomponents/text/text'
+import ImportAccountInstructions from './subcomponents/instructions'
 
 const ImportAccount = ({ navigation }) => {
   const [phrase, setPhrase] = useState('')
@@ -66,14 +63,7 @@ const ImportAccount = ({ navigation }) => {
           gap: 20,
         }}
       >
-        <View style={{ gap: 10 }}>
-          <View style={{ paddingBottom: 20, paddingTop: 80 }}>
-            <PrimaryAccentText fontColor={'#FFFFFF'} fontWeight={'bold'}>
-              {i18n.t('recoverAccountTextOne')}
-            </PrimaryAccentText>
-          </View>
-          <SecondaryText>{i18n.t('recoverAccountTextTwo')}</SecondaryText>
-        </View>
+        <ImportAccountInstructions />
         <Input
           label={`${i18n.t('passphrase')}`}
           placeholder={i18n.t('enterPassphrase')}
@@ -83,10 +73,8 @@ const ImportAccount = ({ navigation }) => {
         <ErrorText>{error}</ErrorText>
 
         {isloading ? (
-          // <View style={{ padding: 10 }}>
           <Loading />
         ) : (
-          // </View>
           <PrimaryButton
             title={i18n.t('findMyAccount')}
             onPress={findAccount}

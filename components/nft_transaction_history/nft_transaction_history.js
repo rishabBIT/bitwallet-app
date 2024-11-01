@@ -1,11 +1,13 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import React, { useEffect, useState } from 'react'
-import { FlatList, Text, View } from 'react-native'
+import { FlatList, View } from 'react-native'
+import { getNFTTransactionHistory } from '../../api/nodeserver'
 import i18n from '../../locales/i18n'
+import { AppBar } from '../../subcomponents/appbar/appbar'
 import Container from '../../subcomponents/container'
-import { getNFTTransactionHistory } from '../subcomponents/api/nodeserver'
-import { AppBar } from '../subcomponents/appbar/appbar'
-import LoadingPage from '../subcomponents/loading/loadingPage'
+import LoadingPage from '../../subcomponents/loading/loadingPage'
+import EmptyState from './components/empty_state'
+import TransactionItem from './components/transaction_item'
 
 const NFTTransactionHistory = ({ navigation }) => {
   const [nftTransactionHistory, setNftTransactionHistory] = useState([])
@@ -55,21 +57,7 @@ const NFTTransactionHistory = ({ navigation }) => {
 
   if (isLoading) return <LoadingPage />
   if (nftTransactionHistory.length === 0) {
-    return (
-      <Container>
-        <AppBar
-          title={i18n.t('nftTransactions')}
-          back={() => navigation.navigate('Home')}
-        />
-        <View
-          style={{ flex: 1, padding: 20, gap: 20, justifyContent: 'center' }}
-        >
-          <Text style={{ color: 'white', fontSize: 30 }}>
-            {i18n.t('noTransaction')}
-          </Text>
-        </View>
-      </Container>
-    )
+    return <EmptyState navigation={navigation} />
   } else {
     return (
       <Container>
@@ -85,98 +73,12 @@ const NFTTransactionHistory = ({ navigation }) => {
               showsVerticalScrollIndicator={false}
               data={nftTransactionHistory}
               keyExtractor={(item, index) => index.toString()}
-              renderItem={(item) => {
-                return (
-                  <View
-                    style={{
-                      backgroundColor: 'rgba(255, 255, 255, 0.2)',
-                      borderRadius: 8,
-                      padding: 16,
-                      margin: 16,
-                      // elevation: 3,
-                    }}
-                  >
-                    <View
-                      style={{
-                        paddingBottom: 16,
-                      }}
-                    >
-                      <Text
-                        style={{
-                          color: '#D8DD00',
-                        }}
-                      >
-                        Name:{' '}
-                        <Text style={{ color: 'white' }}>
-                          {item.item.nft.name}
-                        </Text>
-                      </Text>
-                    </View>
-                    <View style={{ paddingBottom: 16 }}>
-                      <Text
-                        style={{
-                          color: '#D8DD00',
-                        }}
-                      >
-                        Contract :{' '}
-                        <Text style={{ color: 'white' }}>
-                          {item.item.nft.contract}
-                        </Text>
-                      </Text>
-                    </View>
-                    {/* <View style={{ paddingBottom: 16 }}>
-                      <Text
-                        style={{
-                          color: "#D8DD00",
-                        }}
-                      >
-                        Receiver Id:{" "}
-                        <Text style={{ color: "white" }}>
-                          {item.item.token_new_owner_account_id}
-                        </Text>
-                      </Text>
-                    </View> */}
-                    <View style={{ paddingBottom: 16 }}>
-                      <Text
-                        style={{
-                          color: '#D8DD00',
-                        }}
-                      >
-                        Event Kind:{' '}
-                        <Text style={{ color: 'white' }}>
-                          {item.item.cause}
-                        </Text>
-                      </Text>
-                    </View>
-
-                    <View style={{ paddingBottom: 16 }}>
-                      <Text
-                        style={{
-                          color: '#D8DD00',
-                        }}
-                      >
-                        Transaction Hash:{' '}
-                        <Text style={{ color: 'white' }}>
-                          {item.item.transaction_hash}
-                        </Text>
-                      </Text>
-                    </View>
-
-                    <View style={{ paddingBottom: 16 }}>
-                      <Text
-                        style={{
-                          color: '#D8DD00',
-                        }}
-                      >
-                        Date :{' '}
-                        <Text style={{ color: 'white' }}>
-                          {getElapsedTime(item.item.block_timestamp)}
-                        </Text>
-                      </Text>
-                    </View>
-                  </View>
-                )
-              }}
+              renderItem={({ item }) => (
+                <TransactionItem
+                  transaction={item}
+                  getElapsedTime={getElapsedTime}
+                />
+              )}
             />
           )}
         </View>

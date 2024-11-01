@@ -1,20 +1,20 @@
 import { View } from 'react-native'
+import { SecondaryButton } from '../../subcomponents/button/button'
 import Container from '../../subcomponents/container'
-import { SecondaryButton } from '../subcomponents/button/button'
 import {
   PrimaryAccentText,
   PrimaryText,
   SecondaryText,
   WarningText,
-} from '../subcomponents/text/text'
+} from '../../subcomponents/text/text'
 
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useEffect, useState } from 'react'
-import Pin from '../pin/keypad'
-import { deleteDevice } from '../subcomponents/api/nodeserver'
-import { PrimaryButton } from '../subcomponents/button/button'
-import LoadingPage from '../subcomponents/loading/loadingPage'
+import { deleteDevice } from '../../api/nodeserver'
 import i18n from '../../locales/i18n'
+import { PrimaryButton } from '../../subcomponents/button/button'
+import LoadingPage from '../../subcomponents/loading/loadingPage'
+import Pin from '../pin/keypad'
 
 const ResetAccount = ({ navigation }) => {
   const [isPin, setIsPin] = useState(false)
@@ -55,7 +55,9 @@ const ResetAccount = ({ navigation }) => {
   if (isLoading) return <LoadingPage />
 
   if (isPin)
-    return <Pin title={i18n.t('enterPin')} subtitle={status} submit={submitPin} />
+    return (
+      <Pin title={i18n.t('enterPin')} subtitle={status} submit={submitPin} />
+    )
 
   return (
     <Container>
@@ -68,13 +70,8 @@ const ResetAccount = ({ navigation }) => {
         }}
       >
         <PrimaryAccentText>{i18n.t('resetAccount')}</PrimaryAccentText>
-        <PrimaryText>
-          {i18n.t('resetAccounTextOne')}
-        </PrimaryText>
-        <WarningText>
-          {i18n.t('resetAccounTextTwo')}
-
-        </WarningText>
+        <PrimaryText>{i18n.t('resetAccounTextOne')}</PrimaryText>
+        <WarningText>{i18n.t('resetAccounTextTwo')}</WarningText>
         <View>
           <SecondaryText>{i18n.t('resetAccounTextThree')}</SecondaryText>
         </View>

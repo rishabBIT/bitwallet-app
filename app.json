@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "Bitwallet App",
+    "name": "Bitwallet",
     "slug": "bitwallet-app",
-    "version": "3.0.8",
+    "version": "3.1.3",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -11,7 +11,9 @@
       "resizeMode": "contain",
       "backgroundColor": "#020105"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true,
       "infoPlist": {
@@ -46,7 +48,10 @@
               "pathPrefix": "/deep-link"
             }
           ],
-          "category": ["BROWSABLE", "DEFAULT"]
+          "category": [
+            "BROWSABLE",
+            "DEFAULT"
+          ]
         }
       ]
     },

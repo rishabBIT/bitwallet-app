@@ -3,20 +3,20 @@ import { BarCodeScanner } from 'expo-barcode-scanner'
 import React, { useEffect, useState } from 'react'
 import { Linking, StyleSheet, Text, View } from 'react-native'
 import { WebView } from 'react-native-webview'
-import Container from '../../subcomponents/container'
+import i18n from '../../locales/i18n'
 import {
   LinkButton,
   PrimaryButton,
   SecondaryButton,
-} from '../subcomponents/button/button'
-import LoadingPage from '../subcomponents/loading/loadingPage'
+} from '../../subcomponents/button/button'
+import Container from '../../subcomponents/container'
+import LoadingPage from '../../subcomponents/loading/loadingPage'
 import {
   ErrorText,
   PrimaryAccentText,
   PrimaryText,
   SecondaryText,
-} from '../subcomponents/text/text'
-import i18n from '../../locales/i18n'
+} from '../../subcomponents/text/text'
 
 export default function Scanner({ navigation }) {
   const [hasPermission, setHasPermission] = useState(null)
@@ -64,9 +64,7 @@ export default function Scanner({ navigation }) {
         }}
       >
         <PrimaryAccentText>{i18n.t('bitScan')}</PrimaryAccentText>
-        <SecondaryText>
-          {i18n.t('bitScanText')}
-        </SecondaryText>
+        <SecondaryText>{i18n.t('bitScanText')}</SecondaryText>
         <View
           style={{
             flex: 1,
@@ -131,11 +129,11 @@ const ScannedPage = ({ navigation, data, setScanned }) => {
     try {
       const urlPattern = new RegExp(
         '^(https?:\\/\\/)?' +
-        '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' +
-        '((\\d{1,3}\\.){3}\\d{1,3}))' +
-        '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' +
-        '(\\?[;&a-z\\d%_.~+=-]*)?' +
-        '(\\#[-a-z\\d_]*)?$',
+          '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' +
+          '((\\d{1,3}\\.){3}\\d{1,3}))' +
+          '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' +
+          '(\\?[;&a-z\\d%_.~+=-]*)?' +
+          '(\\#[-a-z\\d_]*)?$',
         'i'
       )
       if (urlPattern.test(data)) {
@@ -252,15 +250,15 @@ const ConnectionPage = ({ data, navigation }) => {
 
   const connectSocket = async (wsURL) => {
     const chatSocket = new WebSocket(wsURL)
-    chatSocket.onmessage = function(e) {
+    chatSocket.onmessage = function (e) {
       const data = JSON.parse(e.data)
       console.log(data)
     }
-    chatSocket.onclose = function(e) {
+    chatSocket.onclose = function (e) {
       setIsConnected(false)
       console.log('Chat socket closed unexpectedly')
     }
-    chatSocket.onopen = function(e) {
+    chatSocket.onopen = function (e) {
       setSocket(chatSocket)
       setIsConnected(true)
     }

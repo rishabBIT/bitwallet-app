@@ -1,5 +1,5 @@
 import CreateAccount from '../account/createAccount/createAccount'
-import CreateorImport from '../account/createorimport'
+import CreateorImport from '../account/createOrImportAccount/createorimport'
 import ImportAccount from '../account/importAccount/importAccount'
 import Accountdetails from '../accountdetails/accountdetails'
 import AccountdetailsOne from '../accountdetails/accountdetails_one'

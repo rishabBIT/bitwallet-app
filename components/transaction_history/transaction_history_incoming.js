@@ -1,10 +1,11 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import React, { useEffect, useState } from 'react'
-import { Dimensions, FlatList, Text, View } from 'react-native'
+import { Dimensions, Text, View } from 'react-native'
+import { getTransactionHistory } from '../../api/nodeserver'
 import i18n from '../../locales/i18n'
 import Container from '../../subcomponents/container'
-import { getTransactionHistory } from '../subcomponents/api/nodeserver'
-import { Loading } from '../subcomponents/loading/loadingPage'
+import { Loading } from '../../subcomponents/loading/loadingPage'
+import TransactionList from './subcomponents/transaction_list'
 
 const TransactionHistoryIncoming = ({ navigation }) => {
   const [history, setHistory] = useState([])
@@ -23,22 +24,9 @@ const TransactionHistoryIncoming = ({ navigation }) => {
         const incoming = []
 
         for (const txn of res.data.txns) {
-          // console.log('====================================')
-          // console.log(txn.receiver_account_id)
-          // console.log(txn.predecessor_account_id)
-          // console.log('====================================')
-          if (
-            // txn.receiver_account_id ===  &&
-            txn.predecessor_account_id !== publicKey.toString().trim()
-          ) {
-            // console.log('====================================')
-            // console.log('IF STATEMENT')
-            // console.log('====================================')
+          if (txn.predecessor_account_id !== publicKey.toString().trim()) {
             incoming.push(txn)
           } else {
-            // console.log(txn.receiver_account_id)
-            // console.log(publicKey.toString().trim())
-            // console.log(txn.predecessor_account_id)
           }
         }
 
@@ -115,12 +103,6 @@ const TransactionHistoryIncoming = ({ navigation }) => {
           <Text style={{ color: 'white', fontSize: 30 }}>
             {i18n.t('noTransaction')}
           </Text>
-          {/* <Button
-            title={'Click'}
-            onPress={() => {
-              console.log(incomingHistory)
-            }}
-          /> */}
         </View>
       </Container>
     )
@@ -128,89 +110,11 @@ const TransactionHistoryIncoming = ({ navigation }) => {
     return (
       <Container>
         <View style={{ padding: 20, gap: 20 }}>
-          {/* <View style={{ width: 80 }}>
-          <LinkButton title='< Back' onPress={() => navigation.pop()} />
-        </View> */}
           {incomingHistory.length !== 0 && (
-            <FlatList
-              showsVerticalScrollIndicator={false}
-              data={incomingHistory}
-              keyExtractor={(item, index) => index.toString()}
-              renderItem={(item) => {
-                return (
-                  <View
-                    style={{
-                      backgroundColor: 'rgba(255, 255, 255, 0.2)',
-                      borderRadius: 8,
-                      padding: 16,
-                      margin: 16,
-                    }}
-                  >
-                    <View style={{ paddingBottom: 16 }}>
-                      <Text
-                        style={{
-                          color: '#D8DD00',
-                        }}
-                      >
-                        Receiver Id:{' '}
-                        <Text style={{ color: 'white' }}>
-                          {item.item.receiver_account_id}
-                        </Text>
-                      </Text>
-                    </View>
-                    <View style={{ paddingBottom: 16 }}>
-                      <Text
-                        style={{
-                          color: '#D8DD00',
-                        }}
-                      >
-                        Sender Id:{' '}
-                        <Text style={{ color: 'white' }}>
-                          {item.item.predecessor_account_id}
-                        </Text>
-                      </Text>
-                    </View>
-
-                    <View style={{ paddingBottom: 16 }}>
-                      <Text
-                        style={{
-                          color: '#D8DD00',
-                        }}
-                      >
-                        Deposit:{' '}
-                        <Text style={{ color: 'white' }}>
-                          {convertDeposit(item.item.actions_agg.deposit)}
-                        </Text>
-                      </Text>
-                    </View>
-
-                    <View style={{ paddingBottom: 16 }}>
-                      <Text
-                        style={{
-                          color: '#D8DD00',
-                        }}
-                      >
-                        Transaction Fee:{' '}
-                        <Text style={{ color: 'white' }}>
-                          {item.item.outcomes_agg.transaction_fee}
-                        </Text>
-                      </Text>
-                    </View>
-                    <View style={{ paddingBottom: 16 }}>
-                      <Text
-                        style={{
-                          color: '#D8DD00',
-                        }}
-                      >
-                        Date :{' '}
-                        <Text style={{ color: 'white' }}>
-                          {getElapsedTime(item.item.block_timestamp)}
-                        </Text>
-                      </Text>
-                    </View>
-                  </View>
-                )
-              }}
+            <TransactionList
+              transactions={incomingHistory}
+              convertDeposit={convertDeposit}
+              getElapsedTime={getElapsedTime}
             />
           )}
         </View>

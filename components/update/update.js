@@ -1,13 +1,16 @@
 import { Linking, View } from 'react-native'
 import i18n from '../../locales/i18n'
+import {
+  PrimaryButton,
+  SecondaryButton,
+} from '../../subcomponents/button/button'
 import Container from '../../subcomponents/container'
-import { PrimaryButton, SecondaryButton } from '../subcomponents/button/button'
-import Icon from '../subcomponents/icon/icon'
+import Icon from '../../subcomponents/icon/icon'
 import {
   PrimaryAccentText,
   PrimaryText,
   WarningText,
-} from '../subcomponents/text/text'
+} from '../../subcomponents/text/text'
 
 const Update = ({ cancel }) => {
   return (

@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import { Text, TouchableOpacity, View } from 'react-native'
 import i18n, { changeLocale } from '../../locales/i18n'
+import { AppBar } from '../../subcomponents/appbar/appbar'
 import Container from '../../subcomponents/container'
-import { AppBar } from '../subcomponents/appbar/appbar'
-import Icon from '../subcomponents/icon/icon'
+import Icon from '../../subcomponents/icon/icon'
 
 const Menu = ({ navigation }) => {
   const [isMenu, setIsMenu] = useState(false)
@@ -35,7 +35,10 @@ const Menu = ({ navigation }) => {
               alignItems: 'center',
               gap: 10,
             }}
-            onPress={() => navigation.navigate('Accountdetails')}
+            onPress={() =>
+              // AsyncStorage.clear()
+              navigation.navigate('Accountdetails')
+            }
           >
             <Text align={'left'} style={{ fontSize: 20, letterSpacing: 0.2 }}>
               {i18n.t('accountDetails')}

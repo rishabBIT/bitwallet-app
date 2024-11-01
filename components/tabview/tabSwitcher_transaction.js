@@ -3,7 +3,6 @@ import React, { useState } from 'react'
 import {
   ImageBackground,
   Platform,
-  SafeAreaView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -11,7 +10,7 @@ import {
 } from 'react-native'
 import i18n from '../../locales/i18n'
 import Container from '../../subcomponents/container'
-import Icon from '../subcomponents/icon/icon'
+import Icon from '../../subcomponents/icon/icon'
 import TransactionHistoryIncoming from '../transaction_history/transaction_history_incoming'
 import TransactionHistoryOutgoing from '../transaction_history/transaction_history_outgoing'
 
@@ -19,8 +18,8 @@ const TabSwitcher = ({ navigation }) => {
   const [activeTab, setActiveTab] = useState(1)
 
   return (
-    // <View style={{ flex: 1, backgroundColor: 'transparent' }}>
-    <SafeAreaView style={styles.safeArea}>
+    <View style={{ flex: 1, backgroundColor: 'transparent' }}>
+      {/* <SafeAreaView style={styles.safeArea}> */}
       <ImageBackground
         source={require('../../assets/new/Background.png')}
         style={styles.backgroundImage}
@@ -107,7 +106,8 @@ const TabSwitcher = ({ navigation }) => {
           </View>
         </Container>
       </ImageBackground>
-    </SafeAreaView>
+      {/* </SafeAreaView> */}
+    </View>
   )
 }
 

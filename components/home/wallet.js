@@ -2,13 +2,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import * as Clipboard from 'expo-clipboard'
 import { useEffect, useState } from 'react'
 import { Dimensions, Share, StyleSheet, Text, View } from 'react-native'
+import { getbalance, retryFailedCerts } from '../../api/nodeserver'
 import i18n from '../../locales/i18n'
+import { LinkButton, PrimaryButton } from '../../subcomponents/button/button'
 import Container from '../../subcomponents/container'
+import { Loading } from '../../subcomponents/loading/loadingPage'
+import { GradientText } from '../../subcomponents/text/text'
 import useNotifications from '../notifications/notifications'
-import { getbalance, retryFailedCerts } from '../subcomponents/api/nodeserver'
-import { LinkButton, PrimaryButton } from '../subcomponents/button/button'
-import { Loading } from '../subcomponents/loading/loadingPage'
-import { GradientText } from '../subcomponents/text/text'
 
 const Wallet = ({ navigation }) => {
   const [address, setAddress] = useState('')

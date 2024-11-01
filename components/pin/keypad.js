@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { StyleSheet, View } from 'react-native'
+import { KeypadButton } from '../../subcomponents/button/button'
 import Container from '../../subcomponents/container'
-import { KeypadButton } from '../subcomponents/button/button'
-import { PrimaryAccentText, SecondaryText } from '../subcomponents/text/text'
+import { PrimaryAccentText, SecondaryText } from '../../subcomponents/text/text'
 
 const Pin = ({ submit, title, subtitle }) => {
   const [enteredPin, setEnteredPin] = useState('')

@@ -3,8 +3,8 @@ import { useEffect, useState } from 'react'
 import { TouchableOpacity, View } from 'react-native'
 import i18n from '../../locales/i18n'
 import Container from '../../subcomponents/container'
-import Icon from '../subcomponents/icon/icon'
-import { PrimaryAccentText } from '../subcomponents/text/text'
+import Icon from '../../subcomponents/icon/icon'
+import { PrimaryAccentText } from '../../subcomponents/text/text'
 
 const Network = ({ navigation }) => {
   const [network, setNetwork] = useState('')

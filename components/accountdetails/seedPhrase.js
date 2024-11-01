@@ -3,14 +3,14 @@ import * as Clipboard from 'expo-clipboard'
 import { useEffect, useState } from 'react'
 import { View } from 'react-native'
 import i18n from '../../locales/i18n'
+import { AppBar } from '../../subcomponents/appbar/appbar'
+import { TertiaryButton } from '../../subcomponents/button/button'
 import Container from '../../subcomponents/container'
-import { AppBar } from '../subcomponents/appbar/appbar'
-import { TertiaryButton } from '../subcomponents/button/button'
 import {
   PrimaryAccentText,
   SecondaryText,
   WarningText,
-} from '../subcomponents/text/text'
+} from '../../subcomponents/text/text'
 
 const SeedPhrase = ({ setView, navigation }) => {
   const [phrase, setPhrase] = useState('')
@@ -41,9 +41,6 @@ const SeedPhrase = ({ setView, navigation }) => {
           gap: 30,
         }}
       >
-        {/* <View style={{ width: 80 }}>
-          <LinkButton title='< Back' onPress={() => setView(1)} />
-        </View> */}
         <PrimaryAccentText>{i18n.t('secretPassphrase')}</PrimaryAccentText>
         <SecondaryText>{i18n.t('clickToCopy')}</SecondaryText>
         <TertiaryButton

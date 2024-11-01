@@ -9,10 +9,10 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native'
-import { getCertificates } from '../subcomponents/api/nodeserver'
-import Icon from '../subcomponents/icon/icon'
-import { Loading } from '../subcomponents/loading/loadingPage'
-import { PrimaryText } from '../subcomponents/text/text'
+import { getCertificates } from '../../api/nodeserver'
+import Icon from '../../subcomponents/icon/icon'
+import { Loading } from '../../subcomponents/loading/loadingPage'
+import { PrimaryText } from '../../subcomponents/text/text'
 
 const FailedCertificate = ({ navigation }) => {
   const [certificates, setCertificates] = useState(null)

@@ -3,12 +3,12 @@ import { Image } from 'expo-image'
 import { LinearGradient } from 'expo-linear-gradient'
 import { useEffect, useState } from 'react'
 import { Dimensions, ScrollView, TouchableOpacity, View } from 'react-native'
+import { getCertificates } from '../../api/nodeserver'
 import i18n from '../../locales/i18n'
-import { getCertificates } from '../subcomponents/api/nodeserver'
-import { PrimaryButton } from '../subcomponents/button/button'
-import Icon from '../subcomponents/icon/icon'
-import { Loading } from '../subcomponents/loading/loadingPage'
-import { PrimaryText, SecondaryText } from '../subcomponents/text/text'
+import { PrimaryButton } from '../../subcomponents/button/button'
+import Icon from '../../subcomponents/icon/icon'
+import { Loading } from '../../subcomponents/loading/loadingPage'
+import { PrimaryText, SecondaryText } from '../../subcomponents/text/text'
 
 const Certificate = ({ navigation }) => {
   const [certificates, setCertificates] = useState(null)

@@ -13,7 +13,7 @@ import {
 import { SceneMap, TabBar, TabView } from 'react-native-tab-view'
 import i18n from '../../locales/i18n'
 import Container from '../../subcomponents/container'
-import Icon from '../subcomponents/icon/icon'
+import Icon from '../../subcomponents/icon/icon'
 import TransactionHistoryIncoming from '../transaction_history/transaction_history_incoming'
 import TransactionHistoryOutgoing from '../transaction_history/transaction_history_outgoing'
 

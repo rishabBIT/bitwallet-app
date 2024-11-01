@@ -1,141 +1,138 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import AsyncStorage from '@react-native-async-storage/async-storage'
 // import { NavigationContainer } from "@react-navigation/native";
-import { useEffect, useState } from "react";
-import { Linking } from "react-native";
-import DeepLinkHandler from "./components/deepLinking/deepLinking";
-import NoInternet from "./components/noInternet/noInternet";
-import Pin from "./components/pin/keypad";
-import {
-  checkForUpdates,
-  updateURLs,
-} from "./components/subcomponents/api/nodeserver";
+import { useEffect, useState } from 'react'
+import { Linking } from 'react-native'
+import { checkForUpdates, updateURLs } from './api/nodeserver'
+import DeepLinkHandler from './components/deepLinking/deepLinking'
+import NoInternet from './components/noInternet/noInternet'
+import Pin from './components/pin/keypad'
 
-import Update from "./components/update/update";
+import Update from './components/update/update'
 
-import LoadingPage from "./components/subcomponents/loading/loadingPage";
+import LoadingPage from './subcomponents/loading/loadingPage'
 
-import NavigationContainer from "./components/stacknavigator/navigationcontainer";
-import i18n from "./locales/i18n";
+import NavigationContainer from './components/stacknavigator/navigationcontainer'
+import i18n from './locales/i18n'
 
 // const Stack = createNativeStackNavigator();
 
 const linking = {
-  prefixes: ["beimagine.tech://"],
+  prefixes: ['beimagine.tech://'],
   config: {
-    initialRouteName: "Deeplink",
+    initialRouteName: 'Deeplink',
     screens: {
-      Deeplink: "Deeplink",
+      Deeplink: 'Deeplink',
     },
   },
-};
+}
 
 export default function App() {
-  const [isPinRequired, setIsPinRequired] = useState(false);
-  const [isLoading, setIsloading] = useState(true);
-  const [status, setStatus] = useState("");
-  const [storedPin, setStoredPin] = useState("");
-  const [isConnected, setIsConnected] = useState(true);
-  const [updateAvailable, setUpdateAvailable] = useState(false);
+  const [isPinRequired, setIsPinRequired] = useState(false)
+  const [isLoading, setIsloading] = useState(true)
+  const [status, setStatus] = useState('')
+  const [storedPin, setStoredPin] = useState('')
+  const [isConnected, setIsConnected] = useState(true)
+  const [updateAvailable, setUpdateAvailable] = useState(false)
 
-  const [appName, setAppName] = useState("");
-  const [action, setAction] = useState("");
-  const [redirectUrl, setRedirectUrl] = useState("");
+  const [appName, setAppName] = useState('')
+  const [action, setAction] = useState('')
+  const [redirectUrl, setRedirectUrl] = useState('')
 
-  const [deepLink, setDeepLink] = useState(false);
+  const [deepLink, setDeepLink] = useState(false)
 
   useEffect(() => {
-    Linking.addEventListener("url", (res) => {
-      handleDeepLink(res.url);
-    });
+    Linking.addEventListener('url', (res) => {
+      handleDeepLink(res.url)
+    })
 
-    handleDeepLink();
+    handleDeepLink()
     return () => {
-      Linking.removeEventListener("url", handleDeepLink);
-    };
-  }, []);
+      Linking.removeEventListener('url', handleDeepLink)
+    }
+  }, [])
 
   useEffect(() => {
     if (deepLink === false) {
-      checkStatus();
-      checkConnection();
-      setTimeout(checkUpdate, 10000);
+      checkStatus()
+      checkConnection()
+      setTimeout(checkUpdate, 10000)
     }
-  }, [deepLink]);
+  }, [deepLink])
 
   const getInitialUrl = async () => {
-    const initialUrl = await Linking.getInitialURL();
+    const initialUrl = await Linking.getInitialURL()
 
-    return initialUrl;
-  };
+    return initialUrl
+  }
 
   const handleDeepLink = async (initialUrl) => {
     try {
-      let action, app, redirectUrl;
+      let action, app, redirectUrl
 
       if (!initialUrl) {
-        initialUrl = await getInitialUrl();
+        initialUrl = await getInitialUrl()
       }
 
-      const paramsArray = initialUrl.split("?")[1].split("&");
+      const paramsArray = initialUrl.split('?')[1].split('&')
 
       if (paramsArray) {
         paramsArray.forEach((param) => {
-          const [key, value] = param.split("=");
-          if (key === "action") {
-            action = value;
-          } else if (key === "app") {
-            app = value;
-          } else if (key === "redirectUrl") {
-            redirectUrl = value;
+          const [key, value] = param.split('=')
+          if (key === 'action') {
+            action = value
+          } else if (key === 'app') {
+            app = value
+          } else if (key === 'redirectUrl') {
+            redirectUrl = value
           }
-        });
+        })
 
-        console.log("Action:", action);
-        console.log("App:", app);
-        console.log("Redirect URL:", redirectUrl);
+        console.log('Action:', action)
+        console.log('App:', app)
+        console.log('Redirect URL:', redirectUrl)
 
-        setDataFn(action, app, redirectUrl);
-        setDeepLink(true);
+        setDataFn(action, app, redirectUrl)
+        setDeepLink(true)
       }
     } catch (e) {
-      console.log(e);
+      console.log(e)
     }
-  };
+  }
 
   const setDataFn = async (action, appName, redirectUrl) => {
-    setAppName(appName);
-    setAction(action);
-    setRedirectUrl(redirectUrl);
-  };
+    setAppName(appName)
+    setAction(action)
+    setRedirectUrl(redirectUrl)
+  }
 
   const checkUpdate = async () => {
-    let update = await checkForUpdates();
-    setUpdateAvailable(update);
-  };
+    let update = await checkForUpdates()
+    setUpdateAvailable(update)
+  }
 
   const checkStatus = async () => {
-    setIsloading(true);
-    const pin = await AsyncStorage.getItem("pin");
+    setIsloading(true)
+    const pin = await AsyncStorage.getItem('pin')
 
-    if (pin && pin !== null && pin !== "null" && pin.length === 4) {
-      setIsPinRequired(true);
-      setStoredPin(pin);
+    if (pin && pin !== null && pin !== 'null' && pin.length === 4) {
+      setIsPinRequired(true)
+      setStoredPin(pin)
     }
-    setIsloading(false);
-  };
+    setIsloading(false)
+  }
 
   const checkConnection = async () => {
-    setIsloading(true);
-    const isInternet = await updateURLs();
-    if (isInternet) setIsConnected(true);
-    else setIsConnected(false);
-    setIsloading(false);
-  };
+    setIsloading(true)
+    const isInternet = await updateURLs()
+    if (isInternet) setIsConnected(true)
+    else setIsConnected(false)
+    setIsloading(false)
+  }
 
   const enterPin = (e) => {
-    if (storedPin !== e) setStatus("Invalid Pin");
-    else setIsPinRequired(false);
-  };
+    if (storedPin !== e) setStatus('Invalid Pin')
+    else setIsPinRequired(false)
+  }
 
   if (deepLink)
     return (
@@ -144,21 +141,21 @@ export default function App() {
         redirectUrl={redirectUrl}
         setDeepLink={setDeepLink}
       />
-    );
+    )
 
-  if (isLoading) return <LoadingPage />;
+  if (isLoading) return <LoadingPage />
 
   if (isPinRequired)
     return (
-      <Pin title={i18n.t("enterPin")} subtitle={status} submit={enterPin} />
-    );
+      <Pin title={i18n.t('enterPin')} subtitle={status} submit={enterPin} />
+    )
 
-  if (!isConnected) return <NoInternet retry={checkConnection} />;
+  if (!isConnected) return <NoInternet retry={checkConnection} />
 
   if (updateAvailable)
-    return <Update cancel={() => setUpdateAvailable(false)} />;
+    return <Update cancel={() => setUpdateAvailable(false)} />
 
-  return <NavigationContainer />;
+  return <NavigationContainer />
 
   // return (
   //   <SafeAreaProvider>

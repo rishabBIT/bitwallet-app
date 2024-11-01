@@ -1,10 +1,11 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import React, { useEffect, useState } from 'react'
-import { Dimensions, FlatList, Text, View } from 'react-native'
+import { Dimensions, Text, View } from 'react-native'
+import { getTransactionHistory } from '../../api/nodeserver'
 import i18n from '../../locales/i18n'
 import Container from '../../subcomponents/container'
-import { getTransactionHistory } from '../subcomponents/api/nodeserver'
-import { Loading } from '../subcomponents/loading/loadingPage'
+import { Loading } from '../../subcomponents/loading/loadingPage'
+import TransactionList from './subcomponents/transaction_list'
 
 const TransactionHistoryOutgoing = ({ navigation }) => {
   const [history, setHistory] = useState([])
@@ -111,87 +112,10 @@ const TransactionHistoryOutgoing = ({ navigation }) => {
       <Container>
         <View style={{ padding: 20, gap: 20 }}>
           {outgoingHistory.length !== 0 && (
-            <FlatList
-              showsVerticalScrollIndicator={false}
-              data={outgoingHistory}
-              keyExtractor={(item, index) => index.toString()}
-              renderItem={(item) => {
-                return (
-                  <View
-                    style={{
-                      backgroundColor: 'rgba(255, 255, 255, 0.2)',
-                      borderRadius: 8,
-                      padding: 16,
-                      margin: 16,
-                    }}
-                  >
-                    <View style={{ paddingBottom: 16 }}>
-                      <Text
-                        style={{
-                          color: '#D8DD00',
-                        }}
-                      >
-                        Receiver Id:{' '}
-                        <Text style={{ color: 'white' }}>
-                          {item.item.receiver_account_id}
-                        </Text>
-                      </Text>
-                    </View>
-
-                    <View style={{ paddingBottom: 16 }}>
-                      <Text
-                        style={{
-                          color: '#D8DD00',
-                        }}
-                      >
-                        Sender Id:{' '}
-                        <Text style={{ color: 'white' }}>
-                          {item.item.predecessor_account_id}
-                        </Text>
-                      </Text>
-                    </View>
-
-                    <View style={{ paddingBottom: 16 }}>
-                      <Text
-                        style={{
-                          color: '#D8DD00',
-                        }}
-                      >
-                        Deposit:{' '}
-                        <Text style={{ color: 'white' }}>
-                          {convertDeposit(item.item.actions_agg.deposit)}
-                        </Text>
-                      </Text>
-                    </View>
-
-                    <View style={{ paddingBottom: 16 }}>
-                      <Text
-                        style={{
-                          color: '#D8DD00',
-                        }}
-                      >
-                        Transaction Fee:{' '}
-                        <Text style={{ color: 'white' }}>
-                          {item.item.outcomes_agg.transaction_fee}
-                        </Text>
-                      </Text>
-                    </View>
-
-                    <View style={{ paddingBottom: 16 }}>
-                      <Text
-                        style={{
-                          color: '#D8DD00',
-                        }}
-                      >
-                        Date :{' '}
-                        <Text style={{ color: 'white' }}>
-                          {getElapsedTime(item.item.block_timestamp)}
-                        </Text>
-                      </Text>
-                    </View>
-                  </View>
-                )
-              }}
+            <TransactionList
+              transactions={outgoingHistory}
+              convertDeposit={convertDeposit}
+              getElapsedTime={getElapsedTime}
             />
           )}
         </View>

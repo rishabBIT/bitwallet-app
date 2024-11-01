@@ -9,9 +9,9 @@ import {
   View,
 } from 'react-native'
 import i18n from '../../locales/i18n'
-import Certificate from '../home/certificate'
+import { PrimaryAccentText } from '../../subcomponents/text/text'
 import FailedCertificate from '../home/failedCertificates'
-import { PrimaryAccentText } from '../subcomponents/text/text'
+import CertificateMasonry from '../home/masonry_certificate/certificate_masonry'
 
 const TabSwitcherCertificates = ({ navigation }) => {
   const [activeTab, setActiveTab] = useState(1)
@@ -73,7 +73,7 @@ const TabSwitcherCertificates = ({ navigation }) => {
         </TouchableOpacity>
       </View>
       {activeTab === 1 ? (
-        <Certificate navigation={navigation} />
+        <CertificateMasonry navigation={navigation} />
       ) : (
         <FailedCertificate navigation={navigation} />
       )}

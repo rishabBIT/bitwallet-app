@@ -1,7 +1,7 @@
 import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import i18n from '../../locales/i18n'
+import { AppBar } from '../../subcomponents/appbar/appbar'
 import Container from '../../subcomponents/container'
-import { AppBar } from '../subcomponents/appbar/appbar'
 
 export const PrivacyPolicy = ({ navigation }) => {
   return (
